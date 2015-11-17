@@ -1,13 +1,12 @@
 package com.aluxian.tweeather
 
+import org.apache.spark.SparkContext
 import org.apache.spark.rdd.RDD
 import org.apache.spark.sql.SQLContext
-import org.apache.spark.{SparkConf, SparkContext}
 
-object Sentiment140Parser {
+object Sentiment140Parser extends Script {
 
-  def main(args: Array[String]) {
-    val sc = new SparkContext(new SparkConf())
+  def main(sc: SparkContext) {
     val sqlContext = new SQLContext(sc)
 
     val testData = sc.textFile("hdfs://tw/sentiment140/test.csv", 2)
@@ -33,7 +32,7 @@ object Sentiment140Parser {
       .replaceAll("https?:\\/\\/[^\\s]*", "") // urls
       .replaceAll("\\bvia\\b|\\bRT\\b", "") // 'via' and 'RT' keywords
       .replaceAll("\\s+", " ") // multiple white spaces
-      .replaceAll("\\B@\\w*", "") // @ mentions
+      .replaceAll("\\B@\\w*", "z") // @ mentions
       .trim)
     )
 
