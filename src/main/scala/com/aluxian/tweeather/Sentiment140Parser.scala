@@ -7,18 +7,14 @@ import org.apache.spark.{SparkConf, SparkContext}
 object Sentiment140Parser {
 
   def main(args: Array[String]) {
-    val conf = new SparkConf()
-      .setAppName("Tweeather_" + Sentiment140Parser.getClass.getSimpleName)
-      .setMaster(sys.env.getOrElse("TW_MASTER", "local[2]"))
-
-    val sc = new SparkContext(conf)
+    val sc = new SparkContext(new SparkConf())
     val sqlContext = new SQLContext(sc)
 
-    val testData = sc.textFile("hdfs://localhost:9000/tw/sentiment140/test.csv", 2)
-    val trainingData = sc.textFile("hdfs://localhost:9000/tw/sentiment140/training.csv", 8)
+    val testData = sc.textFile("hdfs://tw/sentiment140/test.csv", 2)
+    val trainingData = sc.textFile("hdfs://tw/sentiment140/training.csv", 8)
 
-    parse(sqlContext, testData, "hdfs://localhost:9000/tw/parsed/test.parquet")
-    parse(sqlContext, trainingData, "hdfs://localhost:9000/tw/parsed/training.parquet")
+    parse(sqlContext, testData, "hdfs://tw/parsed/test.parquet")
+    parse(sqlContext, trainingData, "hdfs://tw/parsed/training.parquet")
   }
 
   def parse(sqlContext: SQLContext, data: RDD[String], filePath: String) {
