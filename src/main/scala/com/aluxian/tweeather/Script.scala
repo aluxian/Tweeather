@@ -4,13 +4,18 @@ import org.apache.spark.{SparkConf, SparkContext}
 
 trait Script {
 
+  implicit val scriptName: String = this.getClass.getSimpleName
+  implicit var hdfsHostUrl: String = "hdfs://localhost:9000"
+
   implicit class HdfsStringInterpolator(val sc: StringContext) {
-    def hdfs(args: Any*): String = "hdfs://localhost:9000" + sc.parts.mkString
+    def hdfs(args: Any*): String = hdfsHostUrl + sc.parts.mkString
   }
 
   def main(implicit args: Array[String]) {
+    hdfsHostUrl = arg("--hdfs").getOrElse(hdfsHostUrl)
+
     val conf = new SparkConf()
-      .setAppName("Tweeather_" + this.getClass.getSimpleName)
+      .setAppName("Tweeather_" + scriptName)
       .setMaster(arg("--master").getOrElse("local[2]"))
 
     main(new SparkContext(conf))
