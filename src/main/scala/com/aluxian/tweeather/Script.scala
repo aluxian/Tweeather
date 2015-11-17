@@ -4,6 +4,10 @@ import org.apache.spark.{SparkConf, SparkContext}
 
 trait Script {
 
+  implicit class HdfsStringInterpolator(val sc: StringContext) {
+    def hdfs(args: Any*): String = "hdfs://localhost:9000" + sc.parts.mkString
+  }
+
   def main(implicit args: Array[String]) {
     val conf = new SparkConf()
       .setAppName("Tweeather_" + this.getClass.getSimpleName)
