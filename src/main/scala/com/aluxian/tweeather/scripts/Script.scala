@@ -28,7 +28,7 @@ trait Script {
 
     val conf = new SparkConf()
       .setAppName("Tweeather_" + scriptName)
-      .setMaster(arg("master").getOrElse("local[2]"))
+      .setMaster(arg("master").getOrElse("local[*]"))
       .set("spark.app.id", "Tweeather")
 
     main(new SparkContext(conf))
