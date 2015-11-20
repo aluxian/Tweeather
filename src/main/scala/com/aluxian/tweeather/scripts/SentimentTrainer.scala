@@ -26,7 +26,7 @@ object SentimentTrainer extends Script with Logging {
       new Tokenizer().setInputCol("text").setOutputCol("raw_words"),
       new TwitterStopWordsRemover().setInputCol("raw_words").setOutputCol("words"),
       new HashingTF().setInputCol("words").setOutputCol("features"),
-      new ColumnDropper().setRemovedColumns("raw_text", "text", "raw_words", "words"),
+      new ColumnDropper().setDropColumns("raw_text", "text", "raw_words", "words"),
       new NaiveBayes().setSmoothing(0.25)
     ))
 
