@@ -36,7 +36,7 @@ object SentimentTrainer extends Script with Logging {
     // Test the model
     val evaluator = new BinaryClassificationEvaluator()
     val accuracy = evaluator.evaluate(model.transform(testData))
-    logInfo(s"Test dataset accuracy: $accuracy")
+    logDebug(s"Test dataset accuracy: $accuracy")
 
     // Save the model
     val output = new ObjectOutputStream(hdfs.create(new Path(hdfs"/tw/sentiment/nb.model")))

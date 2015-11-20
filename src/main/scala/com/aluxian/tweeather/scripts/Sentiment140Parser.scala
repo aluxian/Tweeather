@@ -17,7 +17,7 @@ object Sentiment140Parser extends Script with Logging {
   }
 
   def parse(sqlContext: SQLContext, data: RDD[String], filePath: String) {
-    logInfo(s"Parsing $filePath")
+    logDebug(s"Parsing $filePath")
 
     val parsed = data
       .filter(_.contains("\",\"")) // ensure correct format
