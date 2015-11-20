@@ -2,12 +2,16 @@
   <dictionary name="aluxian">
     <words>
       <w>aluxian</w>
+      <w>bvia</w>
+      <w>dataset</w>
       <w>fommil</w>
       <w>github</w>
       <w>hdfs</w>
       <w>multinomial</w>
       <w>netlib</w>
+      <w>tuples</w>
       <w>tweeather</w>
+      <w>usernames</w>
     </words>
   </dictionary>
 </component>
