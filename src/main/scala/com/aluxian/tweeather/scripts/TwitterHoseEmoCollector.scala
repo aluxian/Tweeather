@@ -11,7 +11,7 @@ object TwitterHoseEmoCollector extends Script with Logging {
   val negativeEmoticons = Seq(":(", ":-(")
 
   def main(sc: SparkContext) {
-    val ssc = new StreamingContext(sc, Minutes(1))
+    val ssc = new StreamingContext(sc, Minutes(10))
     val filter = new FilterQuery().language("en").track(positiveEmoticons ++ negativeEmoticons: _*)
     val stream = TwitterUtils.createStream(ssc, None, Some(filter))
 
