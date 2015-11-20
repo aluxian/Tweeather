@@ -17,7 +17,7 @@ object TwitterHoseEmoTrainer extends Script with Logging {
     import sqlContext.implicits._
 
     // Prepare data set
-    val trainingData = sc.objectFile(hdfs"/tw/sentiment/emo/data/*").toDF("raw_text", "label")
+    val trainingData = sc.objectFile[(String, Double)](hdfs"/tw/sentiment/emo/data/*").toDF("raw_text", "label")
     logInfo(s"Training on ${trainingData.count()} tweets")
 
     // Configure the pipeline
