@@ -28,7 +28,7 @@ trait Script {
     }
 
     hdfsHostUrl = arg("--hdfs").getOrElse(hdfsHostUrl)
-    hdfsConf.set("fs.default.name", hdfsHostUrl)
+    hdfsConf.set("fs.defaultFS", hdfsHostUrl)
 
     val conf = new SparkConf()
       .setAppName("Tweeather_" + scriptName)
