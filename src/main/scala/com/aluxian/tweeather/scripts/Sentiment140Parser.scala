@@ -1,22 +1,24 @@
 package com.aluxian.tweeather.scripts
 
-import org.apache.spark.SparkContext
 import org.apache.spark.rdd.RDD
 import org.apache.spark.sql.SQLContext
+import org.apache.spark.{Logging, SparkContext}
 
-object Sentiment140Parser extends Script {
+object Sentiment140Parser extends Script with Logging {
 
   def main(sc: SparkContext) {
     val sqlContext = new SQLContext(sc)
 
-    val testData = sc.textFile(hdfs"/tw/sentiment140/test.csv", 2)
-    val trainingData = sc.textFile(hdfs"/tw/sentiment140/training.csv", 8)
+    val testData = sc.textFile(hdfs"/tw/sentiment140/testdata.manual.2009.06.14.csv", 2)
+    val trainingData = sc.textFile(hdfs"/tw/sentiment140/training.1600000.processed.noemoticon.csv", 8)
 
     parse(sqlContext, testData, hdfs"/tw/sentiment/data/test.parquet")
     parse(sqlContext, trainingData, hdfs"/tw/sentiment/data/training.parquet")
   }
 
   def parse(sqlContext: SQLContext, data: RDD[String], filePath: String) {
+    logInfo(s"Parsing $filePath")
+
     val parsed = data
       .filter(_.contains("\",\"")) // ensure correct format
       .map(_.split("\",\"").map(_.replace("\"", ""))) // split columns and remove " marks

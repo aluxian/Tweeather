@@ -39,9 +39,9 @@ object SentimentTrainer extends Script with Logging {
     logInfo(s"Test dataset accuracy: $accuracy")
 
     // Save the model
-    val oos = new ObjectOutputStream(hdfs.create(new Path(hdfs"/tw/sentiment/nb.model")))
-    oos.writeObject(model)
-    oos.close()
+    val output = new ObjectOutputStream(hdfs.create(new Path(hdfs"/tw/sentiment/nb.model")))
+    output.writeObject(model)
+    output.close()
   }
 
 }

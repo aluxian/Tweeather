@@ -6,6 +6,8 @@ import org.apache.spark.{SparkConf, SparkContext}
 
 trait Script {
 
+  var args: Array[String] = _
+
   implicit var scriptName: String = this.getClass.getSimpleName.stripSuffix("$")
   implicit var hdfsHostUrl: String = "hdfs://localhost:9000"
 
@@ -13,10 +15,12 @@ trait Script {
   lazy val hdfs = FileSystem.get(hdfsConf)
 
   implicit class HdfsStringInterpolator(val sc: StringContext) {
-    def hdfs(args: Any*): String = hdfsHostUrl + sc.parts.mkString
+    def hdfs(args: Any*): String = hdfsHostUrl + sc.s(args: _*)
   }
 
-  def main(implicit args: Array[String]) {
+  def main(args: Array[String]) {
+    this.args = args
+
     hdfsHostUrl = arg("--hdfs").getOrElse(hdfsHostUrl)
     hdfsConf.set("fs.default.name", hdfsHostUrl)
 
@@ -27,7 +31,7 @@ trait Script {
     main(new SparkContext(conf))
   }
 
-  def arg(name: String)(implicit args: Array[String]): Option[String] = {
+  def arg(name: String): Option[String] = {
     val pi = args.indexOf(name)
 
     if (args.length > pi + 1) {
