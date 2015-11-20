@@ -2,6 +2,7 @@ package com.aluxian.tweeather.scripts
 
 import org.apache.hadoop.conf.Configuration
 import org.apache.hadoop.fs.FileSystem
+import org.apache.log4j.PropertyConfigurator
 import org.apache.spark.{SparkConf, SparkContext}
 
 trait Script {
@@ -20,6 +21,11 @@ trait Script {
 
   def main(args: Array[String]) {
     this.args = args
+
+    Option(getClass.getClassLoader.getResource("log4j.properties")) match {
+      case Some(url) => PropertyConfigurator.configure(url)
+      case None => System.err.println("Unable to load log4j.properties")
+    }
 
     hdfsHostUrl = arg("--hdfs").getOrElse(hdfsHostUrl)
     hdfsConf.set("fs.default.name", hdfsHostUrl)
