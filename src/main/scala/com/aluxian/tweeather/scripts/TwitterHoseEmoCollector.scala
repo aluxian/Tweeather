@@ -1,7 +1,7 @@
 package com.aluxian.tweeather.scripts
 
 import com.aluxian.tweeather.streaming.TwitterUtils
-import org.apache.spark.streaming.{Seconds, StreamingContext}
+import org.apache.spark.streaming.{Minutes, StreamingContext}
 import org.apache.spark.{Logging, SparkContext}
 import twitter4j.FilterQuery
 
@@ -11,7 +11,7 @@ object TwitterHoseEmoCollector extends Script with Logging {
   val negativeEmoticons = Seq(":(", ":-(")
 
   def main(sc: SparkContext) {
-    val ssc = new StreamingContext(sc, Seconds(30))
+    val ssc = new StreamingContext(sc, Minutes(1))
     val filter = new FilterQuery().language("en").track(positiveEmoticons ++ negativeEmoticons: _*)
     val stream = TwitterUtils.createStream(ssc, None, Some(filter))
 
@@ -20,7 +20,7 @@ object TwitterHoseEmoCollector extends Script with Logging {
       .filter(!_.contains("RT"))
       .map(text => (text, positiveEmoticons.exists(text.contains), negativeEmoticons.exists(text.contains)))
       .filter(p => p._2 != p._3)
-      .map(p => (p._1, p._2))
+      .map(p => (p._1, if (p._2) 1d else 0d))
       .saveAsObjectFiles(hdfs"/tw/sentiment/emo/data/scraped-")
 
     ssc.start()
