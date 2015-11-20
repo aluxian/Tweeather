@@ -2,11 +2,11 @@ package com.aluxian.tweeather.scripts
 
 import java.io.ObjectOutputStream
 
-import com.aluxian.tweeather.transformers.{ColumnDropper, StringSanitizer, TwitterStopWordsRemover}
+import com.aluxian.tweeather.transformers.{ColumnDropper, FeatureReducer, StringSanitizer}
 import org.apache.hadoop.fs.Path
 import org.apache.spark.ml.Pipeline
 import org.apache.spark.ml.classification.NaiveBayes
-import org.apache.spark.ml.feature.{HashingTF, Tokenizer}
+import org.apache.spark.ml.feature.{HashingTF, StopWordsRemover, Tokenizer}
 import org.apache.spark.mllib.evaluation.BinaryClassificationMetrics
 import org.apache.spark.sql.{Row, SQLContext}
 import org.apache.spark.{Logging, SparkContext}
@@ -22,11 +22,12 @@ object Sentiment140Trainer extends Script with Logging {
 
     // Configure a pipeline
     val pipeline = new Pipeline().setStages(Array(
-      new StringSanitizer().setInputCol("raw_text").setOutputCol("text"),
+      new FeatureReducer().setInputCol("raw_text").setOutputCol("reduced_text"),
+      new StringSanitizer().setInputCol("reduced_text").setOutputCol("text"),
       new Tokenizer().setInputCol("text").setOutputCol("raw_words"),
-      new TwitterStopWordsRemover().setInputCol("raw_words").setOutputCol("words"),
+      new StopWordsRemover().setInputCol("raw_words").setOutputCol("words"),
       new HashingTF().setInputCol("words").setOutputCol("features"),
-      new ColumnDropper().setDropColumns("raw_text", "text", "raw_words", "words"),
+      new ColumnDropper().setDropColumns("raw_text", "reduced_text", "text", "raw_words", " words"),
       new NaiveBayes().setSmoothing(0.25)
     ))
 

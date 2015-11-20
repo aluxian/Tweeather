@@ -6,7 +6,7 @@ import org.apache.spark.ml.util.Identifiable
 import org.apache.spark.sql.types._
 
 /**
-  * A feature transformer that removes urls, @usernames, punctuation and symbols from input text.
+  * A feature transformer that removes punctuation and symbols from the input text.
   */
 class StringSanitizer(override val uid: String) extends UnaryTransformer[String, String, StringSanitizer] {
 
@@ -14,9 +14,6 @@ class StringSanitizer(override val uid: String) extends UnaryTransformer[String,
 
   override protected def createTransformFunc: String => String = {
     _
-      .toLowerCase()
-      .replaceAll("\\B@\\w*", "") // @ mentions
-      .replaceAll("https?:\\/\\/\\S*", "") // urls
       .replaceAll("[^a-z0-9\\s]+", "") // punctuation
       .replaceAll("\\s+", " ") // multiple white spaces
       .trim()
