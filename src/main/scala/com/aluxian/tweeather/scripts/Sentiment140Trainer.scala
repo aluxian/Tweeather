@@ -28,7 +28,7 @@ object Sentiment140Trainer extends Script with Logging {
       new StopWordsRemover().setInputCol("raw_words").setOutputCol("words"),
       new HashingTF().setInputCol("words").setOutputCol("features"),
       new ColumnDropper().setDropColumns("raw_text", "reduced_text", "text", "raw_words", " words"),
-      new NaiveBayes().setSmoothing(0.25)
+      new NaiveBayes().setSmoothing(0.5)
     ))
 
     // Fit the pipeline
