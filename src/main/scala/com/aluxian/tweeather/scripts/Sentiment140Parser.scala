@@ -12,8 +12,8 @@ object Sentiment140Parser extends Script with Logging {
     val testData = sc.textFile(hdfs"/tw/sentiment140/testdata.manual.2009.06.14.csv", 2)
     val trainingData = sc.textFile(hdfs"/tw/sentiment140/training.1600000.processed.noemoticon.csv", 8)
 
-    parse(sqlContext, testData, hdfs"/tw/sentiment/data/test.parquet")
-    parse(sqlContext, trainingData, hdfs"/tw/sentiment/data/training.parquet")
+    parse(sqlContext, testData, hdfs"/tw/sentiment140/test.parquet")
+    parse(sqlContext, trainingData, hdfs"/tw/sentiment140/training.parquet")
   }
 
   def parse(sqlContext: SQLContext, data: RDD[String], filePath: String) {

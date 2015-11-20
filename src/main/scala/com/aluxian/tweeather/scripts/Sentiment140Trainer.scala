@@ -6,21 +6,21 @@ import com.aluxian.tweeather.transformers.{ColumnDropper, StringSanitizer, Twitt
 import org.apache.hadoop.fs.Path
 import org.apache.spark.ml.Pipeline
 import org.apache.spark.ml.classification.NaiveBayes
-import org.apache.spark.ml.evaluation.BinaryClassificationEvaluator
 import org.apache.spark.ml.feature.{HashingTF, Tokenizer}
-import org.apache.spark.sql.SQLContext
+import org.apache.spark.mllib.evaluation.BinaryClassificationMetrics
+import org.apache.spark.sql.{Row, SQLContext}
 import org.apache.spark.{Logging, SparkContext}
 
-object SentimentTrainer extends Script with Logging {
+object Sentiment140Trainer extends Script with Logging {
 
   def main(sc: SparkContext) {
     val sqlContext = new SQLContext(sc)
 
     // Prepare data sets
-    val testData = sqlContext.read.parquet(hdfs"/tw/sentiment/data/test.parquet")
-    val trainingData = sqlContext.read.parquet(hdfs"/tw/sentiment/data/training.parquet")
+    val testData = sqlContext.read.parquet(hdfs"/tw/sentiment140/test.parquet")
+    val trainingData = sqlContext.read.parquet(hdfs"/tw/sentiment140/training.parquet")
 
-    // Configure the pipeline
+    // Configure a pipeline
     val pipeline = new Pipeline().setStages(Array(
       new StringSanitizer().setInputCol("raw_text").setOutputCol("text"),
       new Tokenizer().setInputCol("text").setOutputCol("raw_words"),
@@ -33,13 +33,19 @@ object SentimentTrainer extends Script with Logging {
     // Fit the pipeline
     val model = pipeline.fit(trainingData)
 
-    // Test the model
-    val evaluator = new BinaryClassificationEvaluator()
-    val accuracy = evaluator.evaluate(model.transform(testData))
-    logInfo(s"Test dataset accuracy: $accuracy")
+    // Test the model accuracy
+    val predicted = model
+      .transform(testData)
+      .select("prediction", "label")
+      .map { case Row(prediction: Double, label: Double) => (prediction, label) }
+
+    val metrics = new BinaryClassificationMetrics(predicted)
+    logInfo(s"Test dataset ROC: ${metrics.areaUnderROC()}")
+    logInfo(s"Test dataset PR: ${metrics.areaUnderPR()}")
+    metrics.unpersist()
 
     // Save the model
-    val output = new ObjectOutputStream(hdfs.create(new Path(hdfs"/tw/sentiment/nb.model")))
+    val output = new ObjectOutputStream(hdfs.create(new Path(hdfs"/tw/sentiment/sentiment140.model")))
     output.writeObject(model)
     output.close()
   }
