@@ -16,9 +16,9 @@ trait Script {
 
     // Spark configuration
     val conf = new SparkConf()
-      .set("spark.app.id", scriptName)
-      .set("spark.app.name", scriptName)
-      .set("spark.master", sys.props.getOrElse("spark.master", "local[*]"))
+      .setIfMissing("spark.app.id", scriptName)
+      .setIfMissing("spark.app.name", scriptName)
+      .setIfMissing("spark.master", "local[*]")
 
     main(new SparkContext(conf))
   }
