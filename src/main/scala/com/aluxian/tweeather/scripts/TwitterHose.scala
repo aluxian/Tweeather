@@ -1,7 +1,7 @@
 package com.aluxian.tweeather.scripts
 
 import com.aluxian.tweeather.streaming.TwitterUtils
-import org.apache.spark.streaming.{Seconds, StreamingContext}
+import org.apache.spark.streaming.{Minutes, StreamingContext}
 import org.apache.spark.{Logging, SparkContext}
 import twitter4j.FilterQuery
 
@@ -13,9 +13,8 @@ object TwitterHose extends Script with Logging {
   ) // Europe
 
   def main(sc: SparkContext) {
-    val ssc = new StreamingContext(sc, Seconds(3))
-    val filter = new FilterQuery().locations(locationBoundingBox: _*).language("en")
-    val stream = TwitterUtils.createStream(ssc, None, Some(filter))
+    val ssc = new StreamingContext(sc, Minutes(10))
+    val stream = TwitterUtils.createMultiStream(ssc, queryBuilder)
 
     stream.foreachRDD(rdd => {
       rdd.foreach(status => {
@@ -25,6 +24,12 @@ object TwitterHose extends Script with Logging {
 
     ssc.start()
     ssc.awaitTermination()
+  }
+
+  def queryBuilder(): FilterQuery = {
+    new FilterQuery()
+      .locations(locationBoundingBox: _*)
+      .language("en")
   }
 
 }

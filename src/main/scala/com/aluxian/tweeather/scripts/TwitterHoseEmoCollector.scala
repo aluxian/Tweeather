@@ -1,21 +1,15 @@
 package com.aluxian.tweeather.scripts
 
-import java.util.Properties
-
 import com.aluxian.tweeather.streaming.TwitterUtils
-import org.apache.spark.streaming.dstream.DStream
 import org.apache.spark.streaming.{Minutes, StreamingContext}
 import org.apache.spark.{Logging, SparkContext}
-import twitter4j.auth.{AccessToken, Authorization}
-import twitter4j.{FilterQuery, Status, TwitterFactory}
+import twitter4j.FilterQuery
 
 object TwitterHoseEmoCollector extends Script with Hdfs with Logging {
 
   def main(sc: SparkContext) {
     val ssc = new StreamingContext(sc, Minutes(10))
-    val stream = loadCredentials()
-      .map(auth => TwitterUtils.createStream(ssc, Some(auth), Some(filter())))
-      .reduce[DStream[Status]] { (accStream, stream) => accStream.union(stream) }
+    val stream = TwitterUtils.createMultiStream(ssc, queryBuilder)
 
     stream
       .map(_.getText)
@@ -29,35 +23,8 @@ object TwitterHoseEmoCollector extends Script with Hdfs with Logging {
     ssc.awaitTermination()
   }
 
-  def loadCredentials(): Seq[Authorization] = {
-    val props = loadProperties()
-    val num = props.getProperty("twitter.credentials").toInt
-    1.to(num).map(i => {
-      val twitter = new TwitterFactory().getInstance()
 
-      twitter.setOAuthConsumer(
-        props.getProperty(s"twitter.credentials.$i.consumerKey"),
-        props.getProperty(s"twitter.credentials.$i.consumerSecret")
-      )
-
-      twitter.setOAuthAccessToken(new AccessToken(
-        props.getProperty(s"twitter.credentials.$i.token"),
-        props.getProperty(s"twitter.credentials.$i.tokenSecret")
-      ))
-
-      twitter.getAuthorization
-    })
-  }
-
-  def loadProperties(): Properties = {
-    val properties = new Properties()
-    val stream = getClass.getResourceAsStream("/com/aluxian/tweeather/twitter.properties")
-    properties.load(stream)
-    stream.close()
-    properties
-  }
-
-  def filter(): FilterQuery = {
+  def queryBuilder(): FilterQuery = {
     new FilterQuery()
       .track(positiveEmoticons ++ negativeEmoticons: _*)
       .language("en")
