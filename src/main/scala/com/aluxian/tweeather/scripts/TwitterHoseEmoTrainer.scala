@@ -7,18 +7,18 @@ import org.apache.hadoop.fs.Path
 import org.apache.spark.ml.Pipeline
 import org.apache.spark.ml.classification.NaiveBayes
 import org.apache.spark.ml.feature.{HashingTF, StopWordsRemover, Tokenizer}
-import org.apache.spark.sql.SQLContext
+import org.apache.spark.mllib.evaluation.BinaryClassificationMetrics
+import org.apache.spark.sql.{Row, SQLContext}
 import org.apache.spark.{Logging, SparkContext}
 
 object TwitterHoseEmoTrainer extends Script with Logging {
 
   def main(sc: SparkContext) {
     val sqlContext = new SQLContext(sc)
-    import sqlContext.implicits._
 
-    // Prepare data set
-    val trainingData = sc.objectFile[(String, Double)](hdfs"/tw/sentiment/emo/data/*").toDF("raw_text", "label")
-    logInfo(s"Training on ${trainingData.count()} tweets")
+    // Prepare data sets
+    val testData = sqlContext.read.parquet(hdfs"/tw/sentiment/emo/test.parquet")
+    val trainingData = sqlContext.read.parquet(hdfs"/tw/sentiment/emo/training.parquet")
 
     // Configure the pipeline
     val pipeline = new Pipeline().setStages(Array(
@@ -33,7 +33,17 @@ object TwitterHoseEmoTrainer extends Script with Logging {
 
     // Fit the pipeline
     val model = pipeline.fit(trainingData)
-    logInfo("Training finished")
+
+    // Test the model accuracy
+    val predicted = model
+      .transform(testData)
+      .select("prediction", "label")
+      .map { case Row(prediction: Double, label: Double) => (prediction, label) }
+
+    val metrics = new BinaryClassificationMetrics(predicted)
+    logInfo(s"Test dataset ROC: ${metrics.areaUnderROC()}")
+    logInfo(s"Test dataset PR: ${metrics.areaUnderPR()}")
+    metrics.unpersist()
 
     // Save the model
     val output = new ObjectOutputStream(hdfs.create(new Path(hdfs"/tw/sentiment/emo.model")))

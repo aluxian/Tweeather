@@ -9,8 +9,8 @@ object Sentiment140Parser extends Script with Logging {
   def main(sc: SparkContext) {
     val sqlContext = new SQLContext(sc)
 
-    val testData = sc.textFile(hdfs"/tw/sentiment140/testdata.manual.2009.06.14.csv", 2)
-    val trainingData = sc.textFile(hdfs"/tw/sentiment140/training.1600000.processed.noemoticon.csv", 8)
+    val testData = sc.textFile(hdfs"/tw/sentiment140/testdata.manual.2009.06.14.csv")
+    val trainingData = sc.textFile(hdfs"/tw/sentiment140/training.1600000.processed.noemoticon.csv")
 
     parse(sqlContext, testData, hdfs"/tw/sentiment140/test.parquet")
     parse(sqlContext, trainingData, hdfs"/tw/sentiment140/training.parquet")

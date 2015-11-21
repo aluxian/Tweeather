@@ -21,7 +21,7 @@ object TwitterHoseEmoCollector extends Script with Logging {
       .map(text => (text, positiveEmoticons.exists(text.contains), negativeEmoticons.exists(text.contains)))
       .filter(p => p._2 != p._3)
       .map(p => (p._1, if (p._2) 1d else 0d))
-      .saveAsObjectFiles(hdfs"/tw/sentiment/emo/data/scraped-")
+      .saveAsTextFiles(hdfs"/tw/sentiment/emo/data/text")
 
     ssc.start()
     ssc.awaitTermination()
