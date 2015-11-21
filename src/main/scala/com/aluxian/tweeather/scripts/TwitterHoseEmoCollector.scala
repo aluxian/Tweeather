@@ -12,7 +12,7 @@ import twitter4j.{FilterQuery, Status, TwitterFactory}
 object TwitterHoseEmoCollector extends Script with Hdfs with Logging {
 
   def main(sc: SparkContext) {
-    val ssc = new StreamingContext(sc, Minutes(1))
+    val ssc = new StreamingContext(sc, Minutes(10))
     val stream = loadCredentials()
       .map(auth => TwitterUtils.createStream(ssc, Some(auth), Some(filter())))
       .reduce[DStream[Status]] { (accStream, stream) => accStream.union(stream) }
