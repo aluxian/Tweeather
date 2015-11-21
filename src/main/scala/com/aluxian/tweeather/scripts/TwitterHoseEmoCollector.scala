@@ -51,7 +51,7 @@ object TwitterHoseEmoCollector extends Script with Hdfs with Logging {
 
   def loadProperties(): Properties = {
     val properties = new Properties()
-    val stream = getClass.getResourceAsStream("com/aluxian/tweeather/twitter.properties")
+    val stream = getClass.getResourceAsStream("/com/aluxian/tweeather/twitter.properties")
     properties.load(stream)
     stream.close()
     properties
