@@ -9,11 +9,11 @@ object Sentiment140Parser extends Script with Hdfs with Logging {
   def main(sc: SparkContext) {
     val sqlContext = new SQLContext(sc)
 
-    val testData = sc.textFile(hdfs"/tw/sentiment140/testdata.manual.2009.06.14.csv")
-    val trainingData = sc.textFile(hdfs"/tw/sentiment140/training.1600000.processed.noemoticon.csv")
+    val testData = sc.textFile(hdfs"/tw/sentiment/140/testdata.manual.2009.06.14.csv")
+    val trainingData = sc.textFile(hdfs"/tw/sentiment/140/training.1600000.processed.noemoticon.csv")
 
-    parse(sqlContext, testData, hdfs"/tw/sentiment140/test.parquet")
-    parse(sqlContext, trainingData, hdfs"/tw/sentiment140/training.parquet")
+    parse(sqlContext, testData, hdfs"/tw/sentiment/140/test.parquet")
+    parse(sqlContext, trainingData, hdfs"/tw/sentiment/140/training.parquet")
   }
 
   def parse(sqlContext: SQLContext, data: RDD[String], filePath: String) {

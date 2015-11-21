@@ -16,8 +16,8 @@ object Sentiment140Trainer extends Script with Hdfs with Logging {
     val sqlContext = new SQLContext(sc)
 
     // Prepare data sets
-    val testData = sqlContext.read.parquet(hdfs"/tw/sentiment140/test.parquet")
-    val trainingData = sqlContext.read.parquet(hdfs"/tw/sentiment140/training.parquet")
+    val testData = sqlContext.read.parquet(hdfs"/tw/sentiment/140/test.parquet")
+    val trainingData = sqlContext.read.parquet(hdfs"/tw/sentiment/140/training.parquet")
 
     // Configure the pipeline
     val pipeline = new Pipeline().setStages(Array(
@@ -45,7 +45,7 @@ object Sentiment140Trainer extends Script with Hdfs with Logging {
     metrics.unpersist()
 
     // Save the model
-    val output = new ObjectOutputStream(hdfs.create(hdfsp"/tw/sentiment/sentiment140.model"))
+    val output = new ObjectOutputStream(hdfs.create(hdfsp"/tw/sentiment/140.model"))
     output.writeObject(model)
     output.close()
   }
