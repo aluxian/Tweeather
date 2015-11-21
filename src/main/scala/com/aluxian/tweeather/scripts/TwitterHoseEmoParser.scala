@@ -3,7 +3,7 @@ package com.aluxian.tweeather.scripts
 import org.apache.spark.sql.SQLContext
 import org.apache.spark.{Logging, SparkContext}
 
-object TwitterHoseEmoParser extends Script with Logging {
+object TwitterHoseEmoParser extends Script with Hdfs with Logging {
 
   def main(sc: SparkContext) {
     val sqlContext = new SQLContext(sc)

@@ -1,0 +1,9 @@
+twitter.credentials=2
+twitter.credentials.1.consumerKey=
+twitter.credentials.1.consumerSecret=
+twitter.credentials.1.token=
+twitter.credentials.1.tokenSecret=
+twitter.credentials.2.consumerKey=
+twitter.credentials.2.consumerSecret=
+twitter.credentials.2.token=
+twitter.credentials.2.tokenSecret=

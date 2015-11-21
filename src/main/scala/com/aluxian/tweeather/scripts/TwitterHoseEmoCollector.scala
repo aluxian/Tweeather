@@ -1,16 +1,20 @@
 package com.aluxian.tweeather.scripts
 
+import java.util.Properties
+
 import com.aluxian.tweeather.streaming.TwitterUtils
 import org.apache.spark.streaming.{Seconds, StreamingContext}
 import org.apache.spark.{Logging, SparkContext}
-import twitter4j.FilterQuery
+import twitter4j.auth.{AccessToken, Authorization}
+import twitter4j.{FilterQuery, TwitterFactory}
 
-object TwitterHoseEmoCollector extends Script with Logging {
+object TwitterHoseEmoCollector extends Script with Hdfs with Logging {
 
   def main(sc: SparkContext) {
-    val ssc = new StreamingContext(sc, Seconds(3))
-    val filter = new FilterQuery().language("en").track(positiveEmoticons ++ negativeEmoticons: _*)
-    val stream = TwitterUtils.createStream(ssc, None, Some(filter))
+    val ssc = new StreamingContext(sc, Seconds(10))
+    val stream = loadCredentials()
+      .map(auth => TwitterUtils.createStream(ssc, Some(auth), Some(filter())))
+      .reduce { (accStream, stream) => accStream.union(stream) }
 
     stream
       .map(_.getText)
@@ -22,6 +26,40 @@ object TwitterHoseEmoCollector extends Script with Logging {
 
     ssc.start()
     ssc.awaitTermination()
+  }
+
+  def loadCredentials(): Seq[Authorization] = {
+    val props = loadProperties()
+    val num = props.getProperty("twitter.credentials").toInt
+    1.to(num).map(i => {
+      val twitter = new TwitterFactory().getInstance()
+
+      twitter.setOAuthConsumer(
+        props.getProperty(s"twitter.credentials.$i.consumerKey"),
+        props.getProperty(s"twitter.credentials.$i.consumerSecret")
+      )
+
+      twitter.setOAuthAccessToken(new AccessToken(
+        props.getProperty(s"twitter.credentials.$i.token"),
+        props.getProperty(s"twitter.credentials.$i.tokenSecret")
+      ))
+
+      twitter.getAuthorization
+    })
+  }
+
+  def loadProperties(): Properties = {
+    val properties = new Properties()
+    val stream = getClass.getResourceAsStream("com/aluxian/tweeather/twitter.properties")
+    properties.load(stream)
+    stream.close()
+    properties
+  }
+
+  def filter(): FilterQuery = {
+    new FilterQuery()
+      .track(positiveEmoticons ++ negativeEmoticons: _*)
+      .language("en")
   }
 
   val positiveEmoticons = Seq(

@@ -3,7 +3,6 @@ package com.aluxian.tweeather.scripts
 import java.io.ObjectOutputStream
 
 import com.aluxian.tweeather.transformers.{ColumnDropper, FeatureReducer, StringSanitizer}
-import org.apache.hadoop.fs.Path
 import org.apache.spark.ml.Pipeline
 import org.apache.spark.ml.classification.NaiveBayes
 import org.apache.spark.ml.feature.{HashingTF, StopWordsRemover, Tokenizer}
@@ -11,7 +10,7 @@ import org.apache.spark.mllib.evaluation.BinaryClassificationMetrics
 import org.apache.spark.sql.{Row, SQLContext}
 import org.apache.spark.{Logging, SparkContext}
 
-object TwitterHoseEmoTrainer extends Script with Logging {
+object TwitterHoseEmoTrainer extends Script with Hdfs with Logging {
 
   def main(sc: SparkContext) {
     val sqlContext = new SQLContext(sc)
@@ -46,7 +45,7 @@ object TwitterHoseEmoTrainer extends Script with Logging {
     metrics.unpersist()
 
     // Save the model
-    val output = new ObjectOutputStream(hdfs.create(new Path(hdfs"/tw/sentiment/emo.model")))
+    val output = new ObjectOutputStream(hdfs.create(hdfsp"/tw/sentiment/emo.model"))
     output.writeObject(model)
     output.close()
   }

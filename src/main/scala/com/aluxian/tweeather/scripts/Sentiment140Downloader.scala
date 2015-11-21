@@ -3,10 +3,9 @@ package com.aluxian.tweeather.scripts
 import java.net.URL
 import java.util.zip.ZipInputStream
 
-import org.apache.hadoop.fs.Path
 import org.apache.spark.{Logging, SparkContext}
 
-object Sentiment140Downloader extends Script with Logging {
+object Sentiment140Downloader extends Script with Hdfs with Logging {
 
   val downloadUrl = "http://cs.stanford.edu/people/alecmgo/trainingandtestdata.zip"
 
@@ -18,7 +17,7 @@ object Sentiment140Downloader extends Script with Logging {
       .takeWhile(_ != null)
       .foreach(entry => {
         val entryName = entry.getName
-        val output = hdfs.create(new Path(hdfs"/tw/sentiment140/$entryName"))
+        val output = hdfs.create(hdfsp"/tw/sentiment140/$entryName")
         logInfo(s"Downloading $entryName")
 
         Stream.continually(zip.read(buffer))
