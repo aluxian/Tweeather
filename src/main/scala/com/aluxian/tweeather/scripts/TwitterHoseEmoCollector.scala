@@ -3,7 +3,7 @@ package com.aluxian.tweeather.scripts
 import java.util.Properties
 
 import com.aluxian.tweeather.streaming.TwitterUtils
-import org.apache.spark.streaming.{Seconds, StreamingContext}
+import org.apache.spark.streaming.{Minutes, StreamingContext}
 import org.apache.spark.{Logging, SparkContext}
 import twitter4j.auth.{AccessToken, Authorization}
 import twitter4j.{FilterQuery, TwitterFactory}
@@ -11,7 +11,7 @@ import twitter4j.{FilterQuery, TwitterFactory}
 object TwitterHoseEmoCollector extends Script with Hdfs with Logging {
 
   def main(sc: SparkContext) {
-    val ssc = new StreamingContext(sc, Seconds(10))
+    val ssc = new StreamingContext(sc, Minutes(1))
     val stream = loadCredentials()
       .map(auth => TwitterUtils.createStream(ssc, Some(auth), Some(filter())))
       .reduce { (accStream, stream) => accStream.union(stream) }
