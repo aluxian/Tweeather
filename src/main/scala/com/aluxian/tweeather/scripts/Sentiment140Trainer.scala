@@ -2,6 +2,7 @@ package com.aluxian.tweeather.scripts
 
 import java.io.ObjectOutputStream
 
+import com.aluxian.tweeather.scripts.base.{Hdfs, SparkScript}
 import com.aluxian.tweeather.transformers.{ColumnDropper, FeatureReducer, StringSanitizer}
 import org.apache.spark.ml.Pipeline
 import org.apache.spark.ml.classification.NaiveBayes
@@ -10,7 +11,7 @@ import org.apache.spark.mllib.evaluation.BinaryClassificationMetrics
 import org.apache.spark.sql.{Row, SQLContext}
 import org.apache.spark.{Logging, SparkContext}
 
-object Sentiment140Trainer extends Script with Hdfs with Logging {
+object Sentiment140Trainer extends SparkScript with Hdfs with Logging {
 
   def main(sc: SparkContext) {
     val sqlContext = new SQLContext(sc)

@@ -1,11 +1,12 @@
 package com.aluxian.tweeather.scripts
 
+import com.aluxian.tweeather.scripts.base.SparkScript
 import com.aluxian.tweeather.streaming.TwitterUtils
 import org.apache.spark.streaming.{Minutes, StreamingContext}
 import org.apache.spark.{Logging, SparkContext}
 import twitter4j.FilterQuery
 
-object TwitterFireHoseCollector extends Script with Logging {
+object TwitterFireHoseCollector extends SparkScript with Logging {
 
   val locationBoundingBox = Array(
     Array[Double](-27, 33),

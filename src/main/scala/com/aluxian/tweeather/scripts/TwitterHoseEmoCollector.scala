@@ -1,11 +1,12 @@
 package com.aluxian.tweeather.scripts
 
+import com.aluxian.tweeather.scripts.base.{Hdfs, SparkScript}
 import com.aluxian.tweeather.streaming.TwitterUtils
 import org.apache.spark.streaming.{Minutes, StreamingContext}
 import org.apache.spark.{Logging, SparkContext}
 import twitter4j.FilterQuery
 
-object TwitterHoseEmoCollector extends Script with Hdfs with Logging {
+object TwitterHoseEmoCollector extends SparkScript with Hdfs with Logging {
 
   def main(sc: SparkContext) {
     val ssc = new StreamingContext(sc, Minutes(10))

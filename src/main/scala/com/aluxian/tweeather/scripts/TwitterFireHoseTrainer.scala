@@ -2,12 +2,13 @@ package com.aluxian.tweeather.scripts
 
 import java.io.ObjectOutputStream
 
+import com.aluxian.tweeather.scripts.base.{Hdfs, SparkScript}
 import org.apache.spark.ml.classification.MultilayerPerceptronClassifier
 import org.apache.spark.ml.evaluation.MulticlassClassificationEvaluator
 import org.apache.spark.sql.SQLContext
 import org.apache.spark.{Logging, SparkContext}
 
-object TwitterFireHoseTrainer extends Script with Hdfs with Logging {
+object TwitterFireHoseTrainer extends SparkScript with Hdfs with Logging {
 
   def main(sc: SparkContext) {
     val sqlContext = new SQLContext(sc)

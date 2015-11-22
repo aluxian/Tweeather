@@ -1,9 +1,10 @@
 package com.aluxian.tweeather.scripts
 
+import com.aluxian.tweeather.scripts.base.{Hdfs, SparkScript}
 import org.apache.spark.sql.SQLContext
 import org.apache.spark.{Logging, SparkContext}
 
-object TwitterFireHoseParser extends Script with Hdfs with Logging {
+object TwitterFireHoseParser extends SparkScript with Hdfs with Logging {
 
   def main(sc: SparkContext) {
     val sqlContext = new SQLContext(sc)

@@ -3,9 +3,10 @@ package com.aluxian.tweeather.scripts
 import java.net.URL
 import java.util.zip.ZipInputStream
 
+import com.aluxian.tweeather.scripts.base.{Hdfs, SparkScript}
 import org.apache.spark.{Logging, SparkContext}
 
-object Sentiment140Downloader extends Script with Hdfs with Logging {
+object Sentiment140Downloader extends SparkScript with Hdfs with Logging {
 
   val downloadUrl = "http://cs.stanford.edu/people/alecmgo/trainingandtestdata.zip"
 

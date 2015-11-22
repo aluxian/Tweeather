@@ -1,10 +1,11 @@
 package com.aluxian.tweeather.scripts
 
+import com.aluxian.tweeather.scripts.base.{Hdfs, SparkScript}
 import org.apache.spark.rdd.RDD
 import org.apache.spark.sql.SQLContext
 import org.apache.spark.{Logging, SparkContext}
 
-object Sentiment140Parser extends Script with Hdfs with Logging {
+object Sentiment140Parser extends SparkScript with Hdfs with Logging {
 
   def main(sc: SparkContext) {
     val sqlContext = new SQLContext(sc)
