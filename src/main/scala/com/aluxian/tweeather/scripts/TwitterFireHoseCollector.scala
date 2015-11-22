@@ -5,11 +5,11 @@ import org.apache.spark.streaming.{Minutes, StreamingContext}
 import org.apache.spark.{Logging, SparkContext}
 import twitter4j.FilterQuery
 
-object TwitterHose extends Script with Logging {
+object TwitterFireHoseCollector extends Script with Logging {
 
   val locationBoundingBox = Array(
-    Array[Double](-11, 35),
-    Array[Double](43, 71)
+    Array[Double](-27, 33),
+    Array[Double](45, 73)
   ) // Europe
 
   def main(sc: SparkContext) {
