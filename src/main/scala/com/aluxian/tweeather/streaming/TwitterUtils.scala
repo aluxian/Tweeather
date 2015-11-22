@@ -4,7 +4,7 @@ import java.util.Properties
 
 import org.apache.spark.storage.StorageLevel
 import org.apache.spark.streaming.StreamingContext
-import org.apache.spark.streaming.dstream.{DStream, ReceiverInputDStream}
+import org.apache.spark.streaming.dstream.DStream
 import twitter4j.auth.{AccessToken, Authorization}
 import twitter4j.{FilterQuery, Status, TwitterFactory}
 
@@ -25,7 +25,7 @@ object TwitterUtils {
                    filterQuery: Option[FilterQuery] = None,
                    twitterAuth: Option[Authorization] = None,
                    storageLevel: StorageLevel = StorageLevel.MEMORY_ONLY_SER
-                  ): ReceiverInputDStream[Status] = {
+                  ): DStream[Status] = {
     new TwitterInputDStream(ssc, twitterAuth, filterQuery, storageLevel)
   }
 
@@ -46,7 +46,7 @@ object TwitterUtils {
                        ): DStream[Status] = {
     credentials
       .map(auth => createStream(ssc, Some(queryBuilder()), Some(auth)))
-      .reduce[DStream[Status]] { (accStream, stream) => accStream.union(stream) }
+      .reduce { (accStream, stream) => accStream.union(stream) }
   }
 
   private def loadDefaultCredentials(): Seq[Authorization] = {
