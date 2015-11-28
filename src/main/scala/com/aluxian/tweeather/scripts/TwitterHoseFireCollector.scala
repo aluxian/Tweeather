@@ -1,27 +1,27 @@
 package com.aluxian.tweeather.scripts
 
-import com.aluxian.tweeather.scripts.base.SparkScript
+import com.aluxian.tweeather.base.{Hdfs, SparkScript}
+import com.aluxian.tweeather.models.{Coordinates, LocationBox}
 import com.aluxian.tweeather.streaming.TwitterUtils
+import com.aluxian.tweeather.utils.RichStatus
 import org.apache.spark.streaming.{Minutes, StreamingContext}
 import org.apache.spark.{Logging, SparkContext}
 import twitter4j.FilterQuery
 
-object TwitterFireHoseCollector extends SparkScript with Logging {
+object TwitterHoseFireCollector extends SparkScript with Hdfs with Logging {
 
-  val locationBoundingBox = Array(
-    Array[Double](-27, 33),
-    Array[Double](45, 73)
+  val locationBox = LocationBox(
+    sw = Coordinates(33, -27),
+    ne = Coordinates(73, 45)
   ) // Europe
 
   def main(sc: SparkContext) {
     val ssc = new StreamingContext(sc, Minutes(10))
     val stream = TwitterUtils.createMultiStream(ssc, queryBuilder)
 
-    stream.foreachRDD(rdd => {
-      rdd.foreach(status => {
-        println(s"${status.getId} ${status.getUser.getScreenName} ${status.getText}")
-      })
-    })
+    stream
+      .map(_.toTweet)
+      .saveAsObjectFiles(hdfs"/tw/fire/data/tweet")
 
     ssc.start()
     ssc.awaitTermination()
@@ -29,8 +29,9 @@ object TwitterFireHoseCollector extends SparkScript with Logging {
 
   def queryBuilder(): FilterQuery = {
     new FilterQuery()
-      .locations(locationBoundingBox: _*)
+      .locations(locationBox.toTwitterBox: _*)
       .language("en")
   }
+
 
 }

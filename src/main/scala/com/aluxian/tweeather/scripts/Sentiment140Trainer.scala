@@ -2,7 +2,7 @@ package com.aluxian.tweeather.scripts
 
 import java.io.ObjectOutputStream
 
-import com.aluxian.tweeather.scripts.base.{Hdfs, SparkScript}
+import com.aluxian.tweeather.base.{Hdfs, SparkScript}
 import com.aluxian.tweeather.transformers.{ColumnDropper, FeatureReducer, StringSanitizer}
 import org.apache.spark.ml.Pipeline
 import org.apache.spark.ml.classification.NaiveBayes
@@ -27,8 +27,8 @@ object Sentiment140Trainer extends SparkScript with Hdfs with Logging {
       new Tokenizer().setInputCol("text").setOutputCol("raw_words"),
       new StopWordsRemover().setInputCol("raw_words").setOutputCol("words"),
       new HashingTF().setInputCol("words").setOutputCol("features"),
-      new ColumnDropper().setDropColumns("raw_text", "reduced_text", "text", "raw_words", " words"),
-      new NaiveBayes().setSmoothing(0.5)
+      new ColumnDropper().setDropColumns("raw_text", "reduced_text", "text", "raw_words", "words"),
+      new NaiveBayes().setSmoothing(0.5).setFeaturesCol("features")
     ))
 
     // Fit the pipeline

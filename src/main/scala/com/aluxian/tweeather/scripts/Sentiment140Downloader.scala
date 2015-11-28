@@ -3,7 +3,7 @@ package com.aluxian.tweeather.scripts
 import java.net.URL
 import java.util.zip.ZipInputStream
 
-import com.aluxian.tweeather.scripts.base.{Hdfs, SparkScript}
+import com.aluxian.tweeather.base.{Hdfs, SparkScript}
 import org.apache.spark.{Logging, SparkContext}
 
 object Sentiment140Downloader extends SparkScript with Hdfs with Logging {

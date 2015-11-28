@@ -71,7 +71,7 @@ object TwitterUtils {
 
   private def loadTwitterProperties(): Properties = {
     val properties = new Properties()
-    val stream = getClass.getResourceAsStream("/com/aluxian/tweeather/twitter.properties")
+    val stream = getClass.getResourceAsStream("/com/aluxian/tweeather/res/twitter.properties")
     properties.load(stream)
     stream.close()
     properties

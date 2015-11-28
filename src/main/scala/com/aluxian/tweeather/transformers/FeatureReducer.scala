@@ -28,7 +28,7 @@ class FeatureReducer(override val uid: String) extends UnaryTransformer[String, 
     require(inputType == StringType, s"Input type must be string type but got $inputType.")
   }
 
-  override protected def outputDataType: DataType = DataTypes.StringType
+  override protected def outputDataType: DataType = StringType
 
   override def copy(extra: ParamMap): FeatureReducer = defaultCopy(extra)
 

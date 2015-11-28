@@ -1,18 +1,13 @@
-package com.aluxian.tweeather.scripts
+package com.aluxian.tweeather.base
 
-import org.apache.log4j.PropertyConfigurator
 import org.apache.spark.{SparkConf, SparkContext}
 
-trait Script {
+trait SparkScript extends Script {
 
   val scriptName = "Tweeather_" + getClass.getSimpleName.stripSuffix("$")
 
-  def main(args: Array[String]) {
-    // Log4j properties
-    Option(getClass.getResource("/com/aluxian/tweeather/log4j.properties")) match {
-      case Some(url) => PropertyConfigurator.configure(url)
-      case None => System.err.println("Unable to load log4j.properties")
-    }
+  override def main(args: Array[String]) {
+    super.main(args)
 
     // Spark configuration
     val conf = new SparkConf()

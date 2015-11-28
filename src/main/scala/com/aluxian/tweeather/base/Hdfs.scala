@@ -1,4 +1,4 @@
-package com.aluxian.tweeather.scripts.base
+package com.aluxian.tweeather.base
 
 import org.apache.hadoop.conf.Configuration
 import org.apache.hadoop.fs.{FileSystem, Path}

@@ -1,7 +1,9 @@
 package com.aluxian.tweeather.scripts
 
-import com.aluxian.tweeather.scripts.base.{Hdfs, SparkScript}
+import com.aluxian.tweeather.base.{Hdfs, SparkScript}
+import com.aluxian.tweeather.models.LabeledText
 import com.aluxian.tweeather.streaming.TwitterUtils
+import com.aluxian.tweeather.utils.RichBoolean
 import org.apache.spark.streaming.{Minutes, StreamingContext}
 import org.apache.spark.{Logging, SparkContext}
 import twitter4j.FilterQuery
@@ -15,15 +17,17 @@ object TwitterHoseEmoCollector extends SparkScript with Hdfs with Logging {
     stream
       .map(_.getText)
       .filter(!_.contains("RT"))
-      .map(text => (text, positiveEmoticons.exists(text.contains), negativeEmoticons.exists(text.contains)))
-      .filter(p => p._2 != p._3)
-      .map(p => (p._1, if (p._2) 1d else 0d))
-      .saveAsTextFiles(hdfs"/tw/sentiment/emo/data/text")
+      .map(text => {
+        val hasPositive = positiveEmoticons.exists(text.contains)
+        val hasNegative = negativeEmoticons.exists(text.contains)
+        if (hasPositive ^ hasNegative) LabeledText(text, hasPositive.toDouble) else null
+      })
+      .filter(_ != null)
+      .saveAsObjectFiles(hdfs"/tw/sentiment/emo/data/text")
 
     ssc.start()
     ssc.awaitTermination()
   }
-
 
   def queryBuilder(): FilterQuery = {
     new FilterQuery()

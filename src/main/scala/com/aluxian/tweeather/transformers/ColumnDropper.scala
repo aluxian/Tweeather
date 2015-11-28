@@ -39,7 +39,7 @@ class ColumnDropper(override val uid: String) extends Transformer {
 
   override def copy(extra: ParamMap): ColumnDropper = defaultCopy(extra)
 
-  def without(dataset: DataFrame, columns: Seq[String]): DataFrame = {
+  private def without(dataset: DataFrame, columns: Seq[String]): DataFrame = {
     if (columns.isEmpty) {
       return dataset
     }
