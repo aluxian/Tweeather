@@ -2,23 +2,23 @@ package com.aluxian.tweeather.scripts
 
 import java.io.ObjectOutputStream
 
-import com.aluxian.tweeather.base.{Hdfs, SparkScript}
 import com.aluxian.tweeather.transformers.{ColumnDropper, FeatureReducer, StringSanitizer}
+import org.apache.hadoop.fs.Path
+import org.apache.spark.Logging
 import org.apache.spark.ml.Pipeline
 import org.apache.spark.ml.classification.NaiveBayes
 import org.apache.spark.ml.feature.{HashingTF, StopWordsRemover, Tokenizer}
 import org.apache.spark.mllib.evaluation.BinaryClassificationMetrics
-import org.apache.spark.sql.{Row, SQLContext}
-import org.apache.spark.{Logging, SparkContext}
+import org.apache.spark.sql.Row
 
-object Sentiment140Trainer extends SparkScript with Hdfs with Logging {
+object Sentiment140Trainer extends Script with Logging {
 
-  def main(sc: SparkContext) {
-    val sqlContext = new SQLContext(sc)
+  override def main(args: Array[String]) {
+    super.main(args)
 
     // Prepare data sets
-    val testData = sqlContext.read.parquet(hdfs"/tw/sentiment/140/test.parquet")
-    val trainingData = sqlContext.read.parquet(hdfs"/tw/sentiment/140/training.parquet")
+    val testData = sqlc.read.parquet("/tw/sentiment/140/test.parquet")
+    val trainingData = sqlc.read.parquet("/tw/sentiment/140/training.parquet")
 
     // Configure the pipeline
     val pipeline = new Pipeline().setStages(Array(
@@ -46,7 +46,7 @@ object Sentiment140Trainer extends SparkScript with Hdfs with Logging {
     metrics.unpersist()
 
     // Save the model
-    val output = new ObjectOutputStream(hdfs.create(hdfsp"/tw/sentiment/140.model"))
+    val output = new ObjectOutputStream(hdfs.create(new Path("/tw/sentiment/140.model")))
     output.writeObject(model)
     output.close()
   }

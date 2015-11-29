@@ -1,16 +1,17 @@
 package com.aluxian.tweeather.scripts
 
-import com.aluxian.tweeather.base.{Hdfs, SparkScript}
 import com.aluxian.tweeather.models.LabeledText
 import com.aluxian.tweeather.streaming.TwitterUtils
 import com.aluxian.tweeather.utils.RichBoolean
+import org.apache.spark.Logging
 import org.apache.spark.streaming.{Minutes, StreamingContext}
-import org.apache.spark.{Logging, SparkContext}
 import twitter4j.FilterQuery
 
-object TwitterHoseEmoCollector extends SparkScript with Hdfs with Logging {
+object TwitterHoseEmoCollector extends Script with Logging {
 
-  def main(sc: SparkContext) {
+  override def main(args: Array[String]) {
+    super.main(args)
+
     val ssc = new StreamingContext(sc, Minutes(10))
     val stream = TwitterUtils.createMultiStream(ssc, queryBuilder)
 
@@ -23,7 +24,7 @@ object TwitterHoseEmoCollector extends SparkScript with Hdfs with Logging {
         if (hasPositive ^ hasNegative) LabeledText(text, hasPositive.toDouble) else null
       })
       .filter(_ != null)
-      .saveAsObjectFiles(hdfs"/tw/sentiment/emo/data/text")
+      .saveAsObjectFiles("/tw/sentiment/emo/data/text")
 
     ssc.start()
     ssc.awaitTermination()

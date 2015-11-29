@@ -1,23 +1,22 @@
 package com.aluxian.tweeather.scripts
 
-import com.aluxian.tweeather.base.{Hdfs, SparkScript}
+import org.apache.spark.Logging
 import org.apache.spark.rdd.RDD
-import org.apache.spark.sql.{SQLContext, SaveMode}
-import org.apache.spark.{Logging, SparkContext}
+import org.apache.spark.sql.SaveMode
 
-object Sentiment140Parser extends SparkScript with Hdfs with Logging {
+object Sentiment140Parser extends Script with Logging {
 
-  def main(sc: SparkContext) {
-    val sqlContext = new SQLContext(sc)
+  override def main(args: Array[String]) {
+    super.main(args)
 
-    val testData = sc.textFile(hdfs"/tw/sentiment/140/testdata.manual.2009.06.14.csv")
-    val trainingData = sc.textFile(hdfs"/tw/sentiment/140/training.1600000.processed.noemoticon.csv")
+    val testData = sc.textFile("/tw/sentiment/140/testdata.manual.2009.06.14.csv")
+    val trainingData = sc.textFile("/tw/sentiment/140/training.1600000.processed.noemoticon.csv")
 
-    parse(sqlContext, testData, hdfs"/tw/sentiment/140/test.parquet")
-    parse(sqlContext, trainingData, hdfs"/tw/sentiment/140/training.parquet")
+    parse(testData, "/tw/sentiment/140/test.parquet")
+    parse(trainingData, "/tw/sentiment/140/training.parquet")
   }
 
-  def parse(sqlContext: SQLContext, data: RDD[String], filePath: String) {
+  def parse(data: RDD[String], filePath: String) {
     logInfo(s"Parsing $filePath")
 
     val parsed = data
@@ -28,7 +27,7 @@ object Sentiment140Parser extends SparkScript with Hdfs with Logging {
       .filter(row => row._1 != 2) // remove neutral tweets
       .map(row => (row._1 / 4, row._2)) // normalize sentiment
 
-    import sqlContext.implicits._
+    import sqlc.implicits._
     parsed.toDF("label", "raw_text").write.mode(SaveMode.Overwrite).save(filePath)
   }
 

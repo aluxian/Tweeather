@@ -1,28 +1,27 @@
 package com.aluxian.tweeather.scripts
 
-import com.aluxian.tweeather.base.{Hdfs, SparkScript}
 import com.aluxian.tweeather.models.{FireNetInput, Tweet}
 import com.aluxian.tweeather.transformers._
 import com.aluxian.tweeather.utils.{RichSeq, SentimentModels}
+import org.apache.spark.Logging
 import org.apache.spark.mllib.util.MLUtils
-import org.apache.spark.sql.{Row, SQLContext}
-import org.apache.spark.{Logging, SparkContext}
+import org.apache.spark.sql.Row
 
-object TwitterHoseFireParser extends SparkScript with Hdfs with Logging {
+object TwitterHoseFireParser extends Script with Logging {
 
   val locationBox = TwitterHoseFireCollector.locationBox // Europe
 
-  def main(sc: SparkContext) {
-    val sqlContext = new SQLContext(sc)
-    import sqlContext.implicits._
+  override def main(args: Array[String]) {
+    super.main(args)
+    import sqlc.implicits._
 
     // Import data
-    var data = sc.objectFile[Tweet](hdfs"/tw/fire/data/tweet*")
+    var data = sc.objectFile[Tweet]("/tw/fire/data/tweet*")
       .map(tweet => (tweet.text, tweet.location.lat, tweet.location.lon, tweet.createdAt))
       .toDF("raw_text", "lat", "lon", "createdAt")
 
     // Analyse sentiment
-    data = SentimentModels.emoModel()
+    data = SentimentModels.emoModel
       .setPredictionCol("sentiment")
       .transform(data)
 
@@ -45,7 +44,7 @@ object TwitterHoseFireParser extends SparkScript with Hdfs with Logging {
       })
 
     // Save in LIBSVM format
-    MLUtils.saveAsLibSVMFile(libsvmData, hdfs"/tw/fire/data.libsvm")
+    MLUtils.saveAsLibSVMFile(libsvmData, "/tw/fire/data.libsvm")
   }
 
 }

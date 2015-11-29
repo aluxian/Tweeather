@@ -2,21 +2,20 @@ package com.aluxian.tweeather.scripts
 
 import java.io.ObjectOutputStream
 
-import com.aluxian.tweeather.base.{Hdfs, SparkScript}
+import org.apache.hadoop.fs.Path
+import org.apache.spark.Logging
 import org.apache.spark.ml.classification.MultilayerPerceptronClassifier
 import org.apache.spark.ml.evaluation.MulticlassClassificationEvaluator
 import org.apache.spark.mllib.util.MLUtils
-import org.apache.spark.sql.SQLContext
-import org.apache.spark.{Logging, SparkContext}
 
-object TwitterHoseFireTrainer extends SparkScript with Hdfs with Logging {
+object TwitterHoseFireTrainer extends Script with Logging {
 
-  def main(sc: SparkContext) {
-    val sqlContext = new SQLContext(sc)
-    import sqlContext.implicits._
+  override def main(args: Array[String]) {
+    super.main(args)
+    import sqlc.implicits._
 
     // Prepare data sets
-    val data = MLUtils.loadLibSVMFile(sc, hdfs"/tw/fire/data.libsvm").cache()
+    val data = MLUtils.loadLibSVMFile(sc, "/tw/fire/data.libsvm").cache()
     val Array(trainingData, testData) = data.toDF().randomSplit(Array(0.9, 0.1))
 
     // Set input/output neurons based on the data sets
@@ -37,7 +36,7 @@ object TwitterHoseFireTrainer extends SparkScript with Hdfs with Logging {
     logInfo(s"Precision: ${evaluator.evaluate(predicted)}")
 
     // Save the model
-    val output = new ObjectOutputStream(hdfs.create(hdfsp"/tw/fire/fire.model"))
+    val output = new ObjectOutputStream(hdfs.create(new Path("/tw/fire/fire.model")))
     output.writeObject(model)
     output.close()
   }
