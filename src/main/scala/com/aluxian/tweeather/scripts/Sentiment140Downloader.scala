@@ -12,7 +12,7 @@ object Sentiment140Downloader extends SparkScript with Hdfs with Logging {
 
   def main(sc: SparkContext) {
     val zip = new ZipInputStream(new URL(downloadUrl).openStream())
-    val buffer = new Array[Byte](8192)
+    val buffer = new Array[Byte](8 * 1024)
 
     Stream.continually(zip.getNextEntry)
       .takeWhile(_ != null)
