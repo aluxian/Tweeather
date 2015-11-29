@@ -1,7 +1,5 @@
-target/
-lib_managed/
-src_managed/
-project/boot/
-src/main/resources/com/aluxian/tweeather/res/twitter.properties
+/target/
+/logs/
+/src/main/resources/com/aluxian/tweeather/res/twitter.properties
 .idea
 *.swp
