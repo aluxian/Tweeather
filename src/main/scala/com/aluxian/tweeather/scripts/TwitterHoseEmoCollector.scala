@@ -24,7 +24,7 @@ object TwitterHoseEmoCollector extends Script with Logging {
         if (hasPositive ^ hasNegative) LabeledText(text, hasPositive.toDouble) else null
       })
       .filter(_ != null)
-      .saveAsObjectFiles("/tw/sentiment/emo/data/text")
+      .saveAsObjectFiles("/tw/sentiment/emo/data/lt")
 
     ssc.start()
     ssc.awaitTermination()
