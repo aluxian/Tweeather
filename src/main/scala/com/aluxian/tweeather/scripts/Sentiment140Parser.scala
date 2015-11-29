@@ -2,7 +2,7 @@ package com.aluxian.tweeather.scripts
 
 import com.aluxian.tweeather.base.{Hdfs, SparkScript}
 import org.apache.spark.rdd.RDD
-import org.apache.spark.sql.SQLContext
+import org.apache.spark.sql.{SQLContext, SaveMode}
 import org.apache.spark.{Logging, SparkContext}
 
 object Sentiment140Parser extends SparkScript with Hdfs with Logging {
@@ -29,7 +29,7 @@ object Sentiment140Parser extends SparkScript with Hdfs with Logging {
       .map(row => (row._1 / 4, row._2)) // normalize sentiment
 
     import sqlContext.implicits._
-    parsed.toDF("label", "raw_text").write.save(filePath)
+    parsed.toDF("label", "raw_text").write.mode(SaveMode.Overwrite).save(filePath)
   }
 
 }
