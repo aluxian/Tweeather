@@ -1,4 +1,4 @@
-name := "spark"
+name := "tweeather"
 
 version := "1.0.0"
 
