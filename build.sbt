@@ -9,6 +9,7 @@ libraryDependencies ++= Seq(
   "org.apache.spark" %% "spark-mllib" % "1.6.0-SNAPSHOT",
   "org.apache.spark" %% "spark-streaming" % "1.6.0-SNAPSHOT",
   "org.apache.hadoop" % "hadoop-client" % "2.7.1" excludeAll ExclusionRule("javax.servlet"),
+  "com.github.fommil.netlib" % "all" % "1.1.2" pomOnly(),
   "org.twitter4j" % "twitter4j-stream" % "4.0.4",
   "org.scalaj" %% "scalaj-http" % "2.0.0",
   "edu.ucar" % "grib" % "4.6.3"
