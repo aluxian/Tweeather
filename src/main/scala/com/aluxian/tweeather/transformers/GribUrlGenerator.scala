@@ -5,7 +5,7 @@ import java.util.{Calendar, Date, Locale}
 
 import com.aluxian.tweeather.RichDate
 import com.aluxian.tweeather.models.{Coordinates, LocationBox}
-import com.aluxian.tweeather.utils.{DefaultParamsReadable, DefaultParamsWritable}
+import com.aluxian.tweeather.utils.{DefaultParamsReadable, DefaultParamsWritable, JParam}
 import org.apache.spark.ml.UnaryTransformer
 import org.apache.spark.ml.param._
 import org.apache.spark.ml.util.Identifiable
@@ -20,11 +20,11 @@ class GribUrlGenerator(override val uid: String)
   def this() = this(Identifiable.randomUID("gribUrlGenerator"))
 
   /**
-    * Param for the location box to be used.
+    * JParam for the location box to be used.
     * @group param
     */
-  final val locationBox: Param[LocationBox] =
-    new Param[LocationBox](this, "locationBox", "location box to be used")
+  final val locationBox: JParam[LocationBox] =
+    new JParam[LocationBox](this, "locationBox", "location box to be used")
 
   /** @group setParam */
   def setLocationBox(box: LocationBox): this.type = set(locationBox, box)

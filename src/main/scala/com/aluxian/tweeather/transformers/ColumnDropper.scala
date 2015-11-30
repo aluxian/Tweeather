@@ -1,6 +1,6 @@
 package com.aluxian.tweeather.transformers
 
-import com.aluxian.tweeather.utils.{DefaultParamsReadable, DefaultParamsWritable}
+import com.aluxian.tweeather.utils.{DefaultParamsReadable, DefaultParamsWritable, JParam}
 import org.apache.spark.ml.Transformer
 import org.apache.spark.ml.param._
 import org.apache.spark.ml.util.Identifiable
@@ -15,11 +15,11 @@ class ColumnDropper(override val uid: String) extends Transformer with DefaultPa
   def this() = this(Identifiable.randomUID("columnsDropper"))
 
   /**
-    * Param for the column names to be removed.
+    * JParam for the column names to be removed.
     * @group param
     */
-  final val dropColumns: Param[Seq[String]] =
-    new Param[Seq[String]](this, "dropColumns", "columns to be dropped")
+  final val dropColumns: JParam[Seq[String]] =
+    new JParam[Seq[String]](this, "dropColumns", "columns to be dropped")
 
   /** @group setParam */
   def setDropColumns(columns: String*): this.type = set(dropColumns, columns)
