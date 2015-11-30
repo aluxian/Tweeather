@@ -143,12 +143,10 @@ class WeatherProvider(override val uid: String) extends Transformer {
         } else {
           val out = hdfs.create(hdfsPath, true)
           IOUtils.copy(stream, out)
-          out.close()
+          IOUtils.closeQuietly(out, null)
         }
 
-        if (stream != null) {
-          stream.close()
-        }
+        IOUtils.closeQuietly(stream, null)
       })
     }
 
