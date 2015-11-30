@@ -34,7 +34,7 @@ object TwitterHoseFireParser extends Script with Logging {
     logInfo("Getting weather data")
     data = Seq(
       new GribUrlGenerator().setLocationBox(locationBox).setInputCol("createdAt").setOutputCol("grib_url"),
-      new WeatherProvider().setLatitudeColumn("grib_url")
+      new WeatherProvider().setLatitudeColumn("grib_url").setGribsPath("/tw/fire/gribs/")
     ).mapCompose(data)(_.transform)
 
     // Convert to LabeledPoint
