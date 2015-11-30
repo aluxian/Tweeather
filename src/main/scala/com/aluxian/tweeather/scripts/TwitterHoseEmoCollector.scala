@@ -1,8 +1,6 @@
 package com.aluxian.tweeather.scripts
 
-import com.aluxian.tweeather.models.LabeledText
 import com.aluxian.tweeather.streaming.TwitterUtils
-import com.aluxian.tweeather.utils.RichBoolean
 import org.apache.spark.Logging
 import org.apache.spark.streaming.{Minutes, StreamingContext}
 import twitter4j.FilterQuery
@@ -16,15 +14,8 @@ object TwitterHoseEmoCollector extends Script with Logging {
     val stream = TwitterUtils.createMultiStream(ssc, queryBuilder)
 
     stream
-      .map(_.getText)
-      .filter(!_.contains("RT"))
-      .map(text => {
-        val hasPositive = positiveEmoticons.exists(text.contains)
-        val hasNegative = negativeEmoticons.exists(text.contains)
-        if (hasPositive ^ hasNegative) LabeledText(text, hasPositive.toDouble) else null
-      })
-      .filter(_ != null)
-      .saveAsObjectFiles("/tw/sentiment/emo/data/lt")
+      .map(_.getText.replaceAll("[\\n\\r]+", " ")) // one tweet per line
+      .saveAsTextFiles("/tw/sentiment/emo/collected/text")
 
     ssc.start()
     ssc.awaitTermination()

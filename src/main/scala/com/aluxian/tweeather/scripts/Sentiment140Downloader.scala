@@ -13,6 +13,7 @@ object Sentiment140Downloader extends Script with Logging {
   override def main(args: Array[String]) {
     super.main(args)
 
+    logInfo(s"Download sentiment140 dataset from $downloadUrl")
     val zip = new ZipInputStream(new URL(downloadUrl).openStream())
     val buffer = new Array[Byte](8 * 1024)
 
@@ -20,7 +21,7 @@ object Sentiment140Downloader extends Script with Logging {
       .takeWhile(_ != null)
       .foreach(entry => {
         val entryName = entry.getName
-        val output = hdfs.create(new Path(s"/tw/sentiment/140/$entryName"))
+        val output = hdfs.create(new Path(s"/tw/sentiment/140/downloaded/$entryName"))
         logInfo(s"Downloading $entryName")
 
         Stream.continually(zip.read(buffer))
@@ -31,6 +32,7 @@ object Sentiment140Downloader extends Script with Logging {
       })
 
     zip.close()
+    logInfo("Downloading finished")
   }
 
 }

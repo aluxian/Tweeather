@@ -1,9 +1,6 @@
 package com.aluxian.tweeather.scripts
 
-import java.io.ObjectOutputStream
-
 import com.aluxian.tweeather.transformers.{ColumnDropper, FeatureReducer, StringSanitizer}
-import org.apache.hadoop.fs.Path
 import org.apache.spark.Logging
 import org.apache.spark.ml.Pipeline
 import org.apache.spark.ml.classification.NaiveBayes
@@ -17,8 +14,9 @@ object Sentiment140Trainer extends Script with Logging {
     super.main(args)
 
     // Prepare data sets
-    val testData = sqlc.read.parquet("/tw/sentiment/140/test.parquet")
-    val trainingData = sqlc.read.parquet("/tw/sentiment/140/training.parquet")
+    logInfo("Getting datasets")
+    val testData = sqlc.read.parquet("/tw/sentiment/140/parsed/test.parquet")
+    val trainingData = sqlc.read.parquet("/tw/sentiment/140/parsed/training.parquet")
 
     // Configure the pipeline
     val pipeline = new Pipeline().setStages(Array(
@@ -32,6 +30,7 @@ object Sentiment140Trainer extends Script with Logging {
     ))
 
     // Fit the pipeline
+    logInfo("Training model")
     val model = pipeline.fit(trainingData)
 
     // Test the model accuracy
@@ -46,9 +45,8 @@ object Sentiment140Trainer extends Script with Logging {
     metrics.unpersist()
 
     // Save the model
-    val output = new ObjectOutputStream(hdfs.create(new Path("/tw/sentiment/140.model")))
-    output.writeObject(model)
-    output.close()
+    logInfo("Saving model")
+    model.write.overwrite().save("/tw/sentiment/models/140.model")
   }
 
 }

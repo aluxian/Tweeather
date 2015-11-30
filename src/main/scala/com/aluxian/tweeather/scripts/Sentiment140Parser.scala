@@ -9,16 +9,17 @@ object Sentiment140Parser extends Script with Logging {
   override def main(args: Array[String]) {
     super.main(args)
 
-    val testData = sc.textFile("/tw/sentiment/140/testdata.manual.2009.06.14.csv")
-    val trainingData = sc.textFile("/tw/sentiment/140/training.1600000.processed.noemoticon.csv")
+    val testData = sc.textFile("/tw/sentiment/140/downloaded/testdata.manual.2009.06.14.csv")
+    val trainingData = sc.textFile("/tw/sentiment/140/downloaded/training.1600000.processed.noemoticon.csv")
 
-    parse(testData, "/tw/sentiment/140/test.parquet")
-    parse(trainingData, "/tw/sentiment/140/training.parquet")
+    logInfo(s"Parsing test dataset")
+    parse(testData, "/tw/sentiment/140/parsed/test.parquet")
+
+    logInfo(s"Parsing training dataset")
+    parse(trainingData, "/tw/sentiment/140/parsed/training.parquet")
   }
 
   def parse(data: RDD[String], filePath: String) {
-    logInfo(s"Parsing $filePath")
-
     val parsed = data
       .filter(_.contains("\",\"")) // ensure correct format
       .map(_.split("\",\"").map(_.replace("\"", ""))) // split columns and remove " marks
@@ -29,6 +30,7 @@ object Sentiment140Parser extends Script with Logging {
 
     import sqlc.implicits._
     parsed.toDF("label", "raw_text").write.mode(SaveMode.Overwrite).save(filePath)
+    logInfo(s"Parsed and saved $filePath")
   }
 
 }
