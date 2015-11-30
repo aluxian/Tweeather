@@ -17,18 +17,18 @@ object TwitterHoseFireCollector extends Script with Logging {
   override def main(args: Array[String]) {
     super.main(args)
 
-    val ssc = new StreamingContext(sc, streamingBatchDuration)
+    val ssc = new StreamingContext(sc, streamingInterval)
     val stream = TwitterUtils.createMultiStream(ssc, queryBuilder)
 
     stream
-      .window(streamingBatchDuration)
+      .window(streamingInterval)
       .map(status => {
         val location = status.getApproximateLocation
         (location.lat, location.lon, status.getCreatedAt.getTime, status.getText)
       })
       .saveAsTextFiles("/tw/fire/collected/", "text")
 
-    ssc.remember(streamingBatchDuration)
+    ssc.remember(streamingInterval)
     ssc.start()
 
     if (!ssc.awaitTerminationOrTimeout(streamingTimeout)) {

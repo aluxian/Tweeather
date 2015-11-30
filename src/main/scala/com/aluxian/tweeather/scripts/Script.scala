@@ -10,7 +10,7 @@ trait Script {
 
   protected lazy val streamingTimeout = sys.props.get("tw.streaming.timeout") // in seconds
     .map(_.toLong * 1000).getOrElse(-1L)
-  protected lazy val streamingBatchDuration = sys.props.get("tw.streaming.batch.duration") // in seconds
+  protected lazy val streamingInterval = sys.props.get("tw.streaming.interval") // in seconds
     .map(s => new Duration(s.toLong * 1000)).getOrElse(Minutes(10))
 
   protected lazy val scriptName = "Tweeather_" + getClass.getSimpleName.stripSuffix("$")

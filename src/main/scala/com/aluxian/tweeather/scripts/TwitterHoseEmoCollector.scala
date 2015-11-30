@@ -10,15 +10,15 @@ object TwitterHoseEmoCollector extends Script with Logging {
   override def main(args: Array[String]) {
     super.main(args)
 
-    val ssc = new StreamingContext(sc, streamingBatchDuration)
+    val ssc = new StreamingContext(sc, streamingInterval)
     val stream = TwitterUtils.createMultiStream(ssc, queryBuilder)
 
     stream
-      .window(streamingBatchDuration)
+      .window(streamingInterval)
       .map(_.getText.replaceAll("[\\n\\r]+", " ")) // one tweet per line
       .saveAsTextFiles("/tw/sentiment/emo/collected/", "text")
 
-    ssc.remember(streamingBatchDuration)
+    ssc.remember(streamingInterval)
     ssc.start()
 
     if (!ssc.awaitTerminationOrTimeout(streamingTimeout)) {
