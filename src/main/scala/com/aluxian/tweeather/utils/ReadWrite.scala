@@ -49,20 +49,24 @@ object DefaultParamsWriter {
     val uid = instance.uid
     val cls = instance.getClass.getName
     val params = instance.extractParamMap().toSeq.asInstanceOf[Seq[ParamPair[Any]]]
-    val jsonParams = paramMap.getOrElse(render(params.map { case ParamPair(p, v) =>
-      p.name -> parse(p.jsonEncode(v))
+
+    val jsonParams = paramMap.getOrElse(render(params.map {
+      case ParamPair(p, v) => p.name -> parse(p.jsonEncode(v))
     }.toList))
+
     val basicMetadata = ("class" -> cls) ~
       ("timestamp" -> System.currentTimeMillis()) ~
       ("sparkVersion" -> sc.version) ~
       ("uid" -> uid) ~
       ("paramMap" -> jsonParams)
+
     val metadata = extraMetadata match {
       case Some(jObject) =>
         basicMetadata ~ jObject
       case None =>
         basicMetadata
     }
+
     val metadataPath = new Path(path, "metadata").toString
     val metadataJson = compact(render(metadata))
     sc.parallelize(Seq(metadataJson), 1).saveAsTextFile(metadataPath)
@@ -82,7 +86,6 @@ trait DefaultParamsReadable[T] extends MLReadable[T] {
   *           TODO: Consider adding check for correct class name.
   */
 class DefaultParamsReader[T] extends MLReader[T] {
-
   override def load(path: String): T = {
     val metadata = DefaultParamsReader.loadMetadata(path, sc)
     val cls = Utils.classForName(metadata.className)
@@ -90,7 +93,6 @@ class DefaultParamsReader[T] extends MLReader[T] {
     DefaultParamsReader.getAndSetParams(instance, metadata)
     instance.asInstanceOf[T]
   }
-
 }
 
 object DefaultParamsReader {
