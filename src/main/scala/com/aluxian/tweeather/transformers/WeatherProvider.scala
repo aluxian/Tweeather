@@ -49,7 +49,7 @@ class WeatherProvider(override val uid: String) extends Transformer {
     new Param[String](this, "gribsPath", "folder path where downloaded GRIB files will be saved")
 
   /** @group setParam */
-  def setGribsPath(column: String): this.type = set(gribsPath, column)
+  def setGribsPath(path: String): this.type = set(gribsPath, path)
 
   /** @group getParam */
   def getGribsPath: String = $(gribsPath)
@@ -86,29 +86,54 @@ class WeatherProvider(override val uid: String) extends Transformer {
 
   setDefault(longitude -> "lon")
 
-  val localFsPath = new Path(Files.createTempDirectory("gfs").toUri)
+  /**
+    * Param for the local FS path where grib files will be temporarily moved (to be read).
+    * @group param
+    */
+  final val localFsPath: Param[String] =
+    new Param[String](this, "localFsPath", "temporary local FS path")
+
+  /** @group setParam */
+  def setLocalFsPath(path: String): this.type = set(localFsPath, path)
+
+  /** @group getParam */
+  def getLocalFsPath: String = $(localFsPath)
+
+  setDefault(localFsPath -> Files.createTempDirectory("gfs").toString)
+
+  /**
+    * Param for the weather metrics to retrieve.
+    * @group param
+    */
+  final val metrics: Param[Seq[Metric]] =
+    new Param[Seq[Metric]](this, "metrics", "weather metrics to retrieve")
+
+  /** @group setParam */
+  def setMetrics(metricsSeq: Seq[Metric]): this.type = set(metrics, metricsSeq)
+
+  /** @group getParam */
+  def getMetrics: Seq[Metric] = $(metrics)
+
+  setDefault(metrics -> Seq(Metric.Temperature, Metric.Pressure, Metric.Humidity))
+
+  @transient
   val gribSets = mutable.Map[String, Map[Metric, GridDatatype]]()
-  val metrics = Seq(
-    Metric.Temperature,
-    Metric.Pressure,
-    Metric.Humidity
-  )
 
   override def transformSchema(schema: StructType): StructType = {
     val inputType = schema($(gribUrl)).dataType
     require(inputType == StringType, s"grib url type must be string type but got $inputType.")
 
-    if (schema.fieldNames.intersect(metrics.map(_.name)).nonEmpty) {
+    if (schema.fieldNames.intersect($(metrics).map(_.name)).nonEmpty) {
       throw new IllegalArgumentException(s"Output columns temperature, pressure and humidity already exist.")
     }
 
-    val outputFields = metrics.map(m => StructField(m.name, DoubleType, nullable = false))
+    val outputFields = $(metrics).map(m => StructField(m.name, DoubleType, nullable = false))
     StructType(schema.fields ++ outputFields)
   }
 
   override def transform(dataset: DataFrame): DataFrame = {
     transformSchema(dataset.schema, logging = true)
-    metrics.mapCompose(dataset)(metric => df => {
+    $(metrics).mapCompose(dataset)(metric => df => {
       val t = udf { (lat: Double, lon: Double, gribUrl: String) =>
         if (!gribSets.contains(gribUrl)) {
           downloadGrib(dataset.sqlContext, gribUrl)
@@ -133,7 +158,7 @@ class WeatherProvider(override val uid: String) extends Transformer {
     val hdfs = FileSystem.get(sqlc.sparkContext.hadoopConfiguration)
     val fileName = MurmurHash3.stringHash(gribUrl).toString + ".grb2"
     val hdfsPath = new Path($(gribsPath), fileName)
-    val localPath = new Path(localFsPath, fileName)
+    val localPath = new Path($(localFsPath), fileName)
 
     // Download file to HDFS
     if (!hdfs.exists(hdfsPath)) {
@@ -153,7 +178,7 @@ class WeatherProvider(override val uid: String) extends Transformer {
     // Copy to local FS then read data
     hdfs.copyToLocalFile(hdfsPath, localPath)
     val data = GridDataset.open(localPath.toString)
-    gribSets(gribUrl) = metrics.map(m => m -> data.findGridDatatype(m.gridName)).toMap
+    gribSets(gribUrl) = $(metrics).map(m => m -> data.findGridDatatype(m.gridName)).toMap
   }
 
 }

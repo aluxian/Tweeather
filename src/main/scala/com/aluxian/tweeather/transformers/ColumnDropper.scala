@@ -1,5 +1,6 @@
 package com.aluxian.tweeather.transformers
 
+import com.aluxian.tweeather.utils.{DefaultParamsReadable, DefaultParamsWritable}
 import org.apache.spark.ml.Transformer
 import org.apache.spark.ml.param._
 import org.apache.spark.ml.util.Identifiable
@@ -9,7 +10,7 @@ import org.apache.spark.sql.types._
 /**
   * A transformer that removes columns.
   */
-class ColumnDropper(override val uid: String) extends Transformer {
+class ColumnDropper(override val uid: String) extends Transformer with DefaultParamsWritable {
 
   def this() = this(Identifiable.randomUID("columnsDropper"))
 
@@ -47,4 +48,8 @@ class ColumnDropper(override val uid: String) extends Transformer {
     without(dataset.drop(columns.last), columns.init)
   }
 
+}
+
+object ColumnDropper extends DefaultParamsReadable[ColumnDropper] {
+  override def load(path: String): ColumnDropper = super.load(path)
 }

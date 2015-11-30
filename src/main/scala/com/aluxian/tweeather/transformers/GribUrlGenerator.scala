@@ -5,6 +5,7 @@ import java.util.{Calendar, Date, Locale}
 
 import com.aluxian.tweeather.RichDate
 import com.aluxian.tweeather.models.{Coordinates, LocationBox}
+import com.aluxian.tweeather.utils.{DefaultParamsReadable, DefaultParamsWritable}
 import org.apache.spark.ml.UnaryTransformer
 import org.apache.spark.ml.param._
 import org.apache.spark.ml.util.Identifiable
@@ -13,7 +14,8 @@ import org.apache.spark.sql.types._
 /**
   * A transformer that adds a download url for the GRIB file (weather data).
   */
-class GribUrlGenerator(override val uid: String) extends UnaryTransformer[Long, String, GribUrlGenerator] {
+class GribUrlGenerator(override val uid: String)
+  extends UnaryTransformer[Long, String, GribUrlGenerator] with DefaultParamsWritable {
 
   def this() = this(Identifiable.randomUID("gribUrlGenerator"))
 
@@ -61,4 +63,8 @@ class GribUrlGenerator(override val uid: String) extends UnaryTransformer[Long, 
 
   override def copy(extra: ParamMap): GribUrlGenerator = defaultCopy(extra)
 
+}
+
+object GribUrlGenerator extends DefaultParamsReadable[GribUrlGenerator] {
+  override def load(path: String): GribUrlGenerator = super.load(path)
 }
