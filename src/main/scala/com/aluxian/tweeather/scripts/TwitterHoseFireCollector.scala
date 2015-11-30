@@ -28,7 +28,6 @@ object TwitterHoseFireCollector extends Script with Logging {
       })
       .saveAsTextFiles("/tw/fire/collected/", "text")
 
-    ssc.remember(streamingInterval)
     ssc.start()
 
     if (!ssc.awaitTerminationOrTimeout(streamingTimeout)) {
