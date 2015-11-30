@@ -14,7 +14,7 @@ object TwitterHoseEmoCollector extends Script with Logging {
     val stream = TwitterUtils.createMultiStream(ssc, queryBuilder)
 
     stream
-      .window(streamingInterval)
+      .window(streamingInterval, streamingInterval)
       .map(_.getText.replaceAll("[\\n\\r]+", " ")) // one tweet per line
       .saveAsTextFiles("/tw/sentiment/emo/collected/", "text")
 
