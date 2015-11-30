@@ -34,6 +34,7 @@ object Sentiment140Trainer extends Script with Logging {
     val model = pipeline.fit(trainingData)
 
     // Test the model accuracy
+    logInfo("Testing model")
     val predicted = model
       .transform(testData)
       .select("prediction", "label")

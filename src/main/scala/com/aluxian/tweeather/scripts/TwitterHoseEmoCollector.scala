@@ -15,7 +15,7 @@ object TwitterHoseEmoCollector extends Script with Logging {
 
     stream
       .map(_.getText.replaceAll("[\\n\\r]+", " ")) // one tweet per line
-      .saveAsTextFiles("/tw/sentiment/emo/collected/text")
+      .saveAsTextFiles("/tw/sentiment/emo/collected/", "text")
 
     ssc.start()
     ssc.awaitTermination()

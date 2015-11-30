@@ -1,6 +1,7 @@
 package com.aluxian.tweeather.scripts
 
 import com.aluxian.tweeather.models.LabeledText
+import com.aluxian.tweeather.utils.RichBoolean
 import org.apache.spark.Logging
 
 object TwitterHoseEmoParser extends Script with Logging {
@@ -10,8 +11,10 @@ object TwitterHoseEmoParser extends Script with Logging {
 
   override def main(args: Array[String]) {
     super.main(args)
+    import sqlc.implicits._
 
-    val data = sc.textFile("/tw/sentiment/emo/collected/text*")
+    logInfo("Parsing text files")
+    val data = sc.textFile("/tw/sentiment/emo/collected/*.text")
       .filter(!_.contains("RT"))
       .map(text => {
         val hasPositive = positiveEmoticons.exists(text.contains)
@@ -20,11 +23,8 @@ object TwitterHoseEmoParser extends Script with Logging {
       })
       .filter(_ != null)
 
-
-    val Array(trainingData, testData) = data.randomSplit(Array(0.9, 0.1))
-
-    testData.toDF("raw_text", "label").write.save("/tw/sentiment/emo/test.parquet")
-    trainingData.toDF("raw_text", "label").write.save("/tw/sentiment/emo/training.parquet")
+    logInfo("Saving text files")
+    data.toDF("raw_text", "label").write.save("/tw/sentiment/emo/parsed/data.parquet")
   }
 
 }
