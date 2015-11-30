@@ -24,7 +24,8 @@ object TwitterHoseEmoParser extends Script with Logging {
       .filter(_ != null)
 
     logInfo("Saving text files")
-    data.toDF("raw_text", "label").write.mode(SaveMode.Overwrite).save("/tw/sentiment/emo/parsed/data.parquet")
+    data.toDF("raw_text", "label").write.mode(SaveMode.Overwrite)
+      .parquet("/tw/sentiment/emo/parsed/data.parquet")
   }
 
 }

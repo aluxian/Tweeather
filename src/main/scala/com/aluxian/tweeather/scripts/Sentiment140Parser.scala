@@ -29,7 +29,7 @@ object Sentiment140Parser extends Script with Logging {
       .map(row => (row._1 / 4, row._2)) // normalize sentiment
 
     import sqlc.implicits._
-    parsed.toDF("label", "raw_text").write.mode(SaveMode.Overwrite).save(filePath)
+    parsed.toDF("label", "raw_text").write.mode(SaveMode.Overwrite).parquet(filePath)
     logInfo(s"Parsed and saved $filePath")
   }
 
