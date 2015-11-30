@@ -24,7 +24,7 @@ object TwitterUtils {
   def createStream(ssc: StreamingContext,
                    filterQuery: Option[FilterQuery] = None,
                    twitterAuth: Option[Authorization] = None,
-                   storageLevel: StorageLevel = StorageLevel.MEMORY_AND_DISK_SER
+                   storageLevel: StorageLevel = StorageLevel.MEMORY_ONLY_SER
                   ): DStream[Status] = {
     new TwitterInputDStream(ssc, twitterAuth, filterQuery, storageLevel)
   }
@@ -42,7 +42,7 @@ object TwitterUtils {
   def createMultiStream(ssc: StreamingContext,
                         queryBuilder: () => FilterQuery = () => null,
                         credentials: Seq[Authorization] = loadDefaultCredentials(),
-                        storageLevel: StorageLevel = StorageLevel.MEMORY_AND_DISK_SER
+                        storageLevel: StorageLevel = StorageLevel.MEMORY_ONLY_SER
                        ): DStream[Status] = {
     credentials
       .map(auth => createStream(ssc, Some(queryBuilder()), Some(auth)))
