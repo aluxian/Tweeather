@@ -19,7 +19,14 @@ object TwitterHoseFireParser extends Script with Logging {
 
     // Import data
     logInfo("Parsing text files")
-    var data = sc.textFile("/tw/fire/collected/*.text")
+    val rawData = sc.textFile("/tw/fire/collected/*.text")
+
+    // The stream created 1 partition / tweet, coalesce to fewer partitions
+    val partitions = Math.ceil(rawData.partitions.length / streamingTweetsPerPartition).toInt
+
+    // Parse data
+    var data = rawData
+      .coalesce(Math.max(sc.defaultMinPartitions, partitions))
       .map(_.split(','))
       .map(parts => (parts(0).toDouble, parts(1).toDouble, parts(2).toLong, parts.drop(3).mkString(",")))
       .toDF("lat", "lon", "createdAt", "raw_text")

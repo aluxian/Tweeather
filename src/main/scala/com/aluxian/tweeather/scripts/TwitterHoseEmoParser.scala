@@ -13,8 +13,16 @@ object TwitterHoseEmoParser extends Script with Logging {
     super.main(args)
     import sqlc.implicits._
 
+    // Import data
     logInfo("Parsing text files")
-    val data = sc.textFile("/tw/sentiment/emo/collected/*.text")
+    val rawData = sc.textFile("/tw/sentiment/emo/collected/*.text")
+
+    // The stream created 1 partition / tweet, coalesce to fewer partitions
+    val partitions = Math.ceil(rawData.partitions.length / streamingTweetsPerPartition).toInt
+
+    // Parse data
+    val data = rawData
+      .coalesce(Math.max(sc.defaultMinPartitions, partitions))
       .filter(!_.contains("RT"))
       .map(text => {
         val hasPositive = positiveEmoticons.exists(text.contains)

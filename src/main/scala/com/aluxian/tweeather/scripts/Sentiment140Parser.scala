@@ -9,6 +9,7 @@ object Sentiment140Parser extends Script with Logging {
   override def main(args: Array[String]) {
     super.main(args)
 
+    // Import data
     val testData = sc.textFile("/tw/sentiment/140/downloaded/testdata.manual.2009.06.14.csv")
     val trainingData = sc.textFile("/tw/sentiment/140/downloaded/training.1600000.processed.noemoticon.csv")
 
