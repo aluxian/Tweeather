@@ -32,9 +32,9 @@ class TwitterReceiver(twitterAuth: Authorization,
 
       def onException(e: Exception) {
         if (!stopped) {
-          restart("Error receiving tweets", e)
+          restart("Error receiving tweets", e, 10 * 1000) // 10 seconds delay
         }
-      }
+      }d
     })
 
     if (filterQuery.isDefined) {
