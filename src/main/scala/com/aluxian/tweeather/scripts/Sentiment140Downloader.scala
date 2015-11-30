@@ -13,7 +13,7 @@ object Sentiment140Downloader extends Script with Logging {
   override def main(args: Array[String]) {
     super.main(args)
 
-    logInfo(s"Download sentiment140 dataset from $downloadUrl")
+    logInfo(s"Downloading sentiment140 dataset from $downloadUrl")
     val zip = new ZipInputStream(new URL(downloadUrl).openStream())
     val buffer = new Array[Byte](8 * 1024)
 
