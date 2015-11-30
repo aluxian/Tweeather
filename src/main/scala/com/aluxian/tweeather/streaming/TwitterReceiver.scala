@@ -21,20 +21,21 @@ class TwitterReceiver(twitterAuth: Authorization,
         store(status)
       }
 
-      // Unimplemented
       def onDeletionNotice(statusDeletionNotice: StatusDeletionNotice) {}
-
-      def onTrackLimitationNotice(i: Int) {}
 
       def onScrubGeo(l: Long, l1: Long) {}
 
-      def onStallWarning(stallWarning: StallWarning) {}
+      def onTrackLimitationNotice(i: Int): Unit = {
+        logWarning(s"Twitter stream track limitation notice: $i")
+      }
 
-      def onException(e: Exception) {
-        if (!stopped) {
-          restart("Error receiving tweets", e, 10 * 1000) // 10 seconds delay
-        }
-      }d
+      def onStallWarning(stallWarning: StallWarning): Unit = {
+        logWarning(s"Twitter stream stall warning: ${stallWarning.toString}")
+      }
+
+      def onException(e: Exception): Unit = {
+        logError("Twitter stream error", e)
+      }
     })
 
     if (filterQuery.isDefined) {
