@@ -1,8 +1,8 @@
 package com.aluxian.tweeather.scripts
 
-import com.aluxian.tweeather.models.LabeledText
-import com.aluxian.tweeather.utils.RichBoolean
+import com.aluxian.tweeather.RichBoolean
 import org.apache.spark.Logging
+import org.apache.spark.sql.SaveMode
 
 object TwitterHoseEmoParser extends Script with Logging {
 
@@ -19,12 +19,12 @@ object TwitterHoseEmoParser extends Script with Logging {
       .map(text => {
         val hasPositive = positiveEmoticons.exists(text.contains)
         val hasNegative = negativeEmoticons.exists(text.contains)
-        if (hasPositive ^ hasNegative) LabeledText(text, hasPositive.toDouble) else null
+        if (hasPositive ^ hasNegative) (text, hasPositive.toDouble) else null
       })
       .filter(_ != null)
 
     logInfo("Saving text files")
-    data.toDF("raw_text", "label").write.save("/tw/sentiment/emo/parsed/data.parquet")
+    data.toDF("raw_text", "label").write.mode(SaveMode.Overwrite).save("/tw/sentiment/emo/parsed/data.parquet")
   }
 
 }

@@ -2,8 +2,8 @@ package com.aluxian.tweeather.transformers
 
 import java.nio.file.Files
 
+import com.aluxian.tweeather.RichSeq
 import com.aluxian.tweeather.models.Metric
-import com.aluxian.tweeather.utils.RichSeq
 import org.apache.spark.ml.Transformer
 import org.apache.spark.ml.param._
 import org.apache.spark.ml.util.Identifiable

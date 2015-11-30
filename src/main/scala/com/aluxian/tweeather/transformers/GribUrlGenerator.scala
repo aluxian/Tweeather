@@ -3,8 +3,8 @@ package com.aluxian.tweeather.transformers
 import java.text.SimpleDateFormat
 import java.util.{Calendar, Date, Locale}
 
+import com.aluxian.tweeather.RichDate
 import com.aluxian.tweeather.models.{Coordinates, LocationBox}
-import com.aluxian.tweeather.utils.RichDate
 import org.apache.spark.ml.UnaryTransformer
 import org.apache.spark.ml.param._
 import org.apache.spark.ml.util.Identifiable

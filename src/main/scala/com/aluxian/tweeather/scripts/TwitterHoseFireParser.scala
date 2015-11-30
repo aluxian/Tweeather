@@ -1,9 +1,11 @@
 package com.aluxian.tweeather.scripts
 
-import com.aluxian.tweeather.models.{FireNetInput, Tweet}
+import com.aluxian.tweeather.RichSeq
 import com.aluxian.tweeather.transformers._
-import com.aluxian.tweeather.utils.{RichSeq, SentimentModels}
 import org.apache.spark.Logging
+import org.apache.spark.ml.classification.NaiveBayesModel
+import org.apache.spark.mllib.linalg.Vectors
+import org.apache.spark.mllib.regression.LabeledPoint
 import org.apache.spark.mllib.util.MLUtils
 import org.apache.spark.sql.Row
 
@@ -16,35 +18,36 @@ object TwitterHoseFireParser extends Script with Logging {
     import sqlc.implicits._
 
     // Import data
-    var data = sc.objectFile[Tweet]("/tw/fire/data/tweet*")
-      .map(tweet => (tweet.text, tweet.location.lat, tweet.location.lon, tweet.createdAt))
-      .toDF("raw_text", "lat", "lon", "createdAt")
+    logInfo("Parsing text files")
+    var data = sc.textFile("/tw/fire/collected/*.text")
+      .map(_.split(','))
+      .map(parts => (parts(0).toDouble, parts(1).toDouble, parts(2).toLong, parts.drop(3).mkString(",")))
+      .toDF("lat", "lon", "createdAt", "raw_text")
 
     // Analyse sentiment
-    data = SentimentModels.emoModel
+    logInfo("Analysing sentiment")
+    data = NaiveBayesModel.load("/tw/sentiment/models/emo.model")
       .setPredictionCol("sentiment")
       .transform(data)
 
     // Get weather
+    logInfo("Getting weather data")
     data = Seq(
       new GribUrlGenerator().setLocationBox(locationBox).setInputCol("createdAt").setOutputCol("grib_url"),
       new WeatherProvider().setLatitudeColumn("grib_url")
     ).mapCompose(data)(_.transform)
 
     // Convert to LabeledPoint
+    logInfo("Converting to LabeledPoint format")
     val libsvmData = data
       .select("sentiment", "temperature", "pressure", "humidity")
-      .map({ case Row(sentiment, temperature, pressure, humidity) =>
-        FireNetInput(
-          sentiment.toString.toDouble,
-          temperature.toString.toDouble,
-          pressure.toString.toDouble,
-          humidity.toString.toDouble
-        ).toLabeledPoint
+      .map({ case Row(sentiment: Double, temperature: Double, pressure: Double, humidity: Double) =>
+        new LabeledPoint(sentiment, Vectors.dense(temperature, pressure, humidity))
       })
 
     // Save in LIBSVM format
-    MLUtils.saveAsLibSVMFile(libsvmData, "/tw/fire/data.libsvm")
+    logInfo("Saving data in LIBSVM format")
+    MLUtils.saveAsLibSVMFile(libsvmData, "/tw/fire/parsed/data.libsvm")
   }
 
 }

@@ -1,8 +1,8 @@
 package com.aluxian.tweeather.scripts
 
+import com.aluxian.tweeather.RichStatus
 import com.aluxian.tweeather.models.{Coordinates, LocationBox}
 import com.aluxian.tweeather.streaming.TwitterUtils
-import com.aluxian.tweeather.utils.RichStatus
 import org.apache.spark.Logging
 import org.apache.spark.streaming.{Minutes, StreamingContext}
 import twitter4j.FilterQuery
@@ -21,8 +21,11 @@ object TwitterHoseFireCollector extends Script with Logging {
     val stream = TwitterUtils.createMultiStream(ssc, queryBuilder)
 
     stream
-      .map(_.toTweet)
-      .saveAsObjectFiles("/tw/fire/data/tweet")
+      .map(status => {
+        val location = status.getApproximateLocation
+        (location.lat, location.lon, status.getCreatedAt.getTime, status.getText)
+      })
+      .saveAsTextFiles("/tw/fire/collected/", "text")
 
     ssc.start()
     ssc.awaitTermination()

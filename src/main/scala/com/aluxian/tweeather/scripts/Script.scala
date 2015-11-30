@@ -7,8 +7,8 @@ import org.apache.spark.{SparkConf, SparkContext}
 
 trait Script {
 
-  lazy val scriptName = "Tweeather_" + getClass.getSimpleName.stripSuffix("$")
-  implicit lazy val sc = {
+  protected lazy val scriptName = "Tweeather_" + getClass.getSimpleName.stripSuffix("$")
+  protected implicit lazy val sc = {
     val conf = new SparkConf()
       .setIfMissing("spark.app.id", scriptName)
       .setIfMissing("spark.app.name", scriptName)
@@ -17,8 +17,8 @@ trait Script {
     new SparkContext(conf)
   }
 
-  lazy val hdfs = FileSystem.get(sc.hadoopConfiguration)
-  lazy val sqlc = new SQLContext(sc)
+  protected lazy val hdfs = FileSystem.get(sc.hadoopConfiguration)
+  protected lazy val sqlc = new SQLContext(sc)
 
   def main(args: Array[String]) {
     // Log4j properties

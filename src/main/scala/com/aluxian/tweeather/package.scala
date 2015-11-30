@@ -1,11 +1,14 @@
-package com.aluxian.tweeather
+package com.aluxian
 
+import java.io.ObjectOutputStream
 import java.util.{Calendar, Date, Locale}
 
-import com.aluxian.tweeather.models.{Coordinates, Tweet}
+import com.aluxian.tweeather.models.Coordinates
+import org.apache.hadoop.fs.{FileSystem, Path}
+import org.apache.spark.ml.Model
 import twitter4j.{GeoLocation, Status}
 
-package object utils {
+package object tweeather {
 
   implicit class RichDate(date: Date) {
     def toCalendar: Calendar = {
@@ -31,15 +34,6 @@ package object utils {
         Coordinates(sum.lat / coordinates.length, sum.lon / coordinates.length)
       }
     }
-
-    def toTweet: Tweet = {
-      Tweet(
-        status.getUser.getScreenName,
-        status.getText,
-        status.getApproximateLocation,
-        status.getCreatedAt.getTime
-      )
-    }
   }
 
   implicit class RichBoolean(boolean: Boolean) {
@@ -51,6 +45,14 @@ package object utils {
   implicit class RichSeq[+A](seq: Seq[A]) {
     def mapCompose[B](z: B)(f: A => (B => B)): B = {
       seq.map(f).reduceRight(_ compose _).apply(z)
+    }
+  }
+
+  implicit class RichModel[M <: Model[M]](model: Model[M]) {
+    def serialize(hdfs: FileSystem, path: String): Unit = {
+      val output = new ObjectOutputStream(hdfs.create(new Path(path)))
+      output.writeObject(model)
+      output.close()
     }
   }
 
