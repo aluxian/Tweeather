@@ -21,11 +21,11 @@ object TwitterHoseFireCollector extends Script with Logging {
     val stream = TwitterUtils.createMultiStream(ssc, queryBuilder)
 
     stream
-      .window(streamingInterval, streamingInterval)
       .map(status => {
         val location = status.getApproximateLocation
         (location.lat, location.lon, status.getCreatedAt.getTime, status.getText)
       })
+      .window(streamingInterval, streamingInterval)
       .saveAsTextFiles("/tw/fire/collected/", "text")
 
     ssc.start()
