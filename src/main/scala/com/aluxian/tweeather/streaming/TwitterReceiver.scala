@@ -26,7 +26,7 @@ class TwitterReceiver(twitterAuth: Authorization,
       def onScrubGeo(l: Long, l1: Long) {}
 
       def onTrackLimitationNotice(i: Int): Unit = {
-        logWarning(s"Twitter stream track limitation notice: $i")
+        logInfo(s"Twitter stream track limitation notice: $i")
       }
 
       def onStallWarning(stallWarning: StallWarning): Unit = {
