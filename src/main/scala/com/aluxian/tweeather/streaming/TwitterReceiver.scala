@@ -21,12 +21,16 @@ class TwitterReceiver(twitterAuth: Authorization,
         store(status)
       }
 
-      def onDeletionNotice(statusDeletionNotice: StatusDeletionNotice) {}
+      def onDeletionNotice(notice: StatusDeletionNotice): Unit = {
+        logInfo(s"Twitter stream deletion notice for status id ${notice.getStatusId} by user id ${notice.getUserId}")
+      }
 
-      def onScrubGeo(l: Long, l1: Long) {}
+      def onScrubGeo(userId: Long, upToStatusId: Long): Unit = {
+        logInfo(s"Twitter stream scrub geo for user id $userId up to status id $upToStatusId")
+      }
 
-      def onTrackLimitationNotice(i: Int): Unit = {
-        logInfo(s"Twitter stream track limitation notice: $i")
+      def onTrackLimitationNotice(numberOfLimitedStatuses: Int): Unit = {
+        logInfo(s"Twitter stream track limitation notice: $numberOfLimitedStatuses")
       }
 
       def onStallWarning(stallWarning: StallWarning): Unit = {
