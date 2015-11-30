@@ -20,6 +20,7 @@ trait Script {
       .setIfMissing("spark.app.name", scriptName)
       .setIfMissing("spark.master", "local[*]")
       .setIfMissing("spark.hadoop.fs.defaultFS", "hdfs://localhost:9000")
+      .setIfMissing("spark.streaming.stopGracefullyOnShutdown", "true")
       .setIfMissing("spark.streaming.blockInterval", "10s")
     new SparkContext(conf)
   }
