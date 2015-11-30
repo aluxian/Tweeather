@@ -12,8 +12,6 @@ trait Script {
     .map(_.toLong * 1000).getOrElse(-1L)
   protected lazy val streamingInterval = sys.props.get("tw.streaming.interval") // in seconds
     .map(s => new Duration(s.toLong * 1000)).getOrElse(Minutes(5))
-  protected lazy val streamingPartitions = sys.props.get("tw.streaming.partitions")
-    .map(_.toInt).getOrElse(sc.defaultMinPartitions)
 
   protected lazy val scriptName = "Tweeather_" + getClass.getSimpleName.stripSuffix("$")
   protected implicit lazy val sc = {
@@ -22,6 +20,7 @@ trait Script {
       .setIfMissing("spark.app.name", scriptName)
       .setIfMissing("spark.master", "local[*]")
       .setIfMissing("spark.hadoop.fs.defaultFS", "hdfs://localhost:9000")
+      .setIfMissing("spark.streaming.blockInterval", "10s")
     new SparkContext(conf)
   }
 

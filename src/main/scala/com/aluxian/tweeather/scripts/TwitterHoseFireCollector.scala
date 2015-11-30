@@ -25,7 +25,7 @@ object TwitterHoseFireCollector extends Script with Logging {
         val location = status.getApproximateLocation
         (location.lat, location.lon, status.getCreatedAt.getTime, status.getText)
       })
-      .repartition(streamingPartitions)
+      .repartition(sc.defaultParallelism)
       .saveAsTextFiles("/tw/fire/collected/", "text")
 
     ssc.start()
