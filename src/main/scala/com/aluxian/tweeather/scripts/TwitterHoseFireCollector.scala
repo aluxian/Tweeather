@@ -21,6 +21,7 @@ object TwitterHoseFireCollector extends Script with Logging {
     val stream = TwitterUtils.createMultiStream(ssc, queryBuilder)
 
     stream
+      .window(streamingBatchDuration)
       .map(status => {
         val location = status.getApproximateLocation
         (location.lat, location.lon, status.getCreatedAt.getTime, status.getText)
