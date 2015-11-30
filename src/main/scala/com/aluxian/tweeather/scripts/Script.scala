@@ -3,11 +3,17 @@ package com.aluxian.tweeather.scripts
 import org.apache.hadoop.fs.FileSystem
 import org.apache.log4j.PropertyConfigurator
 import org.apache.spark.sql.SQLContext
+import org.apache.spark.streaming.{Duration, Minutes}
 import org.apache.spark.{SparkConf, SparkContext}
 
 trait Script {
 
   protected lazy val scriptName = "Tweeather_" + getClass.getSimpleName.stripSuffix("$")
+
+  protected lazy val streamingTimeout = sys.props.get("tw.streaming.timeout").map(_.toLong).getOrElse(-1L)
+  protected lazy val streamingBatchDuration = sys.props.get("tw.streaming.batch.duration")
+    .map(s => new Duration(s.toLong)).getOrElse(Minutes(10))
+
   protected implicit lazy val sc = {
     val conf = new SparkConf()
       .setIfMissing("spark.app.id", scriptName)

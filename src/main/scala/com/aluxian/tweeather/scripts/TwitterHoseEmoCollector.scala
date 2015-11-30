@@ -2,7 +2,7 @@ package com.aluxian.tweeather.scripts
 
 import com.aluxian.tweeather.streaming.TwitterUtils
 import org.apache.spark.Logging
-import org.apache.spark.streaming.{Minutes, StreamingContext}
+import org.apache.spark.streaming.StreamingContext
 import twitter4j.FilterQuery
 
 object TwitterHoseEmoCollector extends Script with Logging {
@@ -10,7 +10,7 @@ object TwitterHoseEmoCollector extends Script with Logging {
   override def main(args: Array[String]) {
     super.main(args)
 
-    val ssc = new StreamingContext(sc, Minutes(10))
+    val ssc = new StreamingContext(sc, streamingBatchDuration)
     val stream = TwitterUtils.createMultiStream(ssc, queryBuilder)
 
     stream
@@ -18,7 +18,10 @@ object TwitterHoseEmoCollector extends Script with Logging {
       .saveAsTextFiles("/tw/sentiment/emo/collected/", "text")
 
     ssc.start()
-    ssc.awaitTermination()
+
+    if (!ssc.awaitTerminationOrTimeout(streamingTimeout)) {
+      ssc.stop(stopSparkContext = true, stopGracefully = true)
+    }
   }
 
   def queryBuilder(): FilterQuery = {
