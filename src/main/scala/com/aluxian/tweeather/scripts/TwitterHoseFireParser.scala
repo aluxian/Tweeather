@@ -21,7 +21,6 @@ object TwitterHoseFireParser extends Script with Logging {
     // Import data
     logInfo("Parsing text files")
     var data = sc.textFile("/tw/fire/collected/*.text")
-      .coalesce(sc.defaultParallelism)
       .map(_.split(','))
       .map(parts => (parts(0).toDouble, parts(1).toDouble, parts(2).toLong, parts.drop(3).mkString(",")))
       .toDF("lat", "lon", "createdAt", "raw_text")
