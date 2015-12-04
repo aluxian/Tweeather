@@ -1,6 +1,6 @@
 package com.aluxian.tweeather.transformers
 
-import com.aluxian.tweeather.utils.{DefaultParamsReadable, DefaultParamsWritable}
+import com.aluxian.tweeather.utils.{ParamsReadable, ParamsWritable}
 import org.apache.spark.ml.UnaryTransformer
 import org.apache.spark.ml.param._
 import org.apache.spark.ml.util.Identifiable
@@ -10,7 +10,7 @@ import org.apache.spark.sql.types._
   * A feature transformer that replaces urls, @usernames and repeated letters thus reducing the feature space.
   */
 class FeatureReducer(override val uid: String)
-  extends UnaryTransformer[String, String, FeatureReducer] with DefaultParamsWritable {
+  extends UnaryTransformer[String, String, FeatureReducer] with ParamsWritable {
 
   def this() = this(Identifiable.randomUID("featureReducer"))
 
@@ -36,6 +36,6 @@ class FeatureReducer(override val uid: String)
 
 }
 
-object FeatureReducer extends DefaultParamsReadable[FeatureReducer] {
+object FeatureReducer extends ParamsReadable[FeatureReducer] {
   override def load(path: String): FeatureReducer = super.load(path)
 }

@@ -3,6 +3,7 @@ package com.aluxian.tweeather.scripts
 import com.aluxian.tweeather.RichSeq
 import com.aluxian.tweeather.transformers._
 import org.apache.spark.Logging
+import org.apache.spark.ml.PipelineModel
 import org.apache.spark.ml.classification.NaiveBayesModel
 import org.apache.spark.mllib.linalg.Vectors
 import org.apache.spark.mllib.regression.LabeledPoint
@@ -27,7 +28,8 @@ object TwitterHoseFireParser extends Script with Logging {
 
     // Analyse sentiment
     logInfo("Analysing sentiment")
-    data = NaiveBayesModel.load("/tw/sentiment/models/emo.model")
+    data = PipelineModel.load("/tw/sentiment/models/emo.model")
+      .asInstanceOf[NaiveBayesModel]
       .setPredictionCol("sentiment")
       .transform(data)
 

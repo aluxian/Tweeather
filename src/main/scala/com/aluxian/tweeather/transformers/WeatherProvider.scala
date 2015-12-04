@@ -4,7 +4,7 @@ import java.nio.file.Files
 
 import com.aluxian.tweeather.RichSeq
 import com.aluxian.tweeather.models.Metric
-import com.aluxian.tweeather.utils.{DefaultParamsReadable, DefaultParamsWritable, JParam}
+import com.aluxian.tweeather.utils.{JParam, ParamsReadable, ParamsWritable}
 import com.amazonaws.util.IOUtils
 import org.apache.hadoop.fs.{FileSystem, Path}
 import org.apache.spark.ml.Transformer
@@ -23,27 +23,27 @@ import scalaj.http.Http
 /**
   * A transformer that retrieves weather from NOAA.
   */
-class WeatherProvider(override val uid: String) extends Transformer with DefaultParamsWritable {
+class WeatherProvider(override val uid: String) extends Transformer with ParamsWritable {
 
   def this() = this(Identifiable.randomUID("weatherProvider"))
 
   /**
-    * JParam for the column name that holds the GRIB download url.
+    * Param for the column name that holds the GRIB download url.
     * @group param
     */
-  final val gribUrl: JParam[String] =
-    new JParam[String](this, "gribUrl", "column name for the GRIB download url")
+  final val gribUrlCol: JParam[String] =
+    new JParam[String](this, "gribUrlCol", "column name for the GRIB download url")
 
   /** @group setParam */
-  def setGribUrlColumn(column: String): this.type = set(gribUrl, column)
+  def setGribUrlColumn(column: String): this.type = set(gribUrlCol, column)
 
   /** @group getParam */
-  def getGribUrlColumn: String = $(gribUrl)
+  def getGribUrlColumn: String = $(gribUrlCol)
 
-  setDefault(gribUrl -> "grib_url")
+  setDefault(gribUrlCol -> "grib_url")
 
   /**
-    * JParam for the folder path where downloaded GRIB files will be saved.
+    * Param for the folder path where downloaded GRIB files will be saved.
     * @group param
     */
   final val gribsPath: JParam[String] =
@@ -58,37 +58,37 @@ class WeatherProvider(override val uid: String) extends Transformer with Default
   setDefault(gribsPath -> "/tmp/gribs/")
 
   /**
-    * JParam for the column name that holds the latitude coordinate.
+    * Param for the column name that holds the latitude coordinate.
     * @group param
     */
-  final val latitude: JParam[String] =
-    new JParam[String](this, "latitude", "column name for the latitude coordinate")
+  final val latitudeCol: JParam[String] =
+    new JParam[String](this, "latitudeCol", "column name for the latitude coordinate")
 
   /** @group setParam */
-  def setLatitudeColumn(column: String): this.type = set(latitude, column)
+  def setLatitudeColumn(column: String): this.type = set(latitudeCol, column)
 
   /** @group getParam */
-  def getLatitudeColumn: String = $(latitude)
+  def getLatitudeColumn: String = $(latitudeCol)
 
-  setDefault(latitude -> "lat")
+  setDefault(latitudeCol -> "lat")
 
   /**
-    * JParam for the column name that holds the longitude coordinate.
+    * Param for the column name that holds the longitude coordinate.
     * @group param
     */
-  final val longitude: JParam[String] =
-    new JParam[String](this, "longitude", "column name for the longitude coordinate")
+  final val longitudeCol: JParam[String] =
+    new JParam[String](this, "longitudeCol", "column name for the longitude coordinate")
 
   /** @group setParam */
-  def setLongitudeColumn(column: String): this.type = set(longitude, column)
+  def setLongitudeColumn(column: String): this.type = set(longitudeCol, column)
 
   /** @group getParam */
-  def getLongitudeColumn: String = $(longitude)
+  def getLongitudeColumn: String = $(longitudeCol)
 
-  setDefault(longitude -> "lon")
+  setDefault(longitudeCol -> "lon")
 
   /**
-    * JParam for the local FS path where grib files will be temporarily moved (to be read).
+    * Param for the local FS path where grib files will be temporarily moved (to be read).
     * @group param
     */
   final val localFsPath: JParam[String] =
@@ -103,7 +103,7 @@ class WeatherProvider(override val uid: String) extends Transformer with Default
   setDefault(localFsPath -> Files.createTempDirectory("gfs").toString)
 
   /**
-    * JParam for the weather metrics to retrieve.
+    * Param for the weather metrics to retrieve.
     * @group param
     */
   final val metrics: JParam[Seq[Metric]] =
@@ -121,11 +121,14 @@ class WeatherProvider(override val uid: String) extends Transformer with Default
   val gribSets = mutable.Map[String, Map[Metric, GridDatatype]]()
 
   override def transformSchema(schema: StructType): StructType = {
-    val inputType = schema($(gribUrl)).dataType
+    val inputType = schema($(gribUrlCol)).dataType
     require(inputType == StringType, s"grib url type must be string type but got $inputType.")
 
-    if (schema.fieldNames.intersect($(metrics).map(_.name)).nonEmpty) {
-      throw new IllegalArgumentException(s"Output columns temperature, pressure and humidity already exist.")
+    val columns = $(metrics).map(_.name)
+    val columnsString = columns.mkString(", ")
+
+    if (schema.fieldNames.intersect(columns).nonEmpty) {
+      throw new IllegalArgumentException(s"Output columns $columnsString already exist.")
     }
 
     val outputFields = $(metrics).map(m => StructField(m.name, DoubleType, nullable = false))
@@ -149,7 +152,7 @@ class WeatherProvider(override val uid: String) extends Transformer with Default
         }
       }
 
-      df.withColumn(metric.name, t(col($(latitude)), col($(longitude)), col($(gribUrl))))
+      df.withColumn(metric.name, t(col($(latitudeCol)), col($(longitudeCol)), col($(gribUrlCol))))
     })
   }
 
@@ -176,6 +179,8 @@ class WeatherProvider(override val uid: String) extends Transformer with Default
       })
     }
 
+    // TODO: Use only one FS
+
     // Copy to local FS then read data
     hdfs.copyToLocalFile(hdfsPath, localPath)
     val data = GridDataset.open(localPath.toString)
@@ -184,6 +189,6 @@ class WeatherProvider(override val uid: String) extends Transformer with Default
 
 }
 
-object WeatherProvider extends DefaultParamsReadable[WeatherProvider] {
+object WeatherProvider extends ParamsReadable[WeatherProvider] {
   override def load(path: String): WeatherProvider = super.load(path)
 }
