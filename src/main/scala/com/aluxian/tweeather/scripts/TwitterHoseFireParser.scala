@@ -2,6 +2,7 @@ package com.aluxian.tweeather.scripts
 
 import com.aluxian.tweeather.RichSeq
 import com.aluxian.tweeather.transformers._
+import org.apache.hadoop.fs.Path
 import org.apache.spark.Logging
 import org.apache.spark.ml.PipelineModel
 import org.apache.spark.mllib.linalg.Vectors
@@ -45,6 +46,7 @@ object TwitterHoseFireParser extends Script with Logging {
 
     // Save in LIBSVM format
     logInfo("Saving data in LIBSVM format")
+    hdfs.delete(new Path("/tw/fire/parsed/data.libsvm"), true)
     MLUtils.saveAsLibSVMFile(libsvmData, "/tw/fire/parsed/data.libsvm")
   }
 
