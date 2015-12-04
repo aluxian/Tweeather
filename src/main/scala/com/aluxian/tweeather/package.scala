@@ -44,7 +44,7 @@ package object tweeather {
 
   implicit class RichSeq[+A](seq: Seq[A]) {
     def mapCompose[B](z: B)(f: A => (B => B)): B = {
-      seq.map(f).reduceRight(_ compose _).apply(z)
+      seq.map(f).reduce(_ andThen _).apply(z)
     }
   }
 

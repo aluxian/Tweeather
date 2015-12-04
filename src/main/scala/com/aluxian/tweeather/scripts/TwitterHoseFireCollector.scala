@@ -23,7 +23,8 @@ object TwitterHoseFireCollector extends Script with Logging {
     stream
       .map(status => {
         val location = status.getApproximateLocation
-        (location.lat, location.lon, status.getCreatedAt.getTime, status.getText)
+        val text = status.getText.replaceAll("[\\n\\r,]+", " ")
+        Seq(location.lat, location.lon, status.getCreatedAt.getTime, text).mkString(",")
       })
       .repartition(sc.defaultParallelism)
       .saveAsTextFiles("/tw/fire/collected/", "text")
