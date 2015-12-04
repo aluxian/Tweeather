@@ -91,8 +91,6 @@ object ParamsReader {
     * Decode a parameter JSON object which contains its value and type information.
     */
   def decodeParam(param: JObject): Any = {
-    println(param)
-    println(manifestFromJson(param))
     (param \ "value").extract(formats, manifestFromJson(param))
   }
 
