@@ -48,6 +48,12 @@ package object tweeather {
     }
   }
 
+  implicit class RichArray[+A](array: Array[A]) {
+    def mapCompose[B](z: B)(f: A => (B => B)): B = {
+      array.toSeq.mapCompose[B](z)(f)
+    }
+  }
+
   implicit class RichModel[M <: Model[M]](model: Model[M]) {
     def serialize(hdfs: FileSystem, path: String): Unit = {
       val output = new ObjectOutputStream(hdfs.create(new Path(path)))

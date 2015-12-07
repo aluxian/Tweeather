@@ -1,16 +1,15 @@
 package com.aluxian.tweeather.transformers
 
-import com.aluxian.tweeather.utils.{ParamsReadable, ParamsWritable}
 import org.apache.spark.ml.UnaryTransformer
 import org.apache.spark.ml.param._
-import org.apache.spark.ml.util.Identifiable
+import org.apache.spark.ml.util.{BasicParamsReadable, BasicParamsWritable, Identifiable}
 import org.apache.spark.sql.types._
 
 /**
   * A feature transformer that removes punctuation and symbols from the input text.
   */
 class StringSanitizer(override val uid: String)
-  extends UnaryTransformer[String, String, StringSanitizer] with ParamsWritable {
+  extends UnaryTransformer[String, String, StringSanitizer] with BasicParamsWritable {
 
   def this() = this(Identifiable.randomUID("stringSanitizer"))
 
@@ -31,6 +30,6 @@ class StringSanitizer(override val uid: String)
 
 }
 
-object StringSanitizer extends ParamsReadable[StringSanitizer] {
+object StringSanitizer extends BasicParamsReadable[StringSanitizer] {
   override def load(path: String): StringSanitizer = super.load(path)
 }

@@ -1,16 +1,15 @@
 package com.aluxian.tweeather.transformers
 
-import com.aluxian.tweeather.utils.{JParam, ParamsReadable, ParamsWritable}
 import org.apache.spark.ml.Transformer
 import org.apache.spark.ml.param._
-import org.apache.spark.ml.util.Identifiable
+import org.apache.spark.ml.util.{BasicParamsReadable, BasicParamsWritable, Identifiable}
 import org.apache.spark.sql.DataFrame
 import org.apache.spark.sql.types._
 
 /**
   * A transformer that removes columns.
   */
-class ColumnDropper(override val uid: String) extends Transformer with ParamsWritable {
+class ColumnDropper(override val uid: String) extends Transformer with BasicParamsWritable {
 
   def this() = this(Identifiable.randomUID("columnsDropper"))
 
@@ -18,24 +17,27 @@ class ColumnDropper(override val uid: String) extends Transformer with ParamsWri
     * Param for the column names to be removed.
     * @group param
     */
-  final val dropColumns: JParam[Seq[String]] =
-    new JParam[Seq[String]](this, "dropColumns", "columns to be dropped")
+  final val dropColumns: StringArrayParam =
+    new StringArrayParam(this, "dropColumns", "columns to be dropped")
 
   /** @group setParam */
-  def setDropColumns(columns: String*): this.type = set(dropColumns, columns)
+  def setDropColumns(columns: String*): this.type = set(dropColumns, columns.toArray)
+
+  /** @group setParam */
+  def setDropColumns(columns: Array[String]): this.type = set(dropColumns, columns)
 
   /** @group getParam */
-  def getDropColumns: Seq[String] = $(dropColumns)
+  def getDropColumns: Array[String] = $(dropColumns)
 
-  setDefault(dropColumns -> Seq())
+  setDefault(dropColumns -> Array())
 
   override def transformSchema(schema: StructType): StructType = {
-    StructType(schema.fields.diff($(dropColumns)))
+    StructType(schema.fields.diff(getDropColumns))
   }
 
   override def transform(dataset: DataFrame): DataFrame = {
     transformSchema(dataset.schema, logging = true)
-    without(dataset, $(dropColumns))
+    without(dataset, getDropColumns)
   }
 
   override def copy(extra: ParamMap): ColumnDropper = defaultCopy(extra)
@@ -50,6 +52,6 @@ class ColumnDropper(override val uid: String) extends Transformer with ParamsWri
 
 }
 
-object ColumnDropper extends ParamsReadable[ColumnDropper] {
+object ColumnDropper extends BasicParamsReadable[ColumnDropper] {
   override def load(path: String): ColumnDropper = super.load(path)
 }

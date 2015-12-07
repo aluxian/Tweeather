@@ -39,15 +39,15 @@ object TwitterHoseFireParser extends Script with Logging {
     // Convert to LabeledPoint
     logInfo("Converting to LabeledPoint format")
     val libsvmData = data
-      .select("prediction", "temperature", "pressure", "humidity")
-      .map({ case Row(sentiment: Double, temperature: Double, pressure: Double, humidity: Double) =>
-        new LabeledPoint(sentiment, Vectors.dense(temperature, pressure, humidity))
+      .select("probability", "temperature", "pressure", "humidity")
+      .map({ case Row(probability: Array[Double], temperature: Double, pressure: Double, humidity: Double) =>
+        new LabeledPoint(probability(1), Vectors.dense(temperature, pressure, humidity))
       })
 
     // Save in LIBSVM format
     logInfo("Saving data in LIBSVM format")
-    hdfs.delete(new Path("/tw/fire/parsed/data.libsvm"), true)
-    MLUtils.saveAsLibSVMFile(libsvmData, "/tw/fire/parsed/data.libsvm")
+    hdfs.delete(new Path("/tw/fire/parsed/data.libsvm.txt"), true)
+    MLUtils.saveAsLibSVMFile(libsvmData, "/tw/fire/parsed/data.libsvm.txt")
   }
 
 }

@@ -5,17 +5,17 @@ import java.util.{Calendar, Date, Locale}
 
 import com.aluxian.tweeather.RichDate
 import com.aluxian.tweeather.models.{Coordinates, LocationBox}
-import com.aluxian.tweeather.utils.{JParam, ParamsReadable, ParamsWritable}
+import com.aluxian.tweeather.utils.LocationBoxParam
 import org.apache.spark.ml.UnaryTransformer
 import org.apache.spark.ml.param._
-import org.apache.spark.ml.util.Identifiable
+import org.apache.spark.ml.util.{BasicParamsReadable, BasicParamsWritable, Identifiable}
 import org.apache.spark.sql.types._
 
 /**
   * A transformer that adds a download url for the GRIB file (weather data).
   */
 class GribUrlGenerator(override val uid: String)
-  extends UnaryTransformer[Long, String, GribUrlGenerator] with ParamsWritable {
+  extends UnaryTransformer[Long, String, GribUrlGenerator] with BasicParamsWritable {
 
   def this() = this(Identifiable.randomUID("gribUrlGenerator"))
 
@@ -23,8 +23,8 @@ class GribUrlGenerator(override val uid: String)
     * Param for the location box to be used.
     * @group param
     */
-  final val locationBox: JParam[LocationBox] =
-    new JParam[LocationBox](this, "locationBox", "location box to be used")
+  final val locationBox: LocationBoxParam =
+    new LocationBoxParam(this, "locationBox", "location box to be used")
 
   /** @group setParam */
   def setLocationBox(box: LocationBox): this.type = set(locationBox, box)
@@ -46,7 +46,7 @@ class GribUrlGenerator(override val uid: String)
         case _ => "18"
       }
 
-      val location = $(locationBox)
+      val location = getLocationBox
       "http://nomads.ncep.noaa.gov/cgi-bin/filter_gfs_0p25.pl" +
         s"?file=gfs.t${quarterOfDay}z.pgrb2.0p25.anl&dir=%2Fgfs.$dateStr$quarterOfDay" +
         s"&lev_2_m_above_ground=on&lev_surface=on&var_PRES=on&var_RH=on&var_TMP=on" +
@@ -65,6 +65,6 @@ class GribUrlGenerator(override val uid: String)
 
 }
 
-object GribUrlGenerator extends ParamsReadable[GribUrlGenerator] {
+object GribUrlGenerator extends BasicParamsReadable[GribUrlGenerator] {
   override def load(path: String): GribUrlGenerator = super.load(path)
 }

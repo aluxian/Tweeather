@@ -14,16 +14,12 @@ object TwitterHoseFireTrainer extends Script with Logging {
 
     // Prepare data sets
     logInfo("Getting datasets")
-    val data = MLUtils.loadLibSVMFile(sc, "/tw/fire/parsed/data.libsvm").cache()
+    val data = MLUtils.loadLibSVMFile(sc, "/tw/fire/parsed/data.libsvm.txt").cache()
     val Array(trainingData, testData) = data.toDF().randomSplit(Array(0.9, 0.1))
-
-    // Set input/output neurons based on the data sets
-    val inputs = data.map(_.features.size).max()
-    val outputs = data.map(_.label).max().toInt
 
     // Configure the perceptron
     val perceptron = new MultilayerPerceptronClassifier()
-      .setLayers(Array(inputs, 5, outputs))
+      .setLayers(Array(3, 5, 1))
       .setMaxIter(50)
 
     // Train the perceptron
