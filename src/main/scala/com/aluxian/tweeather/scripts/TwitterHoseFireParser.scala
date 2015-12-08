@@ -4,7 +4,7 @@ import com.aluxian.tweeather.RichSeq
 import com.aluxian.tweeather.transformers._
 import org.apache.spark.Logging
 import org.apache.spark.ml.PipelineModel
-import org.apache.spark.sql.Row
+import org.apache.spark.sql.{Row, SaveMode}
 
 object TwitterHoseFireParser extends Script with Logging {
 
@@ -39,7 +39,7 @@ object TwitterHoseFireParser extends Script with Logging {
       .map({ case Row(probability: Array[Double], temperature: Double, pressure: Double, humidity: Double) =>
         Seq(probability(1), temperature, pressure, humidity).mkString(",")
       })
-      .saveAsTextFile("/tw/fire/parsed/data.txt")
+      .toDF.write.mode(SaveMode.Overwrite).parquet("/tw/fire/parsed/data.parquet")
   }
 
 }
