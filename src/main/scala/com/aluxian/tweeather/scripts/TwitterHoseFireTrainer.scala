@@ -14,7 +14,7 @@ object TwitterHoseFireTrainer extends Script with Logging {
 
     // Prepare data sets
     logInfo("Getting datasets")
-    val Array(trainingData, testData) = sc.textFile("/tw/fire/parsed/data.libsvm.txt")
+    val Array(trainingData, testData) = sc.textFile("/tw/fire/parsed/data.txt")
       .map(line => {
         val parts = line.split(',').map(_.toDouble)
         val outputs = Vectors.dense(parts.head)

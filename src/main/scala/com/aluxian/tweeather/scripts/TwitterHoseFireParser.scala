@@ -39,7 +39,7 @@ object TwitterHoseFireParser extends Script with Logging {
       .map({ case Row(probability: Array[Double], temperature: Double, pressure: Double, humidity: Double) =>
         Seq(probability(1), temperature, pressure, humidity).mkString(",")
       })
-      .saveAsTextFile("/tw/fire/parsed/data.libsvm.txt")
+      .saveAsTextFile("/tw/fire/parsed/data.txt")
   }
 
 }
