@@ -14,16 +14,15 @@ trait Script {
     .map(s => Seconds(s.toLong)).getOrElse(Minutes(5))
 
   protected lazy val scriptName = "Tweeather_" + getClass.getSimpleName.stripSuffix("$")
-  protected implicit lazy val sc = {
-    val conf = new SparkConf()
+  protected lazy val sc = new SparkContext(
+    new SparkConf()
       .setIfMissing("spark.app.id", scriptName)
       .setIfMissing("spark.app.name", scriptName)
       .setIfMissing("spark.master", "local[*]")
       .setIfMissing("spark.hadoop.fs.defaultFS", "hdfs://localhost:9000")
       .setIfMissing("spark.streaming.stopGracefullyOnShutdown", "true")
       .setIfMissing("spark.streaming.blockInterval", "10s")
-    new SparkContext(conf)
-  }
+  )
 
   protected lazy val hdfs = FileSystem.get(sc.hadoopConfiguration)
   protected lazy val sqlc = new SQLContext(sc)
