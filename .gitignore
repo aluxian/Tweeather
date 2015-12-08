@@ -2,5 +2,3 @@ target/
 logs/
 src/main/resources/com/aluxian/tweeather/res/log4j.properties
 src/main/resources/com/aluxian/tweeather/res/twitter.properties
-.idea
-*.swp
