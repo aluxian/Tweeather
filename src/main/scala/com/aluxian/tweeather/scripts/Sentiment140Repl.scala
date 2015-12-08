@@ -11,14 +11,14 @@ object Sentiment140Repl extends Script with Logging {
     super.main(args)
     import sqlc.implicits._
 
-    println("Loading model...")
+    println("Loading 140 model...")
     sc // dummy call to init the context
     val model = PipelineModel.load("/tw/sentiment/models/140.model")
-    println("Done. Write your query and press <enter>")
+    println("Done. Write the sentence you want analysed and press <enter>")
 
     for (input <- Source.stdin.getLines) {
       val data = sc
-        .parallelize(Seq(input))
+        .parallelize(Seq(input), 1)
         .toDF("raw_text")
 
       model.transform(data)
