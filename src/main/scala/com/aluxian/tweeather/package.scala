@@ -1,11 +1,8 @@
 package com.aluxian
 
-import java.io.ObjectOutputStream
 import java.util.{Calendar, Date, Locale}
 
 import com.aluxian.tweeather.models.Coordinates
-import org.apache.hadoop.fs.{FileSystem, Path}
-import org.apache.spark.ml.Model
 import twitter4j.{GeoLocation, Status}
 
 package object tweeather {
@@ -51,14 +48,6 @@ package object tweeather {
   implicit class RichArray[+A](array: Array[A]) {
     def mapCompose[B](z: B)(f: A => (B => B)): B = {
       array.toSeq.mapCompose[B](z)(f)
-    }
-  }
-
-  implicit class RichModel[M <: Model[M]](model: Model[M]) {
-    def serialize(hdfs: FileSystem, path: String): Unit = {
-      val output = new ObjectOutputStream(hdfs.create(new Path(path)))
-      output.writeObject(model)
-      output.close()
     }
   }
 

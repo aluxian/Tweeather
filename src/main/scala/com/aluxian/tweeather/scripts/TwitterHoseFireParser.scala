@@ -2,12 +2,8 @@ package com.aluxian.tweeather.scripts
 
 import com.aluxian.tweeather.RichSeq
 import com.aluxian.tweeather.transformers._
-import org.apache.hadoop.fs.Path
 import org.apache.spark.Logging
 import org.apache.spark.ml.PipelineModel
-import org.apache.spark.mllib.linalg.Vectors
-import org.apache.spark.mllib.regression.LabeledPoint
-import org.apache.spark.mllib.util.MLUtils
 import org.apache.spark.sql.Row
 
 object TwitterHoseFireParser extends Script with Logging {
@@ -36,18 +32,14 @@ object TwitterHoseFireParser extends Script with Logging {
       new WeatherProvider().setGribsPath("/tw/fire/gribs/")
     ).mapCompose(data)(_.transform)
 
-    // Convert to LabeledPoint
-    logInfo("Converting to LabeledPoint format")
-    val libsvmData = data
+    // Export data
+    logInfo("Exporting data")
+    data
       .select("probability", "temperature", "pressure", "humidity")
       .map({ case Row(probability: Array[Double], temperature: Double, pressure: Double, humidity: Double) =>
-        new LabeledPoint(probability(1), Vectors.dense(temperature, pressure, humidity))
+        Seq(probability(1), temperature, pressure, humidity).mkString(",")
       })
-
-    // Save in LIBSVM format
-    logInfo("Saving data in LIBSVM format")
-    hdfs.delete(new Path("/tw/fire/parsed/data.libsvm.txt"), true)
-    MLUtils.saveAsLibSVMFile(libsvmData, "/tw/fire/parsed/data.libsvm.txt")
+      .saveAsTextFile("/tw/fire/parsed/data.libsvm.txt")
   }
 
 }

@@ -1,10 +1,10 @@
 package com.aluxian.tweeather.scripts
 
-import com.aluxian.tweeather.RichModel
 import org.apache.spark.Logging
-import org.apache.spark.ml.classification.MultilayerPerceptronClassifier
-import org.apache.spark.ml.evaluation.MulticlassClassificationEvaluator
-import org.apache.spark.mllib.util.MLUtils
+import org.apache.spark.ml.ann.MultilayerPerceptron
+import org.apache.spark.ml.evaluation.RegressionEvaluator
+import org.apache.spark.mllib.linalg.{Vector, Vectors}
+import org.apache.spark.sql.Row
 
 object TwitterHoseFireTrainer extends Script with Logging {
 
@@ -14,13 +14,21 @@ object TwitterHoseFireTrainer extends Script with Logging {
 
     // Prepare data sets
     logInfo("Getting datasets")
-    val data = MLUtils.loadLibSVMFile(sc, "/tw/fire/parsed/data.libsvm.txt").cache()
-    val Array(trainingData, testData) = data.toDF().randomSplit(Array(0.9, 0.1))
+    val Array(trainingData, testData) = sc.textFile("/tw/fire/parsed/data.libsvm.txt")
+      .map(line => {
+        val parts = line.split(',').map(_.toDouble)
+        val outputs = Vectors.dense(parts.head)
+        val inputs = Vectors.dense(parts.tail)
+        (inputs, outputs)
+      })
+      .toDF("input", "output")
+      .randomSplit(Array(0.9, 0.1))
 
     // Configure the perceptron
-    val perceptron = new MultilayerPerceptronClassifier()
+    val perceptron = new MultilayerPerceptron()
       .setLayers(Array(3, 5, 1))
-      .setMaxIter(50)
+      .setInputCol("input")
+      .setOutputCol("output")
 
     // Train the perceptron
     logInfo("Training model")
@@ -28,13 +36,22 @@ object TwitterHoseFireTrainer extends Script with Logging {
 
     // Test the model precision
     logInfo("Testing model")
-    val predicted = model.transform(testData).select("prediction", "label")
-    val evaluator = new MulticlassClassificationEvaluator().setMetricName("precision")
-    logInfo(s"Precision: ${evaluator.evaluate(predicted)}")
+    val predicted = model
+      .setOutputCol("predictedOutput")
+      .transform(testData)
+      .select("output", "predictedOutput")
+      .map({ case Row(output: Vector, predictedOutput: Vector) =>
+        (output.toArray.head, predictedOutput.toArray.head)
+      })
+      .toDF("label", "predicted")
+
+    // The output layer has only 1 value, use a simple RegressionEvaluator
+    val accuracy = new RegressionEvaluator().evaluate(predicted)
+    logInfo(s"Accuracy: $accuracy")
 
     // Save the model
     logInfo("Saving model")
-    model.serialize(hdfs, "/tw/fire/fire.model")
+    model.write.overwrite().save("/tw/fire/fire.model")
   }
 
 }
