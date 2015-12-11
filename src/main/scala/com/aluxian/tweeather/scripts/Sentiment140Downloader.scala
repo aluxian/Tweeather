@@ -3,7 +3,6 @@ package com.aluxian.tweeather.scripts
 import java.net.URL
 import java.util.zip.ZipInputStream
 
-import com.amazonaws.util.IOUtils
 import org.apache.hadoop.fs.Path
 import org.apache.spark.Logging
 
@@ -16,18 +15,25 @@ object Sentiment140Downloader extends Script with Logging {
 
     logInfo(s"Downloading sentiment140 dataset from $downloadUrl")
     val zip = new ZipInputStream(new URL(downloadUrl).openStream())
+    val buffer = new Array[Byte](4 * 1024)
 
     Stream.continually(zip.getNextEntry)
       .takeWhile(_ != null)
-      .foreach(entry => {
-        val entryName = entry.getName
-        val out = hdfs.create(new Path(s"/tw/sentiment/140/downloaded/$entryName"))
-        logInfo(s"Downloading $entryName")
-        IOUtils.copy(zip, out)
-        IOUtils.closeQuietly(out, null)
-      })
+      .foreach { entry =>
+        val fileName = entry.getName
+        val out = hdfs.create(new Path(s"/tw/sentiment/140/downloaded/$fileName"))
+        logInfo(s"Downloading $fileName")
 
-    IOUtils.closeQuietly(zip, null)
+        Stream.continually(zip.read(buffer))
+          .takeWhile(_ != -1)
+          .foreach { count =>
+            out.write(buffer, 0, count)
+          }
+
+        out.close()
+      }
+
+    zip.close()
     logInfo("Downloading finished")
   }
 

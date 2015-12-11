@@ -1,13 +1,12 @@
 package com.aluxian.tweeather.transformers
 
-import java.io.File
+import java.io.{File, FileOutputStream}
 import java.nio.file.Files
 import java.util.concurrent.ConcurrentHashMap
 
 import com.aluxian.tweeather.RichArray
 import com.aluxian.tweeather.models.Metric
 import com.aluxian.tweeather.utils.MetricArrayParam
-import com.amazonaws.util.IOUtils
 import org.apache.spark.Logging
 import org.apache.spark.ml.Transformer
 import org.apache.spark.ml.param._
@@ -20,7 +19,6 @@ import ucar.nc2.dt.grid.GridDataset
 
 import scala.collection.JavaConverters._
 import scala.util.hashing.MurmurHash3
-import scala.util.{Failure, Success}
 import scalaj.http.Http
 
 /**
@@ -172,18 +170,11 @@ object WeatherProvider extends BasicParamsReadable[WeatherProvider] with Logging
       val res = Http(gribUrl).asBytes
 
       if (res.isSuccess) {
-        .exec({ (responseCode, headers, stream) =>
-          if (responseCode != 200) {
-            Failure(new Exception(s"Got response code $responseCode for $gribUrl"))
-          } else {
-            val out = hdfs.create(hdfsPath, true)
-            IOUtils.copy(stream, out)
-            IOUtils.closeQuietly(out, null)
-            Success()
-          }
-        }).body match
-          case Failure(e) => logError("Couldn't download grib", e)
-          case Success(v) => hdfs.delete(hdfsLockPath, true)
+        val out = new FileOutputStream(gribFile)
+        out.write(res.body)
+        out.close()
+      } else {
+        logError("Couldn't download grib", new Exception(s"Got response code ${res.code} for $gribUrl"))
       }
     }
 
