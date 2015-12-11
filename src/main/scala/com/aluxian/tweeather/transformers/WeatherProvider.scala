@@ -167,14 +167,24 @@ object WeatherProvider extends BasicParamsReadable[WeatherProvider] with Logging
     // Download file
     if (Files.notExists(gribFile.toPath)) {
       logInfo(s"Downloading ${gribFile.getPath}")
-      val res = Http(gribUrl).asBytes
+      val out = new FileOutputStream(gribFile)
 
-      if (res.isSuccess) {
-        val out = new FileOutputStream(gribFile)
-        out.write(res.body)
+      try {
+        val lock = out.getChannel.lock()
+
+        try {
+          val res = Http(gribUrl).asBytes
+
+          if (res.isSuccess) {
+            out.write(res.body)
+          } else {
+            logError("Couldn't download grib", new Throwable(s"Got response code ${res.code} for $gribUrl"))
+          }
+        } finally {
+          lock.release()
+        }
+      } finally {
         out.close()
-      } else {
-        logError("Couldn't download grib", new Exception(s"Got response code ${res.code} for $gribUrl"))
       }
     }
 
