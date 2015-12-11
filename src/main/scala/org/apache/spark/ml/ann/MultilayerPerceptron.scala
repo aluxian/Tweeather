@@ -80,8 +80,11 @@ class MultilayerPerceptron(override val uid: String)
     val trainer = new FeedForwardTrainer(perceptron, $(layers).head, $(layers).last)
     trainer.LBFGSOptimizer.setConvergenceTol($(tol)).setNumIterations($(maxIter))
     trainer.setStackSize($(blockSize))
-    val data = dataset.select($(inputCol), $(outputCol))
-      .map { case Row(input: Vector, output: Vector) => (input, output) }
+
+    val data = dataset.select($(inputCol), $(outputCol)).map {
+      case Row(input: Vector, output: Vector) => (input, output)
+    }
+
     val model = trainer.train(data)
     new MultilayerPerceptronModel(uid, $(layers), model.weights())
   }

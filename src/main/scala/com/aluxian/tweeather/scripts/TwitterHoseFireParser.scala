@@ -30,7 +30,7 @@ object TwitterHoseFireParser extends Script with Logging {
     logInfo("Getting weather data")
     data = Seq(
       new GribUrlGenerator().setLocationBox(locationBox).setInputCol("createdAt").setOutputCol("grib_url"),
-      new WeatherProvider().setGribsPath("/tw/fire/gribs/")
+      new WeatherProvider().setGribUrlColumn("grib_url")
     ).mapCompose(data)(_.transform)
 
     // Export data

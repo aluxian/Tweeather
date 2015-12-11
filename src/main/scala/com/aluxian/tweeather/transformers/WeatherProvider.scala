@@ -1,26 +1,24 @@
 package com.aluxian.tweeather.transformers
 
 import java.io.File
+import java.nio.file.Files
 import java.util.concurrent.ConcurrentHashMap
 
 import com.aluxian.tweeather.RichArray
 import com.aluxian.tweeather.models.Metric
 import com.aluxian.tweeather.utils.MetricArrayParam
 import com.amazonaws.util.IOUtils
-import org.apache.hadoop.fs.{FileSystem, Path}
-import org.apache.hadoop.hdfs.protocol.AlreadyBeingCreatedException
-import org.apache.hadoop.ipc.RemoteException
-import org.apache.spark.SparkContext
+import org.apache.spark.Logging
 import org.apache.spark.ml.Transformer
 import org.apache.spark.ml.param._
 import org.apache.spark.ml.util.{BasicParamsReadable, BasicParamsWritable, Identifiable}
+import org.apache.spark.sql.DataFrame
 import org.apache.spark.sql.functions._
 import org.apache.spark.sql.types._
-import org.apache.spark.sql.{DataFrame, SQLContext}
 import ucar.nc2.dt.GridDatatype
+import ucar.nc2.dt.grid.GridDataset
 
 import scala.collection.JavaConverters._
-import scala.collection.mutable
 import scala.util.hashing.MurmurHash3
 import scala.util.{Failure, Success}
 import scalaj.http.Http
@@ -59,6 +57,19 @@ class WeatherProvider(override val uid: String) extends Transformer with BasicPa
   def getGribsPath: String = $(gribsPath)
 
   /**
+    * Param for the weather metrics to retrieve.
+    * @group param
+    */
+  final val metrics: MetricArrayParam =
+    new MetricArrayParam(this, "metrics", "weather metrics to retrieve")
+
+  /** @group setParam */
+  def setMetrics(metricsSeq: Array[Metric]): this.type = set(metrics, metricsSeq)
+
+  /** @group getParam */
+  def getMetrics: Array[Metric] = $(metrics)
+
+  /**
     * Param for the column name that holds the latitude coordinate.
     * @group param
     */
@@ -84,39 +95,12 @@ class WeatherProvider(override val uid: String) extends Transformer with BasicPa
   /** @group getParam */
   def getLongitudeColumn: String = $(longitudeCol)
 
-  /**
-    * Param for the local FS path where grib files will be temporarily moved (to be read).
-    * @group param
-    */
-  final val localFsPath: Param[String] =
-    new Param[String](this, "localFsPath", "temporary local FS path")
-
-  /** @group setParam */
-  def setLocalFsPath(path: String): this.type = set(localFsPath, path)
-
-  /** @group getParam */
-  def getLocalFsPath: String = $(localFsPath)
-
-  /**
-    * Param for the weather metrics to retrieve.
-    * @group param
-    */
-  final val metrics: MetricArrayParam =
-    new MetricArrayParam(this, "metrics", "weather metrics to retrieve")
-
-  /** @group setParam */
-  def setMetrics(metricsSeq: Array[Metric]): this.type = set(metrics, metricsSeq)
-
-  /** @group getParam */
-  def getMetrics: Array[Metric] = $(metrics)
-
   setDefault(
     gribUrlCol -> "grib_url",
-    gribsPath -> "/tmp/gribs/",
+    gribsPath -> new File(sys.props.get("java.io.tmpdir").get, "tweeather").getAbsolutePath,
+    metrics -> Array(Metric.Temperature, Metric.Pressure, Metric.Humidity),
     latitudeCol -> "lat",
-    longitudeCol -> "lon",
-    localFsPath -> new File(sys.props.get("java.io.tmpdir").get, "tweeather").getAbsolutePath,
-    metrics -> Array(Metric.Temperature, Metric.Pressure, Metric.Humidity)
+    longitudeCol -> "lon"
   )
 
   override def transformSchema(schema: StructType): StructType = {
@@ -136,14 +120,18 @@ class WeatherProvider(override val uid: String) extends Transformer with BasicPa
 
   override def transform(dataset: DataFrame): DataFrame = {
     transformSchema(dataset.schema, logging = true)
-    val gribSets = new ConcurrentHashMap[String, Map[Metric, GridDatatype]]().asScala
     $(metrics).mapCompose(dataset)(metric => df => {
+      import WeatherProvider.{downloadGrib, gribSets}
+
+      val gribsPathStr = $(gribsPath)
+      val metricsArray = $(metrics)
+
       val t = udf { (lat: Double, lon: Double, gribUrl: String) =>
-        //        gribSets.synchronized {
-        if (!gribSets.contains(gribUrl)) {
-          downloadGrib(gribUrl, gribSets)
+        gribSets.synchronized {
+          if (!gribSets.contains(gribUrl)) {
+            downloadGrib(gribUrl, gribsPathStr, metricsArray)
+          }
         }
-        //        }
 
         if (gribSets.contains(gribUrl)) {
           val datatype = gribSets(gribUrl)(metric)
@@ -168,30 +156,23 @@ class WeatherProvider(override val uid: String) extends Transformer with BasicPa
 
   override def copy(extra: ParamMap): WeatherProvider = defaultCopy(extra)
 
-  private def downloadGrib(gribUrl: String, gribSets: mutable.Map[String, Map[Metric, GridDatatype]]): Unit = {
-    val sqlc = SQLContext.getOrCreate(SparkContext.getOrCreate())
-    val hdfs = FileSystem.get(sqlc.sparkContext.hadoopConfiguration)
+}
 
+object WeatherProvider extends BasicParamsReadable[WeatherProvider] with Logging {
+
+  val gribSets = new ConcurrentHashMap[String, Map[Metric, GridDatatype]]().asScala
+
+  private def downloadGrib(gribUrl: String, gribsPath: String, metrics: Array[Metric]): Unit = {
     val fileName = "gfs" + MurmurHash3.stringHash(gribUrl).toString + ".grb2"
-    val localPath = new Path($(localFsPath), fileName)
-    val hdfsPath = new Path($(gribsPath), fileName)
+    val gribFile = new File(gribsPath, fileName)
 
-    // Download file to HDFS
-    if (!hdfs.exists(hdfsPath)) {
-      val lockAcquired = try {
-        hdfs.createNewFile(hdfsPath)
-      } catch {
-        case abce: AlreadyBeingCreatedException => false
-        case re: RemoteException => re.unwrapRemoteException() match {
-          case abce: AlreadyBeingCreatedException => false
-          case ex => throw ex
-        }
-      }
+    // Download file
+    if (Files.notExists(gribFile.toPath)) {
+      logInfo(s"Downloading ${gribFile.getPath}")
+      val res = Http(gribUrl).asBytes
 
-      if (lockAcquired) {
-        // Download file
-        logInfo(s"Downloading ${hdfsPath.toString}")
-        Http(gribUrl).exec({ (responseCode, headers, stream) =>
+      if (res.isSuccess) {
+        .exec({ (responseCode, headers, stream) =>
           if (responseCode != 200) {
             Failure(new Exception(s"Got response code $responseCode for $gribUrl"))
           } else {
@@ -200,38 +181,23 @@ class WeatherProvider(override val uid: String) extends Transformer with BasicPa
             IOUtils.closeQuietly(out, null)
             Success()
           }
-        }).body match {
+        }).body match
           case Failure(e) => logError("Couldn't download grib", e)
           case Success(v) => hdfs.delete(hdfsLockPath, true)
-        }
-      } else {
-        // File is already being downloaded
-        do {
-          synchronized {
-            wait(1000) // 1 second
-          }
-        } while (!hdfs.exists(hdfsPath) || hdfs.exists(hdfsLockPath))
       }
     }
 
-    //    // Copy to local FS
-    //    if (Files.notExists(Paths.get("file://" + localPath.toString))) {
-    //      hdfs.copyToLocalFile(hdfsPath, localPath)
-    //    }
-    //
-    //    // Read data from the GRIB file
-    //    val data = GridDataset.open(localPath.toString)
-    //    gribSets(gribUrl) = $(metrics).map(m => {
-    //      val dt = data.findGridDatatype(m.gridName)
-    //      if (dt == null) {
-    //        logWarning(s"Null datatype found for $m in $fileName")
-    //      }
-    //      m -> dt
-    //    }).toMap
+    // Read data from the GRIB file
+    val data = GridDataset.open(gribFile.getAbsolutePath)
+    gribSets(gribUrl) = metrics.map(m => {
+      val dt = data.findGridDatatype(m.gridName)
+      if (dt == null) {
+        logWarning(s"Null datatype found for $m in $fileName")
+      }
+      m -> dt
+    }).toMap
   }
 
-}
-
-object WeatherProvider extends BasicParamsReadable[WeatherProvider] {
   override def load(path: String): WeatherProvider = super.load(path)
+
 }
