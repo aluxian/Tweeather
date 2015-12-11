@@ -20,9 +20,10 @@ class FeatureReducer(override val uid: String)
         .replaceAll("\\B@\\w*", "USERNAME") // @ mentions
 
       // Repeated letters
-      "abcdefghijklmonpqrstuvwxyz".map(_.toString).fold(str)((result, c) => {
-        result.replaceAll(s"($c){2,}", s"$c$c")
-      })
+      "abcdefghijklmnopqrstuvwxyz".map(_.toString).fold(str) {
+        (result, c) =>
+          result.replaceAll(s"($c){2,}", s"$c$c")
+      }
   }
 
   override protected def validateInputType(inputType: DataType): Unit = {

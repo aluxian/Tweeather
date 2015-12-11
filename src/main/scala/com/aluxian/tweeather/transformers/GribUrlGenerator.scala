@@ -46,7 +46,7 @@ class GribUrlGenerator(override val uid: String)
         case _ => "18"
       }
 
-      val location = getLocationBox
+      val location = $(locationBox)
       "http://nomads.ncep.noaa.gov/cgi-bin/filter_gfs_0p25.pl" +
         s"?file=gfs.t${quarterOfDay}z.pgrb2.0p25.anl&dir=%2Fgfs.$dateStr$quarterOfDay" +
         s"&lev_2_m_above_ground=on&lev_surface=on&var_PRES=on&var_RH=on&var_TMP=on" +

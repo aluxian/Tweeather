@@ -32,22 +32,22 @@ class ColumnDropper(override val uid: String) extends Transformer with BasicPara
   setDefault(dropColumns -> Array())
 
   override def transformSchema(schema: StructType): StructType = {
-    StructType(schema.fields.diff(getDropColumns))
+    StructType(schema.fields.diff($(dropColumns)))
   }
 
   override def transform(dataset: DataFrame): DataFrame = {
     transformSchema(dataset.schema, logging = true)
-    without(dataset, getDropColumns)
+    without(dataset, $(dropColumns))
   }
 
   override def copy(extra: ParamMap): ColumnDropper = defaultCopy(extra)
 
   private def without(dataset: DataFrame, columns: Seq[String]): DataFrame = {
     if (columns.isEmpty) {
-      return dataset
+      dataset
+    } else {
+      without(dataset.drop(columns.last), columns.init)
     }
-
-    without(dataset.drop(columns.last), columns.init)
   }
 
 }

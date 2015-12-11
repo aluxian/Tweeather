@@ -1,7 +1,7 @@
 package com.aluxian.tweeather.transformers
 
 import java.io.File
-import java.nio.file.{Files, Paths}
+import java.util.concurrent.ConcurrentHashMap
 
 import com.aluxian.tweeather.RichArray
 import com.aluxian.tweeather.models.Metric
@@ -18,8 +18,8 @@ import org.apache.spark.sql.functions._
 import org.apache.spark.sql.types._
 import org.apache.spark.sql.{DataFrame, SQLContext}
 import ucar.nc2.dt.GridDatatype
-import ucar.nc2.dt.grid.GridDataset
 
+import scala.collection.JavaConverters._
 import scala.collection.mutable
 import scala.util.hashing.MurmurHash3
 import scala.util.{Failure, Success}
@@ -119,30 +119,31 @@ class WeatherProvider(override val uid: String) extends Transformer with BasicPa
     metrics -> Array(Metric.Temperature, Metric.Pressure, Metric.Humidity)
   )
 
-  val gribSets = mutable.Map[String, Map[Metric, GridDatatype]]()
-
   override def transformSchema(schema: StructType): StructType = {
-    val inputType = schema(getGribUrlColumn).dataType
+    val inputType = schema($(gribUrlCol)).dataType
     require(inputType == StringType, s"grib url type must be string type but got $inputType.")
 
-    val columns = getMetrics.map(_.name)
+    val columns = $(metrics).map(_.name)
     val columnsString = columns.mkString(", ")
 
     if (schema.fieldNames.intersect(columns).nonEmpty) {
       throw new IllegalArgumentException(s"Output columns $columnsString already exist.")
     }
 
-    val outputFields = getMetrics.map(m => StructField(m.name, DoubleType, nullable = true))
+    val outputFields = $(metrics).map(m => StructField(m.name, DoubleType, nullable = true))
     StructType(schema.fields ++ outputFields)
   }
 
   override def transform(dataset: DataFrame): DataFrame = {
     transformSchema(dataset.schema, logging = true)
-    getMetrics.mapCompose(dataset)(metric => df => {
+    val gribSets = new ConcurrentHashMap[String, Map[Metric, GridDatatype]]().asScala
+    $(metrics).mapCompose(dataset)(metric => df => {
       val t = udf { (lat: Double, lon: Double, gribUrl: String) =>
+        //        gribSets.synchronized {
         if (!gribSets.contains(gribUrl)) {
-          downloadGrib(gribUrl)
+          downloadGrib(gribUrl, gribSets)
         }
+        //        }
 
         if (gribSets.contains(gribUrl)) {
           val datatype = gribSets(gribUrl)(metric)
@@ -158,29 +159,27 @@ class WeatherProvider(override val uid: String) extends Transformer with BasicPa
       }
 
       df.withColumn(metric.name, t(
-        col(getLatitudeColumn),
-        col(getLongitudeColumn),
-        col(getGribUrlColumn)
+        col($(latitudeCol)),
+        col($(longitudeCol)),
+        col($(gribUrlCol))
       ))
     })
   }
 
   override def copy(extra: ParamMap): WeatherProvider = defaultCopy(extra)
 
-  private def downloadGrib(gribUrl: String): Unit = {
+  private def downloadGrib(gribUrl: String, gribSets: mutable.Map[String, Map[Metric, GridDatatype]]): Unit = {
     val sqlc = SQLContext.getOrCreate(SparkContext.getOrCreate())
     val hdfs = FileSystem.get(sqlc.sparkContext.hadoopConfiguration)
 
     val fileName = "gfs" + MurmurHash3.stringHash(gribUrl).toString + ".grb2"
-    val localPath = new Path(getLocalFsPath, fileName)
-    val hdfsPath = new Path(getGribsPath, fileName)
+    val localPath = new Path($(localFsPath), fileName)
+    val hdfsPath = new Path($(gribsPath), fileName)
 
     // Download file to HDFS
     if (!hdfs.exists(hdfsPath)) {
-      val hdfsLockPath = new Path(fileName + ".lock")
       val lockAcquired = try {
-        hdfs.createNewFile(hdfsLockPath)
-        hdfs.deleteOnExit(hdfsLockPath)
+        hdfs.createNewFile(hdfsPath)
       } catch {
         case abce: AlreadyBeingCreatedException => false
         case re: RemoteException => re.unwrapRemoteException() match {
@@ -215,21 +214,20 @@ class WeatherProvider(override val uid: String) extends Transformer with BasicPa
       }
     }
 
-    // Copy to local FS
-    if (Files.notExists(Paths.get("file://" + localPath.toString))) {
-      hdfs.copyToLocalFile(hdfsPath, localPath)
-    }
-
-    // Read data from the GRIB file
-    val data = GridDataset.open(localPath.toString)
-    println(data.getDataVariables)
-    gribSets(gribUrl) = getMetrics.map(m => {
-      val dt = data.findGridDatatype(m.gridName)
-      if (dt == null) {
-        logWarning(s"Null datatype found for $m")
-      }
-      m -> dt
-    }).toMap
+    //    // Copy to local FS
+    //    if (Files.notExists(Paths.get("file://" + localPath.toString))) {
+    //      hdfs.copyToLocalFile(hdfsPath, localPath)
+    //    }
+    //
+    //    // Read data from the GRIB file
+    //    val data = GridDataset.open(localPath.toString)
+    //    gribSets(gribUrl) = $(metrics).map(m => {
+    //      val dt = data.findGridDatatype(m.gridName)
+    //      if (dt == null) {
+    //        logWarning(s"Null datatype found for $m in $fileName")
+    //      }
+    //      m -> dt
+    //    }).toMap
   }
 
 }
