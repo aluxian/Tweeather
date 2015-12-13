@@ -39,7 +39,7 @@ class GribUrlGenerator(override val uid: String)
     (timestamp: Long) => {
       val date = new Date(timestamp)
       val dateStr = dateFormatter.format(date)
-      val quarterOfDay = date.toCalendar.get(Calendar.HOUR_OF_DAY) match {
+      val cycle = date.toCalendar.get(Calendar.HOUR_OF_DAY) match {
         case h if h < 6 => "00"
         case h if h < 12 => "06"
         case h if h < 18 => "12"
@@ -47,11 +47,20 @@ class GribUrlGenerator(override val uid: String)
       }
 
       val location = $(locationBox)
-      "http://nomads.ncep.noaa.gov/cgi-bin/filter_gfs_0p25.pl" +
-        s"?file=gfs.t${quarterOfDay}z.pgrb2.0p25.anl&dir=%2Fgfs.$dateStr$quarterOfDay" +
-        s"&lev_2_m_above_ground=on&lev_surface=on&var_PRES=on&var_RH=on&var_TMP=on" +
-        s"&subregion=&leftlon=${location.sw.lon.toInt}&rightlon=${location.ne.lon.toInt}" +
-        s"&toplat=${location.ne.lat.toInt}&bottomlat=${location.sw.lat.toInt}"
+      Seq(
+        s"http://nomads.ncep.noaa.gov/cgi-bin/filter_gfs_0p25.pl?file=gfs.t${cycle}z.pgrb2.0p25.f000",
+        "lev_2_m_above_ground=on",
+        "lev_surface=on",
+        "var_PRES=on",
+        "var_TMP=on",
+        "var_RH=on",
+        "subregion=",
+        "leftlon=" + location.sw.lon.toInt,
+        "rightlon=" + location.ne.lon.toInt,
+        "toplat=" + location.ne.lat.toInt,
+        "bottomlat=" + location.sw.lat.toInt,
+        "dir=%2Fgfs." + dateStr + cycle
+      ).mkString("&")
     }
   }
 
