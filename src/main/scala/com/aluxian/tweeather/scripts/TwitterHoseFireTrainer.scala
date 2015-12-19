@@ -40,9 +40,10 @@ object TwitterHoseFireTrainer extends Script with Logging {
       .setOutputCol("predicted")
       .transform(testData)
       .select("output", "predicted")
-      .map({ case Row(output: Vector, predictedOutput: Vector) =>
-        (output.toArray.head, predictedOutput.toArray.head)
-      })
+      .map {
+        case Row(output: Vector, predicted: Vector) =>
+          (output.toArray.head, predicted.toArray.head)
+      }
       .toDF("label", "prediction")
 
     // The output layer has only 1 value, use a simple RegressionEvaluator
