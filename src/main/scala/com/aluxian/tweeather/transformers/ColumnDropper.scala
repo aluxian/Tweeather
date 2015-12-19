@@ -37,18 +37,10 @@ class ColumnDropper(override val uid: String) extends Transformer with BasicPara
 
   override def transform(dataset: DataFrame): DataFrame = {
     transformSchema(dataset.schema, logging = true)
-    without(dataset, $(dropColumns))
+    dataset.drop($(dropColumns): _*)
   }
 
   override def copy(extra: ParamMap): ColumnDropper = defaultCopy(extra)
-
-  private def without(dataset: DataFrame, columns: Seq[String]): DataFrame = {
-    if (columns.isEmpty) {
-      dataset
-    } else {
-      without(dataset.drop(columns.last), columns.init)
-    }
-  }
 
 }
 
