@@ -2,22 +2,19 @@ package com.aluxian.tweeather.transformers
 
 import java.io.{File, FileOutputStream}
 import java.nio.file.Files
-import java.util.concurrent.ConcurrentHashMap
 
-import com.aluxian.tweeather.RichArray
 import com.aluxian.tweeather.models.Metric
-import com.aluxian.tweeather.utils.MetricArrayParam
+import com.aluxian.tweeather.using
+import com.aluxian.tweeather.utils.{CloseableWrapper, MetricArrayParam}
 import org.apache.spark.Logging
 import org.apache.spark.ml.Transformer
 import org.apache.spark.ml.param._
 import org.apache.spark.ml.util.{BasicParamsReadable, BasicParamsWritable, Identifiable}
-import org.apache.spark.sql.DataFrame
 import org.apache.spark.sql.functions._
 import org.apache.spark.sql.types._
-import ucar.nc2.dt.GridDatatype
+import org.apache.spark.sql.{DataFrame, Row}
 import ucar.nc2.dt.grid.GridDataset
 
-import scala.collection.JavaConverters._
 import scala.util.hashing.MurmurHash3
 import scalaj.http.Http
 
@@ -117,46 +114,79 @@ class WeatherProvider(override val uid: String) extends Transformer with BasicPa
   }
 
   override def transform(dataset: DataFrame): DataFrame = {
-    transformSchema(dataset.schema, logging = true)
+    val outputSchema = transformSchema(dataset.schema, logging = true)
 
-    val gribSets = new ConcurrentHashMap[String, Map[Metric, GridDatatype]]().asScala
-    dataset
-      .select($(gribUrlCol))
-      .distinct()
-      .map(_.getString(0))
-      .foreach { url =>
-        gribSets(url) = downloadGrib(url)
-      }
+    val latCol = $(latitudeCol)
+    val lonCol = $(longitudeCol)
+    val urlCol = $(gribUrlCol)
 
-    $(metrics).mapCompose(dataset)(metric => df => {
-      val t = udf { (lat: Double, lon: Double, gribUrl: String) =>
-        if (gribSets.contains(gribUrl)) {
-          val datatype = gribSets(gribUrl)(metric)
-          if (datatype != null) {
-            val Array(x, y) = datatype.getCoordinateSystem.findXYindexFromLatLon(lat, lon, null)
-            datatype.readDataSlice(0, 0, y, x).getDouble(0)
-          } else {
-            logError("NaN")
-            Double.NaN
-          }
+    val gribsDir = $(gribsPath)
+    val metricsArray = $(metrics)
+
+    val rows = dataset
+      .repartition(col($(gribUrlCol)))
+      .mapPartitions { p =>
+        import WeatherProvider.downloadGrib
+        logInfo(s"partition iter size=${p.size}")
+        if (p.size < 1) {
+          p
         } else {
-          logError("NaN")
-          Double.NaN
+          val bi = p.buffered
+          val row = bi.head
+
+          val latIndex = row.fieldIndex(latCol)
+          val lonIndex = row.fieldIndex(lonCol)
+
+          val urlIndex = row.fieldIndex(urlCol)
+          val gribUrl = row.getString(urlIndex)
+
+          val gridDataset = downloadGrib(gribUrl, gribsDir, metricsArray)
+          val wrappedDataset = new CloseableWrapper(gridDataset) {
+            override def close(): Unit = gridDataset.close()
+          }
+
+          using(wrappedDataset) { wrapped =>
+            val datatypes = metricsArray.map(m => {
+              val dt = wrapped.value.findGridDatatype(m.gridName)
+              if (dt == null) {
+                logWarning(s"Null datatype found for $m from $gribUrl")
+              }
+              m -> dt
+            }).toMap
+
+            bi.map { row =>
+              val lat = row.getDouble(latIndex)
+              val lon = row.getDouble(lonIndex)
+
+              val metricValues = datatypes.map {
+                case (metric, datatype) =>
+                  val Array(x, y) = datatype.getCoordinateSystem.findXYindexFromLatLon(lat, lon, null)
+                  datatype.readDataSlice(0, 0, y, x).getDouble(0)
+              }.toArray
+
+              Row.merge(row, Row(metricValues: _*))
+            }
+          }
         }
       }
 
-      df.withColumn(metric.name, t(
-        col($(latitudeCol)),
-        col($(longitudeCol)),
-        col($(gribUrlCol))
-      ))
-    })
+    dataset.sqlContext.createDataFrame(rows, outputSchema)
   }
 
-  private def downloadGrib(gribUrl: String): Map[Metric, GridDatatype] = {
+  override def copy(extra: ParamMap): WeatherProvider = defaultCopy(extra)
+
+}
+
+object WeatherProvider extends BasicParamsReadable[WeatherProvider] with Logging {
+
+  override def load(path: String): WeatherProvider = super.load(path)
+
+  /**
+    * Download the grib from the given url and return it as a [[GridDataset]].
+    */
+  private def downloadGrib(gribUrl: String, gribsDir: String, metrics: Seq[Metric]): GridDataset = {
     val fileName = "gfs" + MurmurHash3.stringHash(gribUrl).toString + ".grb2"
-    val gribFile = new File($(gribsPath), fileName)
-    logInfo(gribUrl)
+    val gribFile = new File(gribsDir, fileName)
 
     // Download file
     if (Files.notExists(gribFile.toPath)) {
@@ -165,46 +195,18 @@ class WeatherProvider(override val uid: String) extends Transformer with BasicPa
       gribFile.getParentFile.mkdirs()
       gribFile.createNewFile()
 
-      val out = new FileOutputStream(gribFile, false)
-
-      try {
-        val lock = out.getChannel.lock()
-
-        try {
-          val res = Http(gribUrl).asBytes
-
-          if (res.isSuccess) {
-            out.write(res.body)
-          } else {
-            logError("Couldn't download grib", new Throwable(s"Got response code ${res.code} for $gribUrl"))
-          }
-        } finally {
-          lock.release()
+      using(new FileOutputStream(gribFile, false)) { out =>
+        val res = Http(gribUrl).asBytes
+        if (res.isSuccess) {
+          out.write(res.body)
+        } else {
+          logError("Couldn't download grib", new Throwable(s"Got response code ${res.code} for $gribUrl"))
         }
-      } finally {
-        out.close()
       }
     }
 
-    // Read data from the GRIB file
-    val data = GridDataset.open(gribFile.getAbsolutePath)
-    println(data.getDataVariables)
-    val result = $(metrics).map(m => {
-      val dt = data.findGridDatatype(m.gridName)
-      if (dt == null) {
-        logWarning(s"Null datatype found for $m in $fileName")
-      }
-      m -> dt
-    }).toMap
-
-    data.close()
-    result
+    // Read and return
+    GridDataset.open(gribFile.getAbsolutePath)
   }
 
-  override def copy(extra: ParamMap): WeatherProvider = defaultCopy(extra)
-
-}
-
-object WeatherProvider extends BasicParamsReadable[WeatherProvider] with Logging {
-  override def load(path: String): WeatherProvider = super.load(path)
 }

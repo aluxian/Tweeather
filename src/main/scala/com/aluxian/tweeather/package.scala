@@ -1,5 +1,6 @@
 package com.aluxian
 
+import java.io.Closeable
 import java.util.{Calendar, Date, Locale}
 
 import com.aluxian.tweeather.models.Coordinates
@@ -48,6 +49,28 @@ package object tweeather {
   implicit class RichArray[+A](array: Array[A]) {
     def mapCompose[B](z: B)(f: A => (B => B)): B = {
       array.toSeq.mapCompose[B](z)(f)
+    }
+  }
+
+  def using[T <: Closeable, R](f1: => T)(f2: T => R): R = {
+    var closeable: Option[T] = None
+    var thrown = false
+
+    try {
+      closeable = Some(f1)
+      f2(closeable.get)
+    } catch {
+      case ex: Exception =>
+        thrown = true
+        throw ex
+    } finally {
+      if (closeable.nonEmpty) {
+        try {
+          closeable.get.close()
+        } catch {
+          case ex: Exception => if (!thrown) throw ex
+        }
+      }
     }
   }
 

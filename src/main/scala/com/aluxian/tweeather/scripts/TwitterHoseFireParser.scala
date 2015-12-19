@@ -37,13 +37,8 @@ object TwitterHoseFireParser extends Script with Logging {
     logInfo("Exporting data")
     data
       .select("probability", "temperature", "pressure", "humidity")
-      .map({ case Row(probability: Vector, temperature, pressure, humidity) =>
-        Seq(
-          probability(1),
-          temperature.toString.toDouble,
-          pressure.toString.toDouble,
-          humidity.toString.toDouble
-        ).mkString(",")
+      .map({ case Row(probability: Vector, temperature: Double, pressure: Double, humidity: Double) =>
+        Seq(probability(1), temperature, pressure, humidity).mkString(",")
       })
       .toDF.write.mode(SaveMode.Overwrite).parquet("/tw/fire/parsed/data.parquet")
   }
