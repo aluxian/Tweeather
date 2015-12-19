@@ -126,9 +126,7 @@ class WeatherProvider(override val uid: String) extends Transformer with BasicPa
     val rows = dataset
       .repartition(col($(gribUrlCol)))
       .mapPartitions { p =>
-        import WeatherProvider.downloadGrib
-        logInfo(s"partition iter size=${p.size}")
-        if (p.size < 1) {
+        if (!p.hasNext) {
           p
         } else {
           val bi = p.buffered
@@ -140,7 +138,7 @@ class WeatherProvider(override val uid: String) extends Transformer with BasicPa
           val urlIndex = row.fieldIndex(urlCol)
           val gribUrl = row.getString(urlIndex)
 
-          val gridDataset = downloadGrib(gribUrl, gribsDir, metricsArray)
+          val gridDataset = WeatherProvider.downloadGrib(gribUrl, gribsDir, metricsArray)
           val wrappedDataset = new CloseableWrapper(gridDataset) {
             override def close(): Unit = gridDataset.close()
           }
