@@ -16,6 +16,7 @@ object TwitterHoseEmoParser extends Script with Logging {
     // Import data
     logInfo("Parsing text files")
     val data = sc.textFile("/tw/sentiment/emo/collected/*.text")
+      .distinct()
       .filter(!_.contains("RT"))
       .map(text => {
         val hasPositive = positiveEmoticons.exists(text.contains)
