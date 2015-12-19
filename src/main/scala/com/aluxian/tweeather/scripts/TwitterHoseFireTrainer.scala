@@ -37,13 +37,13 @@ object TwitterHoseFireTrainer extends Script with Logging {
     // Test the model precision
     logInfo("Testing model")
     val predicted = model
-      .setOutputCol("predictedOutput")
+      .setOutputCol("predicted")
       .transform(testData)
-      .select("output", "predictedOutput")
+      .select("output", "predicted")
       .map({ case Row(output: Vector, predictedOutput: Vector) =>
         (output.toArray.head, predictedOutput.toArray.head)
       })
-      .toDF("label", "predicted")
+      .toDF("label", "prediction")
 
     // The output layer has only 1 value, use a simple RegressionEvaluator
     val accuracy = new RegressionEvaluator().evaluate(predicted)

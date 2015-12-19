@@ -66,7 +66,8 @@ class MultilayerPerceptron(override val uid: String)
 
   override def transformSchema(schema: StructType): StructType = {
     SchemaUtils.checkColumnType(schema, $(inputCol), new VectorUDT)
-    SchemaUtils.appendColumn(schema, $(outputCol), new VectorUDT)
+    SchemaUtils.checkColumnType(schema, $(outputCol), new VectorUDT)
+    schema
   }
 
   /**
@@ -132,15 +133,10 @@ class MultilayerPerceptronModel(override val uid: String, val layers: Array[Int]
     */
   override def transform(dataset: DataFrame): DataFrame = {
     transformSchema(dataset.schema, logging = true)
-    if ($(inputCol).nonEmpty) {
-      val predictUDF = udf { (features: Any) =>
-        perceptron.predict(features.asInstanceOf[Vector])
-      }
-      dataset.withColumn($(inputCol), predictUDF(col($(outputCol))))
-    } else {
-      logWarning(s"$uid: Predictor.transform() was called as NOOP since no output columns were set.")
-      dataset
+    val predictUDF = udf { (features: Vector) =>
+      perceptron.predict(features)
     }
+    dataset.withColumn($(outputCol), predictUDF(col($(inputCol))))
   }
 
   override def copy(extra: ParamMap): MultilayerPerceptronModel = {
