@@ -30,7 +30,7 @@ class TwitterReceiver(twitterAuth: Authorization,
       }
 
       def onTrackLimitationNotice(numberOfLimitedStatuses: Int): Unit = {
-        logInfo(s"Twitter stream track limitation notice: $numberOfLimitedStatuses")
+        logDebug(s"Twitter stream track limitation notice: $numberOfLimitedStatuses")
       }
 
       def onStallWarning(stallWarning: StallWarning): Unit = {
