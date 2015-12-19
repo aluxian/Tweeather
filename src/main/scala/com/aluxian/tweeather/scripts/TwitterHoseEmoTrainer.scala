@@ -25,8 +25,8 @@ object TwitterHoseEmoTrainer extends Script with Logging {
       new Tokenizer().setInputCol("text").setOutputCol("raw_words"),
       new StopWordsRemover().setInputCol("raw_words").setOutputCol("words"),
       new HashingTF().setInputCol("words").setOutputCol("features"),
-      new ColumnDropper().setDropColumns("raw_text", "reduced_text", "text", "raw_words", "words"),
-      new NaiveBayes().setSmoothing(0.5).setFeaturesCol("features")
+      new NaiveBayes().setSmoothing(0.5).setFeaturesCol("features"),
+      new ColumnDropper().setDropColumns("raw_text", "reduced_text", "text", "raw_words", "words", "features")
     ))
 
     // Fit the pipeline
