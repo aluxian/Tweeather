@@ -24,7 +24,10 @@ object TwitterHoseFireParser extends Script with Logging {
 
     // Analyse sentiment
     logInfo("Analysing sentiment")
-    data = PipelineModel.load("/tw/sentiment/models/emo.model").transform(data)
+    data = PipelineModel
+      .load("/tw/sentiment/models/emo.model")
+      .transform(data)
+      .drop("rawPrediction", "prediction")
 
     // Get weather
     logInfo("Getting weather data")
@@ -37,8 +40,13 @@ object TwitterHoseFireParser extends Script with Logging {
     logInfo("Exporting data")
     data
       .select("probability", "temperature", "pressure", "humidity")
-      .map({ case Row(probability: Vector, temperature: Double, pressure: Double, humidity: Double) =>
-        Seq(probability(1), temperature, pressure, humidity).mkString(",")
+      .map({ case Row(probability: Vector, temperature, pressure, humidity) =>
+        Seq(
+          probability(1),
+          temperature.toString.toDouble,
+          pressure.toString.toDouble,
+          humidity.toString.toDouble
+        ).mkString(",")
       })
       .toDF.write.mode(SaveMode.Overwrite).parquet("/tw/fire/parsed/data.parquet")
   }
