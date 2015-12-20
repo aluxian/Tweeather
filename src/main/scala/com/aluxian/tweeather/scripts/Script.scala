@@ -21,7 +21,7 @@ trait Script {
       .setIfMissing("spark.master", "local[*]")
       .setIfMissing("spark.hadoop.fs.defaultFS", "hdfs://localhost:9000")
       .setIfMissing("spark.streaming.stopGracefullyOnShutdown", "true")
-      .setIfMissing("spark.streaming.blockInterval", "10s")
+      .setIfMissing("spark.streaming.blockInterval", "30s")
   )
 
   protected lazy val hdfs = FileSystem.get(sc.hadoopConfiguration)
