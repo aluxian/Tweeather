@@ -4,15 +4,13 @@ import java.io.{File, FileOutputStream}
 import java.nio.file.Files
 
 import com.aluxian.tweeather.models.Metric
-import com.aluxian.tweeather.using
-import com.aluxian.tweeather.utils.{CloseableWrapper, MetricArrayParam}
-import org.apache.spark.Logging
+import com.aluxian.tweeather.utils.MetricArrayParam
 import org.apache.spark.ml.Transformer
 import org.apache.spark.ml.param._
 import org.apache.spark.ml.util.{BasicParamsReadable, BasicParamsWritable, Identifiable}
-import org.apache.spark.sql.functions._
+import org.apache.spark.sql.Row
 import org.apache.spark.sql.types._
-import org.apache.spark.sql.{DataFrame, Row}
+import resource._
 import ucar.nc2.dt.grid.GridDataset
 
 import scala.util.hashing.MurmurHash3
@@ -138,14 +136,9 @@ class WeatherProvider(override val uid: String) extends Transformer with BasicPa
           val urlIndex = row.fieldIndex(urlCol)
           val gribUrl = row.getString(urlIndex)
 
-          val gridDataset = WeatherProvider.downloadGrib(gribUrl, gribsDir, metricsArray)
-          val wrappedDataset = new CloseableWrapper(gridDataset) {
-            override def close(): Unit = gridDataset.close()
-          }
-
-          using(wrappedDataset) { wrapped =>
+          for (data <- managed(WeatherProvider.downloadGrib(gribUrl, gribsDir, metricsArray))) {
             val datatypes = metricsArray.map(m => {
-              val dt = wrapped.value.findGridDatatype(m.gridName)
+              val dt = data.findGridDatatype(m.gridName)
               if (dt == null) {
                 logWarning(s"Null datatype found for $m from $gribUrl")
               }
@@ -189,17 +182,16 @@ object WeatherProvider extends BasicParamsReadable[WeatherProvider] with Logging
     // Download file
     if (Files.notExists(gribFile.toPath)) {
       logInfo(s"Downloading ${gribFile.getPath}")
+      val res = Http(gribUrl).asBytes
+      if (res.isSuccess) {
+        gribFile.getParentFile.mkdirs()
+        gribFile.createNewFile()
 
-      gribFile.getParentFile.mkdirs()
-      gribFile.createNewFile()
-
-      using(new FileOutputStream(gribFile, false)) { out =>
-        val res = Http(gribUrl).asBytes
-        if (res.isSuccess) {
+        for (out <- managed(new FileOutputStream(gribFile, false))) {
           out.write(res.body)
-        } else {
-          logError("Couldn't download grib", new Throwable(s"Got response code ${res.code} for $gribUrl"))
         }
+      } else {
+        logError("Couldn't download grib", new Throwable(s"Got response code ${res.code} for $gribUrl"))
       }
     }
 
