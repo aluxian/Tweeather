@@ -17,7 +17,7 @@ import twitter4j.{FilterQuery, Status}
   *
   * @constructor create a new Twitter stream using the supplied Twitter4J authentication credentials.
   */
-class TwitterInputDStream(@transient ssc: StreamingContext,
+class TwitterInputDStream(@transient override val ssc: StreamingContext,
                           twitterAuth: Option[Authorization],
                           filterQuery: Option[FilterQuery],
                           storageLevel: StorageLevel
