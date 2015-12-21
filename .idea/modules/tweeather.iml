@@ -215,13 +215,6 @@
     <orderEntry type="library" name="SBT: org.tachyonproject:tachyon-underfs-local:0.8.2:jar" level="project" />
     <orderEntry type="library" name="SBT: org.tachyonproject:tachyon-underfs-s3:0.8.2:jar" level="project" />
     <orderEntry type="library" name="SBT: org.xerial.snappy:snappy-java:1.1.2:jar" level="project" />
-    <orderEntry type="library" name="SBT: org.eclipse.jetty:jetty-continuation:8.1.14.v20131031:jar" level="project" />
-    <orderEntry type="library" name="SBT: org.eclipse.jetty:jetty-http:8.1.14.v20131031:jar" level="project" />
-    <orderEntry type="library" name="SBT: org.eclipse.jetty:jetty-io:8.1.14.v20131031:jar" level="project" />
-    <orderEntry type="library" name="SBT: org.eclipse.jetty:jetty-security:8.1.14.v20131031:jar" level="project" />
-    <orderEntry type="library" name="SBT: org.eclipse.jetty:jetty-server:8.1.14.v20131031:jar" level="project" />
-    <orderEntry type="library" name="SBT: org.eclipse.jetty:jetty-servlet:8.1.14.v20131031:jar" level="project" />
-    <orderEntry type="library" name="SBT: org.eclipse.jetty:jetty-util:8.1.14.v20131031:jar" level="project" />
     <orderEntry type="library" name="SBT: com.fasterxml.jackson.module:jackson-module-scala_2.11:2.4.4:jar" level="project" />
     <orderEntry type="library" name="SBT: com.jsuereth:scala-arm_2.11:1.4:jar" level="project" />
     <orderEntry type="library" name="SBT: com.twitter:chill_2.11:0.5.0:jar" level="project" />
@@ -253,5 +246,12 @@
     <orderEntry type="library" name="SBT: org.scala-lang:scala-compiler:2.11.7:jar" level="project" />
     <orderEntry type="library" name="SBT: org.scala-lang.modules:scala-parser-combinators_2.11:1.0.4:jar" level="project" />
     <orderEntry type="library" name="SBT: org.scala-lang.modules:scala-xml_2.11:1.0.4:jar" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="SBT: org.eclipse.jetty:jetty-continuation:8.1.14.v20131031:jar" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="SBT: org.eclipse.jetty:jetty-http:8.1.14.v20131031:jar" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="SBT: org.eclipse.jetty:jetty-io:8.1.14.v20131031:jar" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="SBT: org.eclipse.jetty:jetty-security:8.1.14.v20131031:jar" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="SBT: org.eclipse.jetty:jetty-server:8.1.14.v20131031:jar" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="SBT: org.eclipse.jetty:jetty-servlet:8.1.14.v20131031:jar" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="SBT: org.eclipse.jetty:jetty-util:8.1.14.v20131031:jar" level="project" />
   </component>
 </module>
