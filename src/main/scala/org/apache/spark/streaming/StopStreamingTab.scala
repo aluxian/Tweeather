@@ -3,7 +3,6 @@ package org.apache.spark.streaming
 import javax.servlet.http.HttpServletRequest
 
 import org.apache.spark.streaming.StopStreamingTab._
-import org.apache.spark.ui.JettyUtils._
 import org.apache.spark.ui.{SparkUI, SparkUITab}
 import org.apache.spark.{Logging, SparkException}
 
@@ -12,11 +11,11 @@ import org.apache.spark.{Logging, SparkException}
   * This assumes the given SparkContext has enabled its SparkUI.
   */
 class StopStreamingTab(val ssc: StreamingContext)
-  extends SparkUITab(getSparkUI(ssc), "stopStreaming") with Logging {
+  extends SparkUITab(getSparkUI(ssc), "stop") with Logging {
 
   def attach() {
     getSparkUI(ssc).attachTab(this)
-    getSparkUI(ssc).attachHandler(createRedirectHandler("/streaming/stop", "/streaming/", handleStopRequest))
+    //    getSparkUI(ssc).attachHandler(createRedirectHandler("/streaming/stop", "/streaming/", handleStopRequest))
   }
 
   def detach() {
