@@ -66,22 +66,7 @@
     <orderEntry type="library" name="SBT: com.fasterxml.jackson.core:jackson-annotations:2.4.4:jar" level="project" />
     <orderEntry type="library" name="SBT: com.fasterxml.jackson.core:jackson-core:2.4.4:jar" level="project" />
     <orderEntry type="library" name="SBT: com.fasterxml.jackson.core:jackson-databind:2.4.4:jar" level="project" />
-    <orderEntry type="library" name="SBT: com.github.fommil:jniloader:1.1:jar" level="project" />
     <orderEntry type="library" name="SBT: com.github.fommil.netlib:core:1.1.2:jar" level="project" />
-    <orderEntry type="library" name="SBT: com.github.fommil.netlib:native_ref-java:1.1:jar" level="project" />
-    <orderEntry type="library" name="SBT: com.github.fommil.netlib:native_system-java:1.1:jar" level="project" />
-    <orderEntry type="library" name="SBT: com.github.fommil.netlib:netlib-native_ref-linux-armhf:1.1:natives:jar" level="project" />
-    <orderEntry type="library" name="SBT: com.github.fommil.netlib:netlib-native_ref-linux-i686:1.1:natives:jar" level="project" />
-    <orderEntry type="library" name="SBT: com.github.fommil.netlib:netlib-native_ref-linux-x86_64:1.1:natives:jar" level="project" />
-    <orderEntry type="library" name="SBT: com.github.fommil.netlib:netlib-native_ref-osx-x86_64:1.1:natives:jar" level="project" />
-    <orderEntry type="library" name="SBT: com.github.fommil.netlib:netlib-native_ref-win-i686:1.1:natives:jar" level="project" />
-    <orderEntry type="library" name="SBT: com.github.fommil.netlib:netlib-native_ref-win-x86_64:1.1:natives:jar" level="project" />
-    <orderEntry type="library" name="SBT: com.github.fommil.netlib:netlib-native_system-linux-armhf:1.1:natives:jar" level="project" />
-    <orderEntry type="library" name="SBT: com.github.fommil.netlib:netlib-native_system-linux-i686:1.1:natives:jar" level="project" />
-    <orderEntry type="library" name="SBT: com.github.fommil.netlib:netlib-native_system-linux-x86_64:1.1:natives:jar" level="project" />
-    <orderEntry type="library" name="SBT: com.github.fommil.netlib:netlib-native_system-osx-x86_64:1.1:natives:jar" level="project" />
-    <orderEntry type="library" name="SBT: com.github.fommil.netlib:netlib-native_system-win-i686:1.1:natives:jar" level="project" />
-    <orderEntry type="library" name="SBT: com.github.fommil.netlib:netlib-native_system-win-x86_64:1.1:natives:jar" level="project" />
     <orderEntry type="library" name="SBT: com.github.rwl:jtransforms:2.4.0:jar" level="project" />
     <orderEntry type="library" name="SBT: com.google.code.findbugs:jsr305:3.0.0:jar" level="project" />
     <orderEntry type="library" name="SBT: com.google.code.gson:gson:2.2.4:jar" level="project" />
@@ -246,12 +231,21 @@
     <orderEntry type="library" name="SBT: org.scala-lang:scala-compiler:2.11.7:jar" level="project" />
     <orderEntry type="library" name="SBT: org.scala-lang.modules:scala-parser-combinators_2.11:1.0.4:jar" level="project" />
     <orderEntry type="library" name="SBT: org.scala-lang.modules:scala-xml_2.11:1.0.4:jar" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="SBT: org.eclipse.jetty:jetty-continuation:8.1.14.v20131031:jar" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="SBT: org.eclipse.jetty:jetty-http:8.1.14.v20131031:jar" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="SBT: org.eclipse.jetty:jetty-io:8.1.14.v20131031:jar" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="SBT: org.eclipse.jetty:jetty-security:8.1.14.v20131031:jar" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="SBT: org.eclipse.jetty:jetty-server:8.1.14.v20131031:jar" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="SBT: org.eclipse.jetty:jetty-servlet:8.1.14.v20131031:jar" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="SBT: org.eclipse.jetty:jetty-util:8.1.14.v20131031:jar" level="project" />
+    <orderEntry type="library" name="SBT: com.github.fommil:jniloader:1.1:jar" level="project" />
+    <orderEntry type="library" name="SBT: com.github.fommil.netlib:native_ref-java:1.1:jar" level="project" />
+    <orderEntry type="library" name="SBT: com.github.fommil.netlib:native_system-java:1.1:jar" level="project" />
+    <orderEntry type="library" name="SBT: com.github.fommil.netlib:netlib-native_ref-linux-armhf:1.1:natives:jar" level="project" />
+    <orderEntry type="library" name="SBT: com.github.fommil.netlib:netlib-native_ref-linux-i686:1.1:natives:jar" level="project" />
+    <orderEntry type="library" name="SBT: com.github.fommil.netlib:netlib-native_ref-linux-x86_64:1.1:natives:jar" level="project" />
+    <orderEntry type="library" name="SBT: com.github.fommil.netlib:netlib-native_ref-osx-x86_64:1.1:natives:jar" level="project" />
+    <orderEntry type="library" name="SBT: com.github.fommil.netlib:netlib-native_ref-win-i686:1.1:natives:jar" level="project" />
+    <orderEntry type="library" name="SBT: com.github.fommil.netlib:netlib-native_ref-win-x86_64:1.1:natives:jar" level="project" />
+    <orderEntry type="library" name="SBT: com.github.fommil.netlib:netlib-native_system-linux-armhf:1.1:natives:jar" level="project" />
+    <orderEntry type="library" name="SBT: com.github.fommil.netlib:netlib-native_system-linux-i686:1.1:natives:jar" level="project" />
+    <orderEntry type="library" name="SBT: com.github.fommil.netlib:netlib-native_system-linux-x86_64:1.1:natives:jar" level="project" />
+    <orderEntry type="library" name="SBT: com.github.fommil.netlib:netlib-native_system-osx-x86_64:1.1:natives:jar" level="project" />
+    <orderEntry type="library" name="SBT: com.github.fommil.netlib:netlib-native_system-win-i686:1.1:natives:jar" level="project" />
+    <orderEntry type="library" name="SBT: com.github.fommil.netlib:netlib-native_system-win-x86_64:1.1:natives:jar" level="project" />
+    <orderEntry type="library" name="SBT: javax.servlet:servlet-api:2.5:jar" level="project" />
   </component>
 </module>
