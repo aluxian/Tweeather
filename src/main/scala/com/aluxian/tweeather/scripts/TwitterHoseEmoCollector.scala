@@ -2,7 +2,7 @@ package com.aluxian.tweeather.scripts
 
 import com.aluxian.tweeather.streaming.TwitterUtils
 import org.apache.spark.Logging
-import org.apache.spark.streaming.StreamingContext
+import org.apache.spark.streaming.{StopStreamingTab, StreamingContext}
 import twitter4j.FilterQuery
 
 object TwitterHoseEmoCollector extends Script with Logging {
@@ -20,6 +20,13 @@ object TwitterHoseEmoCollector extends Script with Logging {
 
     ssc.start()
 
+    // Add a tab in the Spark UI to stop streaming
+    if (sc.getConf.getBoolean("spark.ui.enabled", defaultValue = true)) {
+      val stopTab = new StopStreamingTab(ssc)
+      stopTab.attach()
+    }
+
+    // Wait for termination or timeout
     if (!ssc.awaitTerminationOrTimeout(streamingTimeout)) {
       ssc.stop(stopSparkContext = true, stopGracefully = true)
     }

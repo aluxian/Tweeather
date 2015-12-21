@@ -1,9 +1,55 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="835fc80b-457f-47ce-b26d-7bb3c1b29a60" name="Default" comment="Updates to 2.0.0-SNAPSHOT, fixes IDEA indexing">
+    <list default="true" id="835fc80b-457f-47ce-b26d-7bb3c1b29a60" name="Default" comment="Fixes WeatherProvider for-loop/scala-arm">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/SBT__org_eclipse_jetty_jetty_continuation_8_1_14_v20131031_jar.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/SBT__org_eclipse_jetty_jetty_http_8_1_14_v20131031_jar.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/SBT__org_eclipse_jetty_jetty_io_8_1_14_v20131031_jar.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/SBT__org_eclipse_jetty_jetty_security_8_1_14_v20131031_jar.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/SBT__org_eclipse_jetty_jetty_server_8_1_14_v20131031_jar.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/SBT__org_eclipse_jetty_jetty_servlet_8_1_14_v20131031_jar.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/SBT__org_eclipse_jetty_jetty_util_8_1_14_v20131031_jar.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/SBT__org_scala_lang_modules_scala_parser_combinators_2_11_1_0_4_jar.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/SBT__org_scala_lang_modules_scala_xml_2_11_1_0_4_jar.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/SBT__org_scala_lang_plugins_scala_continuations_library_2_11_1_0_1_jar.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/SBT__org_scala_lang_scala_compiler_2_11_7_jar.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/SBT__org_scala_lang_scala_library_2_11_7_jar.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/SBT__org_scala_lang_scala_reflect_2_11_7_jar.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/scala/org/apache/spark/streaming/StopStreamingTab.scala" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/SBT__junit_junit_3_8_1_jar.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/SBT__org_scala_lang_scala_compiler_2_10_5_jar.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/SBT__org_scala_lang_scala_library_2_10_5_jar.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/SBT__org_scala_lang_scala_reflect_2_10_5_jar.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/SBT__org_scalamacros_quasiquotes_2_10_2_0_0_jar.xml" afterPath="" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/.idea/libraries/SBT__com_fasterxml_jackson_module_jackson_module_scala_2_10_2_4_4_jar.xml" afterPath="$PROJECT_DIR$/.idea/libraries/SBT__com_fasterxml_jackson_module_jackson_module_scala_2_11_2_4_4_jar.xml" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/.idea/libraries/SBT__com_jsuereth_scala_arm_2_10_1_4_jar.xml" afterPath="$PROJECT_DIR$/.idea/libraries/SBT__com_jsuereth_scala_arm_2_11_1_4_jar.xml" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/.idea/libraries/SBT__com_twitter_chill_2_10_0_5_0_jar.xml" afterPath="$PROJECT_DIR$/.idea/libraries/SBT__com_twitter_chill_2_11_0_5_0_jar.xml" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/.idea/libraries/SBT__com_typesafe_akka_akka_actor_2_10_2_3_11_jar.xml" afterPath="$PROJECT_DIR$/.idea/libraries/SBT__com_typesafe_akka_akka_slf4j_2_11_2_3_11_jar.xml" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/.idea/libraries/SBT__com_typesafe_akka_akka_remote_2_10_2_3_11_jar.xml" afterPath="$PROJECT_DIR$/.idea/libraries/SBT__com_typesafe_akka_akka_remote_2_11_2_3_11_jar.xml" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/.idea/libraries/SBT__com_typesafe_akka_akka_slf4j_2_10_2_3_11_jar.xml" afterPath="$PROJECT_DIR$/.idea/libraries/SBT__com_typesafe_akka_akka_actor_2_11_2_3_11_jar.xml" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/.idea/libraries/SBT__org_apache_spark_spark_catalyst_2_10_2_0_0_SNAPSHOT_jar.xml" afterPath="$PROJECT_DIR$/.idea/libraries/SBT__org_apache_spark_spark_catalyst_2_11_2_0_0_SNAPSHOT_jar.xml" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/.idea/libraries/SBT__org_apache_spark_spark_core_2_10_2_0_0_SNAPSHOT_jar.xml" afterPath="$PROJECT_DIR$/.idea/libraries/SBT__org_apache_spark_spark_core_2_11_2_0_0_SNAPSHOT_jar.xml" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/.idea/libraries/SBT__org_apache_spark_spark_graphx_2_10_2_0_0_SNAPSHOT_jar.xml" afterPath="$PROJECT_DIR$/.idea/libraries/SBT__org_apache_spark_spark_graphx_2_11_2_0_0_SNAPSHOT_jar.xml" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/.idea/libraries/SBT__org_apache_spark_spark_launcher_2_10_2_0_0_SNAPSHOT_jar.xml" afterPath="$PROJECT_DIR$/.idea/libraries/SBT__org_apache_spark_spark_launcher_2_11_2_0_0_SNAPSHOT_jar.xml" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/.idea/libraries/SBT__org_apache_spark_spark_mllib_2_10_2_0_0_SNAPSHOT_jar.xml" afterPath="$PROJECT_DIR$/.idea/libraries/SBT__org_apache_spark_spark_mllib_2_11_2_0_0_SNAPSHOT_jar.xml" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/.idea/libraries/SBT__org_apache_spark_spark_network_common_2_10_2_0_0_SNAPSHOT_jar.xml" afterPath="$PROJECT_DIR$/.idea/libraries/SBT__org_apache_spark_spark_network_common_2_11_2_0_0_SNAPSHOT_jar.xml" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/.idea/libraries/SBT__org_apache_spark_spark_network_shuffle_2_10_2_0_0_SNAPSHOT_jar.xml" afterPath="$PROJECT_DIR$/.idea/libraries/SBT__org_apache_spark_spark_network_shuffle_2_11_2_0_0_SNAPSHOT_jar.xml" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/.idea/libraries/SBT__org_apache_spark_spark_sql_2_10_2_0_0_SNAPSHOT_jar.xml" afterPath="$PROJECT_DIR$/.idea/libraries/SBT__org_apache_spark_spark_sql_2_11_2_0_0_SNAPSHOT_jar.xml" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/.idea/libraries/SBT__org_apache_spark_spark_streaming_2_10_2_0_0_SNAPSHOT_jar.xml" afterPath="$PROJECT_DIR$/.idea/libraries/SBT__org_apache_spark_spark_streaming_2_11_2_0_0_SNAPSHOT_jar.xml" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/.idea/libraries/SBT__org_apache_spark_spark_unsafe_2_10_2_0_0_SNAPSHOT_jar.xml" afterPath="$PROJECT_DIR$/.idea/libraries/SBT__org_apache_spark_spark_unsafe_2_11_2_0_0_SNAPSHOT_jar.xml" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/.idea/libraries/SBT__org_json4s_json4s_ast_2_10_3_2_10_jar.xml" afterPath="$PROJECT_DIR$/.idea/libraries/SBT__org_json4s_json4s_ast_2_11_3_2_10_jar.xml" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/.idea/libraries/SBT__org_json4s_json4s_core_2_10_3_2_10_jar.xml" afterPath="$PROJECT_DIR$/.idea/libraries/SBT__org_json4s_json4s_core_2_11_3_2_10_jar.xml" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/.idea/libraries/SBT__org_json4s_json4s_jackson_2_10_3_2_10_jar.xml" afterPath="$PROJECT_DIR$/.idea/libraries/SBT__org_json4s_json4s_jackson_2_11_3_2_10_jar.xml" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/.idea/libraries/SBT__org_scala_lang_scalap_2_10_0_jar.xml" afterPath="$PROJECT_DIR$/.idea/libraries/SBT__org_scala_lang_scalap_2_11_0_jar.xml" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/.idea/libraries/SBT__org_scalaj_scalaj_http_2_10_2_0_0_jar.xml" afterPath="$PROJECT_DIR$/.idea/libraries/SBT__org_scalaj_scalaj_http_2_11_2_0_0_jar.xml" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/.idea/libraries/SBT__org_scalanlp_breeze_2_10_0_11_2_jar.xml" afterPath="$PROJECT_DIR$/.idea/libraries/SBT__org_scalanlp_breeze_2_11_0_11_2_jar.xml" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/.idea/libraries/SBT__org_scalanlp_breeze_macros_2_10_0_11_2_jar.xml" afterPath="$PROJECT_DIR$/.idea/libraries/SBT__org_scalanlp_breeze_macros_2_11_0_11_2_jar.xml" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/.idea/libraries/SBT__org_spire_math_spire_2_10_0_7_4_jar.xml" afterPath="$PROJECT_DIR$/.idea/libraries/SBT__org_spire_math_spire_2_11_0_7_4_jar.xml" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/.idea/libraries/SBT__org_spire_math_spire_macros_2_10_0_7_4_jar.xml" afterPath="$PROJECT_DIR$/.idea/libraries/SBT__org_spire_math_spire_macros_2_11_0_7_4_jar.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/modules/tweeather.iml" afterPath="$PROJECT_DIR$/.idea/modules/tweeather.iml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/com/aluxian/tweeather/transformers/WeatherProvider.scala" afterPath="$PROJECT_DIR$/src/main/scala/com/aluxian/tweeather/transformers/WeatherProvider.scala" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build.sbt" afterPath="$PROJECT_DIR$/build.sbt" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/com/aluxian/tweeather/scripts/TwitterHoseEmoCollector.scala" afterPath="$PROJECT_DIR$/src/main/scala/com/aluxian/tweeather/scripts/TwitterHoseEmoCollector.scala" />
     </list>
     <ignored path="Tweeather.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -39,34 +85,8 @@
                 <option name="myItemType" value="com.intellij.openapi.externalSystem.view.ExternalProjectsStructure$RootNode" />
               </PATH_ELEMENT>
               <PATH_ELEMENT>
-                <option name="myItemId" value="spark" />
-                <option name="myItemType" value="com.intellij.openapi.externalSystem.view.ProjectNode" />
-              </PATH_ELEMENT>
-              <PATH_ELEMENT>
-                <option name="myItemId" value="tweeather-build" />
-                <option name="myItemType" value="com.intellij.openapi.externalSystem.view.ModuleNode" />
-              </PATH_ELEMENT>
-              <PATH_ELEMENT>
-                <option name="myItemId" value="Dependencies" />
-                <option name="myItemType" value="com.intellij.openapi.externalSystem.view.ExternalSystemViewDefaultContributor$MyDependenciesNode" />
-              </PATH_ELEMENT>
-            </PATH>
-            <PATH>
-              <PATH_ELEMENT>
-                <option name="myItemId" value="" />
-                <option name="myItemType" value="com.intellij.openapi.externalSystem.view.ExternalProjectsStructure$RootNode" />
-              </PATH_ELEMENT>
-              <PATH_ELEMENT>
-                <option name="myItemId" value="spark" />
-                <option name="myItemType" value="com.intellij.openapi.externalSystem.view.ProjectNode" />
-              </PATH_ELEMENT>
-              <PATH_ELEMENT>
                 <option name="myItemId" value="tweeather" />
-                <option name="myItemType" value="com.intellij.openapi.externalSystem.view.ModuleNode" />
-              </PATH_ELEMENT>
-              <PATH_ELEMENT>
-                <option name="myItemId" value="Dependencies" />
-                <option name="myItemType" value="com.intellij.openapi.externalSystem.view.ExternalSystemViewDefaultContributor$MyDependenciesNode" />
+                <option name="myItemType" value="com.intellij.openapi.externalSystem.view.ProjectNode" />
               </PATH_ELEMENT>
             </PATH>
           </tree_state>
@@ -78,18 +98,7 @@
     <favorites_list name="Tweeather" />
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="WeatherProvider.scala" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/main/scala/com/aluxian/tweeather/transformers/WeatherProvider.scala">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.33333334">
-              <caret line="163" column="20" selection-start-line="163" selection-start-column="20" selection-end-line="163" selection-end-column="20" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300" />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -98,6 +107,7 @@
         <option value="Package Object" />
         <option value="Scala Class" />
         <option value="Scala Trait" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -112,14 +122,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$USER_HOME$/.ivy2/cache/org.scala-lang/scala-library/srcs/scala-library-2.10.5-sources.jar!/scala/collection/mutable/SynchronizedMap.scala" />
-        <option value="$USER_HOME$/.ivy2/cache/org.apache.hadoop/hadoop-common/srcs/hadoop-common-2.7.1-sources.jar!/org/apache/hadoop/fs/FileSystem.java" />
-        <option value="$USER_HOME$/.ivy2/cache/org.apache.hadoop/hadoop-common/srcs/hadoop-common-2.7.1-sources.jar!/org/apache/hadoop/fs/FileUtil.java" />
-        <option value="$PROJECT_DIR$/src/main/scala/com/aluxian/tweeather/Fis.scala" />
-        <option value="$USER_HOME$/.ivy2/cache/commons-io/commons-io/srcs/commons-io-2.4-sources.jar!/org/apache/commons/io/IOUtils.java" />
-        <option value="/Library/Java/JavaVirtualMachines/jdk1.8.0_25.jdk/Contents/Home/src.zip!/java/io/OutputStream.java" />
-        <option value="/Library/Java/JavaVirtualMachines/jdk1.8.0_25.jdk/Contents/Home/src.zip!/java/io/FileOutputStream.java" />
-        <option value="/Library/Java/JavaVirtualMachines/jdk1.8.0_25.jdk/Contents/Home/src.zip!/java/io/FilterInputStream.java" />
         <option value="$PROJECT_DIR$/src/main/scala/com/aluxian/tweeather/scripts/Sentiment140Downloader.scala" />
         <option value="$PROJECT_DIR$/src/main/scala/com/aluxian/tweeather/scripts/TwitterHoseFireCollector.scala" />
         <option value="$USER_HOME$/.ivy2/cache/edu.ucar/cdm/srcs/cdm-4.6.3-sources.jar!/ucar/nc2/dt/grid/GridDataset.java" />
@@ -160,9 +162,17 @@
         <option value="$PROJECT_DIR$/src/main/scala/com/aluxian/tweeather/scripts/TwitterHoseFireParser.scala" />
         <option value="$PROJECT_DIR$/src/main/scala/com/aluxian/tweeather/scripts/TwitterHoseEmoParser.scala" />
         <option value="$PROJECT_DIR$/src/main/scala/com/aluxian/tweeather/scripts/Script.scala" />
-        <option value="$PROJECT_DIR$/build.sbt" />
         <option value="$PROJECT_DIR$/src/main/scala/com/aluxian/tweeather/package.scala" />
         <option value="$PROJECT_DIR$/src/main/scala/com/aluxian/tweeather/transformers/WeatherProvider.scala" />
+        <option value="$PROJECT_DIR$/src/main/scala/org/apache/spark/ml/DashboardExtensions.java" />
+        <option value="$PROJECT_DIR$/src/main/scala/org/apache/spark/DashboardExtensions.java" />
+        <option value="$PROJECT_DIR$/src/main/scala/org/apache/spark/DashboardExtensions.scala" />
+        <option value="$PROJECT_DIR$/src/main/scala/org/apache/spark/StopStreamingTab.scala" />
+        <option value="$PROJECT_DIR$/src/main/scala/org/apache/spark/streaming/StreamingPage.scala" />
+        <option value="$USER_HOME$/.ivy2/cache/org.scala-sbt/ivy/srcs/ivy-0.13.9-sources.jar!/sbt/ModuleID.scala" />
+        <option value="$PROJECT_DIR$/src/main/scala/com/aluxian/tweeather/scripts/TwitterHoseEmoCollector.scala" />
+        <option value="$PROJECT_DIR$/build.sbt" />
+        <option value="$PROJECT_DIR$/src/main/scala/org/apache/spark/streaming/StopStreamingTab.scala" />
       </list>
     </option>
   </component>
@@ -246,6 +256,46 @@
               <option name="myItemId" value="" />
               <option name="myItemType" value="" />
             </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="tweeather-build">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="project">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="tweeather">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="Tweeather">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="tweeather">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="Tweeather">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="src/main">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
           </PATH>
         </subPane>
       </pane>
@@ -277,7 +327,29 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewModuleNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="com.aluxian.tweeather" />
+              <option name="myItemId" value="org.apache.spark" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="streaming" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="StopStreamingTab.scala" />
+              <option name="myItemType" value="org.jetbrains.plugins.scala.components.ScalaDefsProjectViewProvider$ScalaFileTreeNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Tweeather" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="tweeather" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewModuleNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="org.apache.spark" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -292,10 +364,6 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="com.aluxian.tweeather" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="transformers" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -337,20 +405,20 @@
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../FIS" />
-    <property name="SearchEverywhereHistoryKey" value="bui&#9;FILE&#9;file:///Users/aluxian/Projects/Tweeather/build.sbt&#10;buil&#9;FILE&#9;file:///Users/aluxian/Projects/Tweeather/build.sbt&#10;build.&#9;FILE&#9;file:///Users/aluxian/Projects/Tweeather/build.sbt&#10;build&#9;FILE&#9;file:///Users/aluxian/Projects/Tweeather/build.sbt&#10;build.s&#9;FILE&#9;file:///Users/aluxian/Projects/Tweeather/build.sbt&#10;MultilayerPerceptronClassifi&#9;null&#9;null&#10;NaiveBayesModel&#9;null&#9;null&#10;buildsb&#9;FILE&#9;file:///Users/aluxian/Projects/Tweeather/build.sbt&#10;bu&#9;FILE&#9;file:///Users/aluxian/Projects/Tweeather/build.sbt&#10;build.sb&#9;FILE&#9;file:///Users/aluxian/Projects/Tweeather/build.sbt&#10;LocationBoxPara&#9;null&#9;null&#10;.gitig&#9;FILE&#9;file:///Users/aluxian/Projects/Tweeather/.gitignore&#10;.gi&#9;FILE&#9;file:///Users/aluxian/Projects/Tweeather/.gitignore&#10;MulticlassEv&#9;FILE&#9;jar:///Users/aluxian/.ivy2/cache/org.apache.spark/spark-mllib_2.10/srcs/spark-mllib_2.10-1.6.0-SNAPSHOT-sources.jar!/org/apache/spark/ml/evaluation/MulticlassClassificationEvaluator.scala&#10;Multil&#9;FILE&#9;jar:///Users/aluxian/.ivy2/cache/org.apache.spark/spark-mllib_2.10/srcs/spark-mllib_2.10-1.6.0-SNAPSHOT-sources.jar!/org/apache/spark/ml/classification/MultilayerPerceptronClassifier.scala&#10;MultilayerPerceptron&#9;FILE&#9;jar:///Users/aluxian/.ivy2/cache/org.apache.spark/spark-mllib_2.10/srcs/spark-mllib_2.10-1.6.0-SNAPSHOT-sources.jar!/org/apache/spark/ml/classification/MultilayerPerceptronClassifier.scala&#10;LinearRegressionModel&#9;null&#9;null&#10;NaiveBayesMo&#9;null&#9;null&#10;Multilay&#9;FILE&#9;jar:///Users/aluxian/.ivy2/cache/org.apache.spark/spark-mllib_2.10/srcs/spark-mllib_2.10-1.6.0-SNAPSHOT-sources.jar!/org/apache/spark/ml/classification/MultilayerPerceptronClassifier.scala&#10;BooleanType&#9;null&#9;null&#10;MultilayerP&#9;FILE&#9;jar:///Users/aluxian/.ivy2/cache/org.apache.spark/spark-mllib_2.10/srcs/spark-mllib_2.10-1.6.0-SNAPSHOT-sources.jar!/org/apache/spark/ml/classification/MultilayerPerceptronClassifier.scala&#10;DefaultParamsWritable&#9;null&#9;null&#10;params&#9;FILE&#9;jar:///Users/aluxian/.ivy2/cache/org.apache.spark/spark-mllib_2.10/srcs/spark-mllib_2.10-1.6.0-SNAPSHOT-sources.jar!/org/apache/spark/ml/param/params.scala&#10;ParamValidators&#9;FILE&#9;jar:///Users/aluxian/.ivy2/cache/org.apache.spark/spark-mllib_2.10/jars/spark-mllib_2.10-1.6.0-SNAPSHOT.jar!/org/apache/spark/ml/param/ParamValidators.class&#10;Utils.&#9;FILE&#9;jar:///Users/aluxian/.ivy2/cache/org.apache.spark/spark-core_2.10/srcs/spark-core_2.10-1.6.0-SNAPSHOT-sources.jar!/org/apache/spark/util/Utils.scala&#10;Utils.scala&#9;FILE&#9;jar:///Users/aluxian/.ivy2/cache/org.apache.spark/spark-core_2.10/srcs/spark-core_2.10-1.6.0-SNAPSHOT-sources.jar!/org/apache/spark/util/Utils.scala&#10;ReadWrite.scala&#9;FILE&#9;jar:///Users/aluxian/.ivy2/cache/org.apache.spark/spark-mllib_2.10/srcs/spark-mllib_2.10-1.6.0-SNAPSHOT-sources.jar!/org/apache/spark/ml/util/ReadWrite.scala&#10;Gradient&#9;FILE&#9;jar:///Users/aluxian/.ivy2/cache/org.apache.spark/spark-mllib_2.10/srcs/spark-mllib_2.10-1.6.0-SNAPSHOT-sources.jar!/org/apache/spark/mllib/optimization/Gradient.scala&#10;NumericP&#9;FILE&#9;jar:///Users/aluxian/.ivy2/cache/org.apache.spark/spark-mllib_2.10/srcs/spark-mllib_2.10-1.6.0-SNAPSHOT-sources.jar!/org/apache/spark/mllib/util/NumericParser.scala&#10;NumericPa&#9;FILE&#9;jar:///Users/aluxian/.ivy2/cache/org.apache.spark/spark-mllib_2.10/srcs/spark-mllib_2.10-1.6.0-SNAPSHOT-sources.jar!/org/apache/spark/mllib/util/NumericParser.scala&#10;Breezu&#9;FILE&#9;jar:///Users/aluxian/.ivy2/cache/org.apache.spark/spark-mllib_2.10/srcs/spark-mllib_2.10-1.6.0-SNAPSHOT-sources.jar!/org/apache/spark/ml/ann/BreezeUtil.scala&#10;Predic&#9;FILE&#9;jar:///Users/aluxian/.ivy2/cache/org.apache.spark/spark-mllib_2.10/srcs/spark-mllib_2.10-1.6.0-SNAPSHOT-sources.jar!/org/apache/spark/ml/Predictor.scala&#10;Since&#9;FILE&#9;jar:///Users/aluxian/.ivy2/cache/org.apache.spark/spark-core_2.10/srcs/spark-core_2.10-1.6.0-SNAPSHOT-sources.jar!/org/apache/spark/annotation/Since.scala&#10;Experimental&#9;PSI&#9;JAVA://org.apache.spark.annotation.Experimental&#10;DefaultParamsWri&#9;null&#9;null&#10;MultilayerPerceptronParams&#9;null&#9;null&#10;Param&#9;FILE&#9;jar:///Users/aluxian/.ivy2/cache/org.apache.spark/spark-mllib_2.10/srcs/spark-mllib_2.10-1.6.0-SNAPSHOT-sources.jar!/org/apache/spark/ml/param/shared/sharedParams.scala&#10;PredictorParams&#9;null&#9;null&#10;Multilayer&#9;FILE&#9;jar:///Users/aluxian/.ivy2/cache/org.apache.spark/spark-mllib_2.10/srcs/spark-mllib_2.10-1.6.0-SNAPSHOT-sources.jar!/org/apache/spark/ml/classification/MultilayerPerceptronClassifier.scala&#10;FeedForwardTopo&#9;null&#9;null&#10;SchemaU&#9;FILE&#9;jar:///Users/aluxian/.ivy2/cache/org.apache.spark/spark-mllib_2.10/srcs/spark-mllib_2.10-1.6.0-SNAPSHOT-sources.jar!/org/apache/spark/ml/util/SchemaUtils.scala&#10;IntArrayParam&#9;null&#9;null&#10;IntParam&#9;null&#9;null&#10;Grib2Index&#9;FILE&#9;jar:///Users/aluxian/.ivy2/cache/edu.ucar/grib/srcs/grib-4.6.3-sources.jar!/ucar/nc2/grib/grib2/Grib2Index.java&#10;scri&#9;FILE&#9;file:///Users/aluxian/Projects/Tweeather/src/main/scala/com/aluxian/tweeather/scripts/Script.scala&#10;ClassTag&#9;null&#9;null&#10;build.sbt&#9;FILE&#9;file:///Users/aluxian/Projects/Tweeather/build.sbt&#10;tokeni&#9;FILE&#9;jar:///Users/aluxian/.ivy2/cache/org.apache.spark/spark-mllib_2.10/srcs/spark-mllib_2.10-1.6.0-SNAPSHOT-sources.jar!/org/apache/spark/ml/feature/Tokenizer.scala&#10;token&#9;FILE&#9;jar:///Users/aluxian/.ivy2/cache/org.apache.spark/spark-mllib_2.10/srcs/spark-mllib_2.10-1.6.0-SNAPSHOT-sources.jar!/org/apache/spark/ml/feature/Tokenizer.scala&#10;SparkListenerSQLExecutionStart&#9;null&#9;null" />
+    <property name="SearchEverywhereHistoryKey" value="build&#9;FILE&#9;file:///Users/aluxian/Projects/Tweeather/build.sbt&#10;SparkUI&#9;FILE&#9;jar:///Users/aluxian/.ivy2/cache/org.apache.spark/spark-core_2.10/srcs/spark-core_2.10-2.0.0-SNAPSHOT-sources.jar!/org/apache/spark/ui/SparkUI.scala&#10;SparkContext&#9;null&#9;null&#10;bui&#9;FILE&#9;file:///Users/aluxian/Projects/Tweeather/build.sbt&#10;buil&#9;FILE&#9;file:///Users/aluxian/Projects/Tweeather/build.sbt&#10;build.&#9;FILE&#9;file:///Users/aluxian/Projects/Tweeather/build.sbt&#10;build.s&#9;FILE&#9;file:///Users/aluxian/Projects/Tweeather/build.sbt&#10;MultilayerPerceptronClassifi&#9;null&#9;null&#10;NaiveBayesModel&#9;null&#9;null&#10;buildsb&#9;FILE&#9;file:///Users/aluxian/Projects/Tweeather/build.sbt&#10;bu&#9;FILE&#9;file:///Users/aluxian/Projects/Tweeather/build.sbt&#10;build.sb&#9;FILE&#9;file:///Users/aluxian/Projects/Tweeather/build.sbt&#10;LocationBoxPara&#9;null&#9;null&#10;.gitig&#9;FILE&#9;file:///Users/aluxian/Projects/Tweeather/.gitignore&#10;.gi&#9;FILE&#9;file:///Users/aluxian/Projects/Tweeather/.gitignore&#10;MulticlassEv&#9;FILE&#9;jar:///Users/aluxian/.ivy2/cache/org.apache.spark/spark-mllib_2.10/srcs/spark-mllib_2.10-1.6.0-SNAPSHOT-sources.jar!/org/apache/spark/ml/evaluation/MulticlassClassificationEvaluator.scala&#10;Multil&#9;FILE&#9;jar:///Users/aluxian/.ivy2/cache/org.apache.spark/spark-mllib_2.10/srcs/spark-mllib_2.10-1.6.0-SNAPSHOT-sources.jar!/org/apache/spark/ml/classification/MultilayerPerceptronClassifier.scala&#10;MultilayerPerceptron&#9;FILE&#9;jar:///Users/aluxian/.ivy2/cache/org.apache.spark/spark-mllib_2.10/srcs/spark-mllib_2.10-1.6.0-SNAPSHOT-sources.jar!/org/apache/spark/ml/classification/MultilayerPerceptronClassifier.scala&#10;LinearRegressionModel&#9;null&#9;null&#10;NaiveBayesMo&#9;null&#9;null&#10;Multilay&#9;FILE&#9;jar:///Users/aluxian/.ivy2/cache/org.apache.spark/spark-mllib_2.10/srcs/spark-mllib_2.10-1.6.0-SNAPSHOT-sources.jar!/org/apache/spark/ml/classification/MultilayerPerceptronClassifier.scala&#10;BooleanType&#9;null&#9;null&#10;MultilayerP&#9;FILE&#9;jar:///Users/aluxian/.ivy2/cache/org.apache.spark/spark-mllib_2.10/srcs/spark-mllib_2.10-1.6.0-SNAPSHOT-sources.jar!/org/apache/spark/ml/classification/MultilayerPerceptronClassifier.scala&#10;DefaultParamsWritable&#9;null&#9;null&#10;params&#9;FILE&#9;jar:///Users/aluxian/.ivy2/cache/org.apache.spark/spark-mllib_2.10/srcs/spark-mllib_2.10-1.6.0-SNAPSHOT-sources.jar!/org/apache/spark/ml/param/params.scala&#10;ParamValidators&#9;FILE&#9;jar:///Users/aluxian/.ivy2/cache/org.apache.spark/spark-mllib_2.10/jars/spark-mllib_2.10-1.6.0-SNAPSHOT.jar!/org/apache/spark/ml/param/ParamValidators.class&#10;Utils.&#9;FILE&#9;jar:///Users/aluxian/.ivy2/cache/org.apache.spark/spark-core_2.10/srcs/spark-core_2.10-1.6.0-SNAPSHOT-sources.jar!/org/apache/spark/util/Utils.scala&#10;Utils.scala&#9;FILE&#9;jar:///Users/aluxian/.ivy2/cache/org.apache.spark/spark-core_2.10/srcs/spark-core_2.10-1.6.0-SNAPSHOT-sources.jar!/org/apache/spark/util/Utils.scala&#10;ReadWrite.scala&#9;FILE&#9;jar:///Users/aluxian/.ivy2/cache/org.apache.spark/spark-mllib_2.10/srcs/spark-mllib_2.10-1.6.0-SNAPSHOT-sources.jar!/org/apache/spark/ml/util/ReadWrite.scala&#10;Gradient&#9;FILE&#9;jar:///Users/aluxian/.ivy2/cache/org.apache.spark/spark-mllib_2.10/srcs/spark-mllib_2.10-1.6.0-SNAPSHOT-sources.jar!/org/apache/spark/mllib/optimization/Gradient.scala&#10;NumericP&#9;FILE&#9;jar:///Users/aluxian/.ivy2/cache/org.apache.spark/spark-mllib_2.10/srcs/spark-mllib_2.10-1.6.0-SNAPSHOT-sources.jar!/org/apache/spark/mllib/util/NumericParser.scala&#10;NumericPa&#9;FILE&#9;jar:///Users/aluxian/.ivy2/cache/org.apache.spark/spark-mllib_2.10/srcs/spark-mllib_2.10-1.6.0-SNAPSHOT-sources.jar!/org/apache/spark/mllib/util/NumericParser.scala&#10;Breezu&#9;FILE&#9;jar:///Users/aluxian/.ivy2/cache/org.apache.spark/spark-mllib_2.10/srcs/spark-mllib_2.10-1.6.0-SNAPSHOT-sources.jar!/org/apache/spark/ml/ann/BreezeUtil.scala&#10;Predic&#9;FILE&#9;jar:///Users/aluxian/.ivy2/cache/org.apache.spark/spark-mllib_2.10/srcs/spark-mllib_2.10-1.6.0-SNAPSHOT-sources.jar!/org/apache/spark/ml/Predictor.scala&#10;Since&#9;FILE&#9;jar:///Users/aluxian/.ivy2/cache/org.apache.spark/spark-core_2.10/srcs/spark-core_2.10-1.6.0-SNAPSHOT-sources.jar!/org/apache/spark/annotation/Since.scala&#10;Experimental&#9;PSI&#9;JAVA://org.apache.spark.annotation.Experimental&#10;DefaultParamsWri&#9;null&#9;null&#10;MultilayerPerceptronParams&#9;null&#9;null&#10;Param&#9;FILE&#9;jar:///Users/aluxian/.ivy2/cache/org.apache.spark/spark-mllib_2.10/srcs/spark-mllib_2.10-1.6.0-SNAPSHOT-sources.jar!/org/apache/spark/ml/param/shared/sharedParams.scala&#10;PredictorParams&#9;null&#9;null&#10;Multilayer&#9;FILE&#9;jar:///Users/aluxian/.ivy2/cache/org.apache.spark/spark-mllib_2.10/srcs/spark-mllib_2.10-1.6.0-SNAPSHOT-sources.jar!/org/apache/spark/ml/classification/MultilayerPerceptronClassifier.scala&#10;FeedForwardTopo&#9;null&#9;null&#10;SchemaU&#9;FILE&#9;jar:///Users/aluxian/.ivy2/cache/org.apache.spark/spark-mllib_2.10/srcs/spark-mllib_2.10-1.6.0-SNAPSHOT-sources.jar!/org/apache/spark/ml/util/SchemaUtils.scala&#10;IntArrayParam&#9;null&#9;null&#10;IntParam&#9;null&#9;null&#10;Grib2Index&#9;FILE&#9;jar:///Users/aluxian/.ivy2/cache/edu.ucar/grib/srcs/grib-4.6.3-sources.jar!/ucar/nc2/grib/grib2/Grib2Index.java&#10;scri&#9;FILE&#9;file:///Users/aluxian/Projects/Tweeather/src/main/scala/com/aluxian/tweeather/scripts/Script.scala&#10;ClassTag&#9;null&#9;null&#10;build.sbt&#9;FILE&#9;file:///Users/aluxian/Projects/Tweeather/build.sbt&#10;tokeni&#9;FILE&#9;jar:///Users/aluxian/.ivy2/cache/org.apache.spark/spark-mllib_2.10/srcs/spark-mllib_2.10-1.6.0-SNAPSHOT-sources.jar!/org/apache/spark/ml/feature/Tokenizer.scala" />
     <property name="last_directory_selection" value="$PROJECT_DIR$/src/main/scala/com/aluxian/tweeather" />
     <property name="FullScreen" value="true" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/src/main/resources/com/aluxian/tweeather/res" />
-      <recent name="$PROJECT_DIR$/src/main/resources/com/aluxian/tweeather" />
-      <recent name="$PROJECT_DIR$/src/main/resources/com.aluxian.tweeather" />
-      <recent name="$PROJECT_DIR$/src/main/resources" />
-      <recent name="$PROJECT_DIR$/src" />
-    </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
       <recent name="com.aluxian.tweeather" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/main/scala/org/apache/spark/streaming" />
+      <recent name="$PROJECT_DIR$/src/main/scala/org/apache/spark/ml" />
+      <recent name="$PROJECT_DIR$/src/main/scala/com/aluxian/tweeather/utils" />
+      <recent name="$PROJECT_DIR$/src/main/scala/com/aluxian/tweeather/transformers" />
+      <recent name="$PROJECT_DIR$/src/main/resources/com/aluxian/tweeather/res" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="com.aluxian.tweeather.scripts" />
@@ -359,12 +427,12 @@
       <recent name="com.aluxian.tweeather.transformers" />
       <recent name="com.aluxian.tweeather.scripts.meta" />
     </key>
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/src/main/scala/org/apache/spark/ml" />
-      <recent name="$PROJECT_DIR$/src/main/scala/com/aluxian/tweeather/utils" />
-      <recent name="$PROJECT_DIR$/src/main/scala/com/aluxian/tweeather/transformers" />
+    <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/src/main/resources/com/aluxian/tweeather/res" />
+      <recent name="$PROJECT_DIR$/src/main/resources/com/aluxian/tweeather" />
       <recent name="$PROJECT_DIR$/src/main/resources/com.aluxian.tweeather" />
+      <recent name="$PROJECT_DIR$/src/main/resources" />
+      <recent name="$PROJECT_DIR$/src" />
     </key>
   </component>
   <component name="RunManager" selected="Application.TwitterHoseEmoCollector">
@@ -932,7 +1000,7 @@
     </list>
   </component>
   <component name="SbtLocalSettings">
-    <option name="lastUpdateTimestamp" value="1450678087289" />
+    <option name="lastUpdateTimestamp" value="1450685603489" />
     <option name="availableProjects">
       <map>
         <entry>
@@ -959,7 +1027,7 @@
     </option>
     <option name="modificationStamps">
       <map>
-        <entry key="$PROJECT_DIR$" value="1450677752000" />
+        <entry key="$PROJECT_DIR$" value="1450685519000" />
         <entry key="$USER_HOME$/play-scala2" value="1431277885000" />
       </map>
     </option>
@@ -977,12 +1045,6 @@
       <created>1447503737037</created>
       <option name="number" value="Default" />
       <updated>1447503737037</updated>
-    </task>
-    <task id="LOCAL-00082" summary="Track limit notices logged as info in TwitterStream">
-      <created>1448906019508</created>
-      <option name="number" value="00082" />
-      <option name="project" value="LOCAL" />
-      <updated>1448906019508</updated>
     </task>
     <task id="LOCAL-00083" summary="Implement all methods of TwitterStream's StatusListener">
       <created>1448906246976</created>
@@ -1272,37 +1334,43 @@
       <option name="project" value="LOCAL" />
       <updated>1450678162631</updated>
     </task>
-    <option name="localTasksCounter" value="131" />
+    <task id="LOCAL-00131" summary="Fixes WeatherProvider for-loop/scala-arm">
+      <created>1450679025853</created>
+      <option name="number" value="00131" />
+      <option name="project" value="LOCAL" />
+      <updated>1450679025853</updated>
+    </task>
+    <option name="localTasksCounter" value="132" />
     <servers />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1440" height="900" extended-state="0" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3282532" sideWeight="0.48194444" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3282532" sideWeight="0.47777778" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="SBT" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32916668" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.30832356" sideWeight="0.5208333" order="10" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.31535757" sideWeight="0.5243056" order="10" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32942554" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.31535757" sideWeight="0.47569445" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3282532" sideWeight="0.48125" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.22430556" sideWeight="0.49322033" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.22430556" sideWeight="0.49322033" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Tail" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3282532" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24583334" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" x="755" y="339" width="354" height="584" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.17916666" sideWeight="0.5067797" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.41852286" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.31535757" sideWeight="0.47916666" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Tail" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3282532" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.41852286" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="Vcs.Log.UiProperties">
@@ -1319,7 +1387,6 @@
   <component name="VcsManagerConfiguration">
     <option name="OFFER_MOVE_TO_ANOTHER_CHANGELIST_ON_PARTIAL_COMMIT" value="false" />
     <option name="CHECK_CODE_CLEANUP_BEFORE_PROJECT_COMMIT" value="true" />
-    <MESSAGE value="Removes println calls" />
     <MESSAGE value="Fixes output format (fire collector) and the fire parser" />
     <MESSAGE value="Overwrite output of the fire parser" />
     <MESSAGE value="Fixes static Metric types" />
@@ -1344,7 +1411,8 @@
     <MESSAGE value="Moves twitter stream track limitations to logDebug" />
     <MESSAGE value="Makes parsers filter out identical rows" />
     <MESSAGE value="Updates to 2.0.0-SNAPSHOT, fixes IDEA indexing" />
-    <option name="LAST_COMMIT_MESSAGE" value="Updates to 2.0.0-SNAPSHOT, fixes IDEA indexing" />
+    <MESSAGE value="Fixes WeatherProvider for-loop/scala-arm" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixes WeatherProvider for-loop/scala-arm" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="XDebuggerManager">
@@ -1494,26 +1562,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/com/aluxian/tweeather/scripts/TwitterHoseEmoCollector.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.29090908">
-          <caret line="19" column="0" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/scala/com/aluxian/tweeather/scripts/TwitterHoseFireParser.scala">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.3090909">
           <caret line="22" column="30" selection-start-line="22" selection-start-column="30" selection-end-line="22" selection-end-column="30" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/com/aluxian/tweeather/scripts/TwitterHoseEmoParser.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.43165466">
-          <caret line="18" column="17" selection-start-line="18" selection-start-column="17" selection-end-line="18" selection-end-column="17" />
           <folding />
         </state>
       </provider>
@@ -1536,14 +1588,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/build.sbt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.4909091">
-          <caret line="27" column="0" selection-start-line="27" selection-start-column="0" selection-end-line="27" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/scala/com/aluxian/tweeather/package.scala">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.8909091">
@@ -1554,9 +1598,169 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/scala/com/aluxian/tweeather/transformers/WeatherProvider.scala">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.33333334">
-          <caret line="163" column="20" selection-start-line="163" selection-start-column="20" selection-end-line="163" selection-end-column="20" />
+        <state vertical-scroll-proportion="0.58787876">
+          <caret line="177" column="0" selection-start-line="177" selection-start-column="0" selection-end-line="177" selection-end-column="0" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/com/aluxian/tweeather/scripts/TwitterHoseEmoParser.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.56363636">
+          <caret line="33" column="0" selection-start-line="33" selection-start-column="0" selection-end-line="33" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$USER_HOME$/.ivy2/cache/org.apache.spark/spark-streaming_2.10/srcs/spark-streaming_2.10-2.0.0-SNAPSHOT-sources.jar!/org/apache/spark/streaming/ui/UIUtils.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.49541286">
+          <caret line="135" column="12" selection-start-line="135" selection-start-column="12" selection-end-line="135" selection-end-column="12" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$USER_HOME$/.ivy2/cache/org.apache.spark/spark-streaming_2.10/srcs/spark-streaming_2.10-2.0.0-SNAPSHOT-sources.jar!/org/apache/spark/streaming/ui/StreamingTab.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.4">
+          <caret line="41" column="0" selection-start-line="41" selection-start-column="0" selection-end-line="41" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$USER_HOME$/.ivy2/cache/org.apache.spark/spark-streaming_2.10/srcs/spark-streaming_2.10-2.0.0-SNAPSHOT-sources.jar!/org/apache/spark/streaming/ui/StreamingPage.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-1.2848485">
+          <caret line="142" column="24" selection-start-line="142" selection-start-column="24" selection-end-line="142" selection-end-column="24" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$USER_HOME$/.ivy2/cache/org.apache.spark/spark-core_2.10/jars/spark-core_2.10-2.0.0-SNAPSHOT.jar!/org/spark-project/jetty/servlet/ServletContextHandler.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.43233082">
+          <caret line="88" column="5" selection-start-line="88" selection-start-column="5" selection-end-line="88" selection-end-column="5" />
+          <folding>
+            <element signature="e#0#37631#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$USER_HOME$/.ivy2/cache/org.apache.spark/spark-core_2.10/srcs/spark-core_2.10-2.0.0-SNAPSHOT-sources.jar!/org/apache/spark/SparkContext.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.37333333">
+          <caret line="478" column="17" selection-start-line="478" selection-start-column="17" selection-end-line="478" selection-end-column="17" />
+          <folding>
+            <element signature="e#828#869#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$USER_HOME$/.ivy2/cache/org.apache.spark/spark-core_2.10/srcs/spark-core_2.10-2.0.0-SNAPSHOT-sources.jar!/org/apache/spark/SparkException.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.07272727">
+          <caret line="19" column="6" selection-start-line="19" selection-start-column="6" selection-end-line="19" selection-end-column="6" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$USER_HOME$/.ivy2/cache/org.apache.spark/spark-core_2.10/srcs/spark-core_2.10-2.0.0-SNAPSHOT-sources.jar!/org/apache/spark/ui/jobs/StagesTab.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.58181816">
+          <caret line="50" column="3" selection-start-line="38" selection-start-column="2" selection-end-line="50" selection-end-column="3" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/project/build.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.027522936">
+          <caret line="1" column="0" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/project/plugins.sbt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.08256881">
+          <caret line="3" column="0" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$USER_HOME$/.ivy2/cache/org.scala-sbt/ivy/srcs/ivy-0.13.9-sources.jar!/sbt/ModuleID.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.13761468">
+          <caret line="10" column="17" selection-start-line="10" selection-start-column="17" selection-end-line="10" selection-end-column="17" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$USER_HOME$/.ivy2/cache/org.apache.spark/spark-core_2.10/srcs/spark-core_2.10-2.0.0-SNAPSHOT-sources.jar!/org/apache/spark/ui/SparkUI.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.44242424">
+          <caret line="128" column="0" selection-start-line="128" selection-start-column="0" selection-end-line="128" selection-end-column="0" />
+          <folding>
+            <element signature="e#831#869#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$USER_HOME$/.ivy2/cache/org.apache.spark/spark-streaming_2.10/srcs/spark-streaming_2.10-2.0.0-SNAPSHOT-sources.jar!/org/apache/spark/streaming/StreamingContext.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.4730216">
+          <caret line="193" column="5" selection-start-line="189" selection-start-column="4" selection-end-line="193" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$USER_HOME$/.ivy2/cache/org.apache.spark/spark-core_2.10/srcs/spark-core_2.10-2.0.0-SNAPSHOT-sources.jar!/org/apache/spark/ui/JettyUtils.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.49460432">
+          <caret line="122" column="12" selection-start-line="122" selection-start-column="12" selection-end-line="122" selection-end-column="12" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/com/aluxian/tweeather/scripts/TwitterHoseEmoCollector.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.35971224">
+          <caret line="25" column="22" selection-start-line="25" selection-start-column="22" selection-end-line="25" selection-end-column="22" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/build.sbt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.8348624">
+          <caret line="31" column="0" selection-start-line="31" selection-start-column="0" selection-end-line="31" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$USER_HOME$/.ivy2/cache/org.apache.spark/spark-core_2.10/srcs/spark-core_2.10-2.0.0-SNAPSHOT-sources.jar!/org/apache/spark/ui/WebUI.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.6363636">
+          <caret line="100" column="23" selection-start-line="100" selection-start-column="23" selection-end-line="100" selection-end-column="23" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/com/aluxian/tweeather/streaming/TwitterInputDStream.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.54545456">
+          <caret line="36" column="0" selection-start-line="36" selection-start-column="0" selection-end-line="36" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/org/apache/spark/streaming/StopStreamingTab.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.6909091">
+          <caret line="38" column="0" selection-start-line="38" selection-start-column="0" selection-end-line="38" selection-end-column="0" />
+          <folding>
+            <element signature="e#36#80#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
