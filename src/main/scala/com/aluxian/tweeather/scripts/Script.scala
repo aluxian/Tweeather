@@ -3,8 +3,6 @@ package com.aluxian.tweeather.scripts
 import org.apache.hadoop.fs.FileSystem
 import org.apache.log4j.PropertyConfigurator
 import org.apache.spark.sql.SQLContext
-import org.apache.spark.streaming.{Minutes, Seconds}
-import org.apache.spark.{SparkConf, SparkContext}
 
 trait Script {
 
@@ -19,7 +17,6 @@ trait Script {
       .setIfMissing("spark.app.id", scriptName)
       .setIfMissing("spark.app.name", scriptName)
       .setIfMissing("spark.master", "local[*]")
-      .setIfMissing("spark.hadoop.fs.defaultFS", "hdfs://localhost:9000")
       .setIfMissing("spark.streaming.stopGracefullyOnShutdown", "true")
       .setIfMissing("spark.streaming.blockInterval", "30s")
   )
