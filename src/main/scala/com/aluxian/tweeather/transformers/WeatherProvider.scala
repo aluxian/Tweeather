@@ -5,11 +5,13 @@ import java.nio.file.Files
 
 import com.aluxian.tweeather.models.Metric
 import com.aluxian.tweeather.utils.MetricArrayParam
+import org.apache.spark.Logging
 import org.apache.spark.ml.Transformer
 import org.apache.spark.ml.param._
 import org.apache.spark.ml.util.{BasicParamsReadable, BasicParamsWritable, Identifiable}
-import org.apache.spark.sql.Row
+import org.apache.spark.sql.functions._
 import org.apache.spark.sql.types._
+import org.apache.spark.sql.{DataFrame, Row}
 import resource._
 import ucar.nc2.dt.grid.GridDataset
 
@@ -136,28 +138,30 @@ class WeatherProvider(override val uid: String) extends Transformer with BasicPa
           val urlIndex = row.fieldIndex(urlCol)
           val gribUrl = row.getString(urlIndex)
 
-          for (data <- managed(WeatherProvider.downloadGrib(gribUrl, gribsDir, metricsArray))) {
-            val datatypes = metricsArray.map(m => {
-              val dt = data.findGridDatatype(m.gridName)
-              if (dt == null) {
-                logWarning(s"Null datatype found for $m from $gribUrl")
+          managed(WeatherProvider.downloadGrib(gribUrl, gribsDir, metricsArray))
+            .map { data =>
+              val datatypes = metricsArray.map(m => {
+                val dt = data.findGridDatatype(m.gridName)
+                if (dt == null) {
+                  logWarning(s"Null datatype found for $m from $gribUrl")
+                }
+                m -> dt
+              }).toMap
+
+              bi.map { row =>
+                val lat = row.getDouble(latIndex)
+                val lon = row.getDouble(lonIndex)
+
+                val metricValues = datatypes.map {
+                  case (metric, datatype) =>
+                    val Array(x, y) = datatype.getCoordinateSystem.findXYindexFromLatLon(lat, lon, null)
+                    datatype.readDataSlice(0, 0, y, x).getDouble(0)
+                }.toArray
+
+                Row.merge(row, Row(metricValues: _*))
               }
-              m -> dt
-            }).toMap
-
-            bi.map { row =>
-              val lat = row.getDouble(latIndex)
-              val lon = row.getDouble(lonIndex)
-
-              val metricValues = datatypes.map {
-                case (metric, datatype) =>
-                  val Array(x, y) = datatype.getCoordinateSystem.findXYindexFromLatLon(lat, lon, null)
-                  datatype.readDataSlice(0, 0, y, x).getDouble(0)
-              }.toArray
-
-              Row.merge(row, Row(metricValues: _*))
             }
-          }
+            .opt.get
         }
       }
 
