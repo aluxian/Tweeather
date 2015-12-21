@@ -4,6 +4,8 @@
     <profile name="SBT 1" modules="tweatherspark,spark">
       <option name="implicitConversions" value="true" />
     </profile>
-    <profile name="SBT 2" modules="tweeather" />
+    <profile name="SBT 2" modules="tweeather">
+      <option name="postfixOps" value="true" />
+    </profile>
   </component>
 </project>
