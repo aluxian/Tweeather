@@ -2,6 +2,7 @@ package com.aluxian.tweeather.scripts
 
 import org.apache.hadoop.fs.FileSystem
 import org.apache.log4j.PropertyConfigurator
+import org.apache.spark.sql.SQLContext
 import org.apache.spark.streaming.{Minutes, Seconds}
 import org.apache.spark.{SparkConf, SparkContext}
 
