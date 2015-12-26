@@ -4,6 +4,8 @@ import com.aluxian.tweeather.RichBoolean
 import org.apache.spark.Logging
 import org.apache.spark.sql.SaveMode
 
+import scala.io.StdIn
+
 object TwitterHoseEmoParser extends Script with Logging {
 
   val positiveEmoticons = TwitterHoseEmoCollector.positiveEmoticons
@@ -28,6 +30,10 @@ object TwitterHoseEmoParser extends Script with Logging {
     logInfo("Saving text files")
     data.toDF("raw_text", "label").write.mode(SaveMode.Overwrite)
       .parquet("/tw/sentiment/emo/parsed/data.parquet")
+
+    // Pause to keep the web UI running
+    logInfo("Press enter to continue")
+    StdIn.readLine()
   }
 
 }

@@ -1,6 +1,9 @@
 package com.aluxian.tweeather.scripts
 
+import com.aluxian.tweeather.scripts.TwitterHoseEmoCounter._
 import org.apache.spark.Logging
+
+import scala.io.StdIn
 
 object TwitterHoseFireCounter extends Script with Logging {
 
@@ -13,6 +16,10 @@ object TwitterHoseFireCounter extends Script with Logging {
 
     // Print count
     logInfo(s"Count = ${data.count()}")
+
+    // Pause to keep the web UI running
+    logInfo("Press enter to continue")
+    StdIn.readLine()
   }
 
 }

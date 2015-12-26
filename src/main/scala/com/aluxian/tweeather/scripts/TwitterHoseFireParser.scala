@@ -1,11 +1,14 @@
 package com.aluxian.tweeather.scripts
 
 import com.aluxian.tweeather.RichSeq
+import com.aluxian.tweeather.scripts.TwitterHoseEmoCounter._
 import com.aluxian.tweeather.transformers._
 import org.apache.spark.Logging
 import org.apache.spark.ml.PipelineModel
 import org.apache.spark.mllib.linalg.Vector
 import org.apache.spark.sql.{Row, SaveMode}
+
+import scala.io.StdIn
 
 object TwitterHoseFireParser extends Script with Logging {
 
@@ -50,6 +53,10 @@ object TwitterHoseFireParser extends Script with Logging {
         ).mkString(",")
       })
       .toDF.write.mode(SaveMode.Overwrite).parquet("/tw/fire/parsed/data.parquet")
+
+    // Pause to keep the web UI running
+    logInfo("Press enter to continue")
+    StdIn.readLine()
   }
 
 }

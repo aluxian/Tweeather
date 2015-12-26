@@ -8,6 +8,8 @@ import org.apache.spark.ml.feature.{HashingTF, StopWordsRemover, Tokenizer}
 import org.apache.spark.mllib.evaluation.BinaryClassificationMetrics
 import org.apache.spark.sql.Row
 
+import scala.io.StdIn
+
 object TwitterHoseEmoTrainer extends Script with Logging {
 
   override def main(args: Array[String]) {
@@ -48,6 +50,10 @@ object TwitterHoseEmoTrainer extends Script with Logging {
     // Save the model
     logInfo("Saving model")
     model.write.overwrite().save("/tw/sentiment/models/emo.model")
+
+    // Pause to keep the web UI running
+    logInfo("Press enter to continue")
+    StdIn.readLine()
   }
 
 }
