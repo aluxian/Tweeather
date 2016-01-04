@@ -18,7 +18,9 @@ object TwitterHoseEmoTrainer extends Script with Logging {
     // Prepare data sets
     logInfo("Getting datasets")
     val testData = sqlc.read.parquet("/tw/sentiment/140/parsed/test.parquet")
-    val trainingData = sqlc.read.parquet("/tw/sentiment/emo/parsed/data.parquet")
+    val emoTrainingData = sqlc.read.parquet("/tw/sentiment/emo/parsed/data.parquet")
+    val s140TrainingData = sqlc.read.parquet("/tw/sentiment/140/parsed/training.parquet")
+    val trainingData = emoTrainingData.unionAll(s140TrainingData)
 
     // Configure the pipeline
     val pipeline = new Pipeline().setStages(Array(
@@ -32,7 +34,7 @@ object TwitterHoseEmoTrainer extends Script with Logging {
     ))
 
     // Fit the pipeline
-    logInfo("Training model")
+    logInfo(s"Training model on ${trainingData.count()} rows")
     val model = pipeline.fit(trainingData)
 
     // Test the model accuracy

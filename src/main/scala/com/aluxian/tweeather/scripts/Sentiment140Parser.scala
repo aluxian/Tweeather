@@ -28,9 +28,10 @@ object Sentiment140Parser extends Script with Logging {
       .map(row => (row(0).toDouble, row(5))) // keep sentiment and text only
       .filter(row => row._1 != 2) // remove neutral tweets
       .map(row => (row._1 / 4, row._2)) // normalize sentiment
+      .map(row => (row._2, row._1)) // switch values
 
     import sqlc.implicits._
-    parsed.toDF("label", "raw_text").write.mode(SaveMode.Overwrite).parquet(filePath)
+    parsed.toDF("raw_text", "label").write.mode(SaveMode.Overwrite).parquet(filePath)
     logInfo(s"Parsed and saved $filePath")
   }
 
