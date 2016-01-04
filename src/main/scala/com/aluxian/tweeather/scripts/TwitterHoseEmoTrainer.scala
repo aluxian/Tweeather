@@ -17,8 +17,8 @@ object TwitterHoseEmoTrainer extends Script with Logging {
 
     // Prepare data sets
     logInfo("Getting datasets")
-    val Array(trainingData, testData) = sqlc.read.parquet("/tw/sentiment/emo/parsed/data.parquet")
-      .randomSplit(Array(0.9, 0.1))
+    val testData = sqlc.read.parquet("/tw/sentiment/140/parsed/test.parquet")
+    val trainingData = sqlc.read.parquet("/tw/sentiment/emo/parsed/data.parquet")
 
     // Configure the pipeline
     val pipeline = new Pipeline().setStages(Array(
@@ -41,6 +41,9 @@ object TwitterHoseEmoTrainer extends Script with Logging {
       .transform(testData)
       .select("prediction", "label")
       .map { case Row(prediction: Double, label: Double) => (prediction, label) }
+
+    val matches = predicted.map({ case (prediction, label) => if (prediction == label) 1 else 0 }).sum()
+    logInfo(s"Test dataset accuracy: ${matches / predicted.count()}")
 
     val metrics = new BinaryClassificationMetrics(predicted)
     logInfo(s"Test dataset ROC: ${metrics.areaUnderROC()}")
