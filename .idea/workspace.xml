@@ -1,15 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="835fc80b-457f-47ce-b26d-7bb3c1b29a60" name="Default" comment="Changes twitter stream persistance to mem+disk">
+    <list default="true" id="835fc80b-457f-47ce-b26d-7bb3c1b29a60" name="Default" comment="Adds pauses to keep spark UI running at the end">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/com/aluxian/tweeather/scripts/TwitterHoseEmoCounter.scala" afterPath="$PROJECT_DIR$/src/main/scala/com/aluxian/tweeather/scripts/TwitterHoseEmoCounter.scala" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/com/aluxian/tweeather/scripts/TwitterHoseEmoParser.scala" afterPath="$PROJECT_DIR$/src/main/scala/com/aluxian/tweeather/scripts/TwitterHoseEmoParser.scala" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/com/aluxian/tweeather/scripts/TwitterHoseEmoTrainer.scala" afterPath="$PROJECT_DIR$/src/main/scala/com/aluxian/tweeather/scripts/TwitterHoseEmoTrainer.scala" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/com/aluxian/tweeather/scripts/TwitterHoseFireCounter.scala" afterPath="$PROJECT_DIR$/src/main/scala/com/aluxian/tweeather/scripts/TwitterHoseFireCounter.scala" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/com/aluxian/tweeather/scripts/TwitterHoseFireParser.scala" afterPath="$PROJECT_DIR$/src/main/scala/com/aluxian/tweeather/scripts/TwitterHoseFireParser.scala" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/com/aluxian/tweeather/scripts/TwitterHoseFireRepl.scala" afterPath="$PROJECT_DIR$/src/main/scala/com/aluxian/tweeather/scripts/TwitterHoseFireRepl.scala" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/com/aluxian/tweeather/scripts/TwitterHoseFireTrainer.scala" afterPath="$PROJECT_DIR$/src/main/scala/com/aluxian/tweeather/scripts/TwitterHoseFireTrainer.scala" />
     </list>
     <list id="4b0f262d-68eb-4698-8301-95ceead941ea" name="Rejected commit: Default" comment="Removes default hadoop fs" />
     <ignored path="Tweeather.iws" />
@@ -101,8 +96,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$USER_HOME$/.ivy2/cache/edu.ucar/cdm/srcs/cdm-4.6.3-sources.jar!/ucar/nc2/dt/radial/Netcdf2Dataset.java" />
-        <option value="$USER_HOME$/.ivy2/cache/edu.ucar/cdm/srcs/cdm-4.6.3-sources.jar!/ucar/unidata/io/InMemoryRandomAccessFile.java" />
         <option value="$USER_HOME$/.ivy2/cache/edu.ucar/cdm/srcs/cdm-4.6.3-sources.jar!/ucar/nc2/ncml/NcMLReader.java" />
         <option value="$USER_HOME$/.ivy2/cache/edu.ucar/cdm/srcs/cdm-4.6.3-sources.jar!/ucar/nc2/ncml/NcMLWriter.java" />
         <option value="$USER_HOME$/.ivy2/cache/org.apache.spark/spark-sql_2.10/srcs/spark-sql_2.10-1.6.0-SNAPSHOT-sources.jar!/org/apache/spark/sql/GroupedData.scala" />
@@ -146,12 +139,14 @@
         <option value="$PROJECT_DIR$/src/main/scala/com/aluxian/tweeather/streaming/TwitterUtils.scala" />
         <option value="$PROJECT_DIR$/src/main/scala/com/aluxian/tweeather/streaming/TwitterReceiver.scala" />
         <option value="$PROJECT_DIR$/src/main/scala/com/aluxian/tweeather/scripts/TwitterHoseEmoParser.scala" />
-        <option value="$PROJECT_DIR$/src/main/scala/com/aluxian/tweeather/scripts/TwitterHoseEmoCounter.scala" />
         <option value="$PROJECT_DIR$/src/main/scala/com/aluxian/tweeather/scripts/TwitterHoseEmoTrainer.scala" />
-        <option value="$PROJECT_DIR$/src/main/scala/com/aluxian/tweeather/scripts/TwitterHoseFireCounter.scala" />
         <option value="$PROJECT_DIR$/src/main/scala/com/aluxian/tweeather/scripts/TwitterHoseFireParser.scala" />
         <option value="$PROJECT_DIR$/src/main/scala/com/aluxian/tweeather/scripts/TwitterHoseFireTrainer.scala" />
         <option value="$PROJECT_DIR$/src/main/scala/com/aluxian/tweeather/scripts/TwitterHoseFireRepl.scala" />
+        <option value="$USER_HOME$/.ivy2/cache/org.apache.spark/spark-mllib_2.11/srcs/spark-mllib_2.11-2.0.0-SNAPSHOT-sources.jar!/org/apache/spark/mllib/evaluation/BinaryClassificationMetrics.scala" />
+        <option value="$USER_HOME$/.ivy2/cache/org.apache.spark/spark-mllib_2.11/srcs/spark-mllib_2.11-2.0.0-SNAPSHOT-sources.jar!/org/apache/spark/mllib/evaluation/AreaUnderCurve.scala" />
+        <option value="$PROJECT_DIR$/src/main/scala/com/aluxian/tweeather/scripts/TwitterHoseFireCounter.scala" />
+        <option value="$PROJECT_DIR$/src/main/scala/com/aluxian/tweeather/scripts/TwitterHoseEmoCounter.scala" />
       </list>
     </option>
   </component>
@@ -216,6 +211,30 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope">
+        <subPane subId="Project Files">
+          <PATH>
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="tweeather">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="Tweeather">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
       <pane id="PackagesPane">
         <subPane>
           <PATH>
@@ -303,30 +322,6 @@
             <PATH_ELEMENT>
               <option name="myItemId" value="Tweeather" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-        </subPane>
-      </pane>
-      <pane id="Scope">
-        <subPane subId="Project Files">
-          <PATH>
-            <PATH_ELEMENT USER_OBJECT="Root">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT USER_OBJECT="Root">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="tweeather">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="Tweeather">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
@@ -1032,12 +1027,6 @@
       <option name="number" value="Default" />
       <updated>1447503737037</updated>
     </task>
-    <task id="LOCAL-00097" summary="Switch Twitter stream StorageLevel back to memory only">
-      <created>1448913673867</created>
-      <option name="number" value="00097" />
-      <option name="project" value="LOCAL" />
-      <updated>1448913673867</updated>
-    </task>
     <task id="LOCAL-00098" summary="Set default stream interval to 5 minutes">
       <created>1448914513605</created>
       <option name="number" value="00098" />
@@ -1326,7 +1315,13 @@
       <option name="project" value="LOCAL" />
       <updated>1450855190768</updated>
     </task>
-    <option name="localTasksCounter" value="146" />
+    <task id="LOCAL-00146" summary="Adds pauses to keep spark UI running at the end">
+      <created>1451146731028</created>
+      <option name="number" value="00146" />
+      <option name="project" value="LOCAL" />
+      <updated>1451146731030</updated>
+    </task>
+    <option name="localTasksCounter" value="147" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -1374,7 +1369,6 @@
     <option name="OFFER_MOVE_TO_ANOTHER_CHANGELIST_ON_PARTIAL_COMMIT" value="false" />
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_CODE_CLEANUP_BEFORE_PROJECT_COMMIT" value="true" />
-    <MESSAGE value="Fixes fire trainer script (and the perceptron)" />
     <MESSAGE value="Improves column dropper" />
     <MESSAGE value="Drop more columns from the sentiment trainers" />
     <MESSAGE value="Improves formatting in fire trainer" />
@@ -1399,7 +1393,8 @@
     <MESSAGE value="Re-adds import removed by IDEA" />
     <MESSAGE value="Adds counter scripts" />
     <MESSAGE value="Changes twitter stream persistance to mem+disk" />
-    <option name="LAST_COMMIT_MESSAGE" value="Changes twitter stream persistance to mem+disk" />
+    <MESSAGE value="Adds pauses to keep spark UI running at the end" />
+    <option name="LAST_COMMIT_MESSAGE" value="Adds pauses to keep spark UI running at the end" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1419,9 +1414,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="e#39#77#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1569,9 +1561,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.6727273">
           <caret line="37" column="0" selection-start-line="37" selection-start-column="0" selection-end-line="37" selection-end-column="0" />
-          <folding>
-            <element signature="e#39#77#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1579,7 +1568,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.43636364">
           <caret line="30" column="0" selection-start-line="30" selection-start-column="0" selection-end-line="30" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1587,7 +1575,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.45454547">
           <caret line="29" column="7" selection-start-line="29" selection-start-column="7" selection-end-line="29" selection-end-column="7" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1595,7 +1582,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.33333334">
           <caret line="428" column="66" selection-start-line="428" selection-start-column="66" selection-end-line="428" selection-end-column="66" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1603,37 +1589,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.56363636">
           <caret line="35" column="20" selection-start-line="34" selection-start-column="4" selection-end-line="35" selection-end-column="20" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/com/aluxian/tweeather/scripts/TwitterHoseEmoCounter.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.34545454">
-          <caret line="19" column="4" selection-start-line="19" selection-start-column="4" selection-end-line="21" selection-end-column="20" />
-          <folding>
-            <element signature="e#39#98#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/com/aluxian/tweeather/scripts/TwitterHoseEmoCollector.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.45454547">
-          <caret line="25" column="3" selection-start-line="25" selection-start-column="3" selection-end-line="25" selection-end-column="3" />
-          <folding>
-            <element signature="e#39#90#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/com/aluxian/tweeather/scripts/TwitterHoseEmoTrainer.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5090909">
-          <caret line="28" column="47" selection-start-line="28" selection-start-column="47" selection-end-line="28" selection-end-column="47" />
-          <folding>
-            <element signature="e#39#129#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1641,7 +1596,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.4">
           <caret line="25" column="13" selection-start-line="25" selection-start-column="13" selection-end-line="25" selection-end-column="13" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1649,34 +1603,69 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.56363636">
           <caret line="36" column="3" selection-start-line="36" selection-start-column="3" selection-end-line="36" selection-end-column="3" />
-          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/com/aluxian/tweeather/scripts/TwitterHoseFireParser.scala">
+    <entry file="jar://$USER_HOME$/.ivy2/cache/org.apache.spark/spark-mllib_2.11/srcs/spark-mllib_2.11-2.0.0-SNAPSHOT-sources.jar!/org/apache/spark/mllib/evaluation/AreaUnderCurve.scala">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.6727273">
-          <caret line="45" column="24" selection-start-line="45" selection-start-column="24" selection-end-line="45" selection-end-column="24" />
-          <folding />
+        <state vertical-scroll-proportion="0.58181816">
+          <caret line="48" column="3" selection-start-line="48" selection-start-column="3" selection-end-line="48" selection-end-column="3" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$USER_HOME$/.ivy2/cache/org.apache.spark/spark-mllib_2.11/srcs/spark-mllib_2.11-2.0.0-SNAPSHOT-sources.jar!/org/apache/spark/mllib/evaluation/BinaryClassificationMetrics.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.46060607">
+          <caret line="90" column="0" selection-start-line="90" selection-start-column="0" selection-end-line="90" selection-end-column="0" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/scala/com/aluxian/tweeather/scripts/TwitterHoseFireCounter.scala">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.38181818">
-          <caret line="21" column="20" selection-start-line="21" selection-start-column="20" selection-end-line="21" selection-end-column="20" />
+        <state vertical-scroll-proportion="0.43636364">
+          <caret line="24" column="0" selection-start-line="24" selection-start-column="0" selection-end-line="24" selection-end-column="0" />
           <folding>
-            <element signature="e#39#99#0" expanded="true" />
+            <element signature="e#39#70#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/scala/com/aluxian/tweeather/scripts/TwitterHoseFireTrainer.scala">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5090909">
+        <state vertical-scroll-proportion="0.7818182">
           <caret line="43" column="36" selection-start-line="43" selection-start-column="36" selection-end-line="43" selection-end-column="36" />
           <folding>
             <element signature="e#39#70#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/com/aluxian/tweeather/scripts/TwitterHoseEmoCollector.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.21818182">
+          <caret line="15" column="10" selection-start-line="15" selection-start-column="10" selection-end-line="15" selection-end-column="10" />
+          <folding>
+            <element signature="e#39#90#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/com/aluxian/tweeather/scripts/TwitterHoseEmoCounter.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.12727273">
+          <caret line="7" column="0" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
+          <folding>
+            <element signature="e#39#70#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/com/aluxian/tweeather/scripts/TwitterHoseEmoTrainer.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.6909091">
+          <caret line="46" column="47" selection-start-line="46" selection-start-column="47" selection-end-line="46" selection-end-column="47" />
+          <folding>
+            <element signature="e#39#129#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1685,6 +1674,14 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.45454547">
           <caret line="30" column="0" selection-start-line="30" selection-start-column="0" selection-end-line="30" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/com/aluxian/tweeather/scripts/TwitterHoseFireParser.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.6727273">
+          <caret line="45" column="24" selection-start-line="45" selection-start-column="24" selection-end-line="45" selection-end-column="24" />
           <folding />
         </state>
       </provider>

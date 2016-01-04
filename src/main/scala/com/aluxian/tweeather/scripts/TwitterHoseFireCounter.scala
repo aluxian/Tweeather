@@ -1,6 +1,5 @@
 package com.aluxian.tweeather.scripts
 
-import com.aluxian.tweeather.scripts.TwitterHoseEmoCounter._
 import org.apache.spark.Logging
 
 import scala.io.StdIn
