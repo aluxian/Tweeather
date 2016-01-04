@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="835fc80b-457f-47ce-b26d-7bb3c1b29a60" name="Default" comment="Use the sentiment140 test dataset in emo trainer">
+    <list default="true" id="835fc80b-457f-47ce-b26d-7bb3c1b29a60" name="Default" comment="Use the sentiment140 training dataset in emo trainer too">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/com/aluxian/tweeather/scripts/Sentiment140Parser.scala" afterPath="$PROJECT_DIR$/src/main/scala/com/aluxian/tweeather/scripts/Sentiment140Parser.scala" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/com/aluxian/tweeather/scripts/TwitterHoseEmoTrainer.scala" afterPath="$PROJECT_DIR$/src/main/scala/com/aluxian/tweeather/scripts/TwitterHoseEmoTrainer.scala" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/com/aluxian/tweeather/scripts/TwitterHoseFireTrainer.scala" afterPath="$PROJECT_DIR$/src/main/scala/com/aluxian/tweeather/scripts/TwitterHoseFireTrainer.scala" />
     </list>
     <list id="4b0f262d-68eb-4698-8301-95ceead941ea" name="Rejected commit: Default" comment="Removes default hadoop fs" />
     <ignored path="Tweeather.iws" />
@@ -73,13 +72,13 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="TwitterHoseEmoTrainer.scala" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/main/scala/com/aluxian/tweeather/scripts/TwitterHoseEmoTrainer.scala">
+      <file leaf-file-name="TwitterHoseFireTrainer.scala" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/scala/com/aluxian/tweeather/scripts/TwitterHoseFireTrainer.scala">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.7090909">
-              <caret line="39" column="30" selection-start-line="39" selection-start-column="30" selection-end-line="39" selection-end-column="30" />
+            <state vertical-scroll-proportion="0.43636364">
+              <caret line="30" column="32" selection-start-line="30" selection-start-column="32" selection-end-line="30" selection-end-column="32" />
               <folding>
-                <element signature="e#39#129#0" expanded="true" />
+                <element signature="e#39#70#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -150,7 +149,6 @@
         <option value="$PROJECT_DIR$/src/main/scala/com/aluxian/tweeather/streaming/TwitterReceiver.scala" />
         <option value="$PROJECT_DIR$/src/main/scala/com/aluxian/tweeather/scripts/TwitterHoseEmoParser.scala" />
         <option value="$PROJECT_DIR$/src/main/scala/com/aluxian/tweeather/scripts/TwitterHoseFireParser.scala" />
-        <option value="$PROJECT_DIR$/src/main/scala/com/aluxian/tweeather/scripts/TwitterHoseFireTrainer.scala" />
         <option value="$PROJECT_DIR$/src/main/scala/com/aluxian/tweeather/scripts/TwitterHoseFireRepl.scala" />
         <option value="$USER_HOME$/.ivy2/cache/org.apache.spark/spark-mllib_2.11/srcs/spark-mllib_2.11-2.0.0-SNAPSHOT-sources.jar!/org/apache/spark/mllib/evaluation/BinaryClassificationMetrics.scala" />
         <option value="$USER_HOME$/.ivy2/cache/org.apache.spark/spark-mllib_2.11/srcs/spark-mllib_2.11-2.0.0-SNAPSHOT-sources.jar!/org/apache/spark/mllib/evaluation/AreaUnderCurve.scala" />
@@ -160,6 +158,7 @@
         <option value="$PROJECT_DIR$/src/main/scala/com/aluxian/tweeather/scripts/Sentiment140Parser.scala" />
         <option value="$USER_HOME$/.ivy2/cache/org.apache.spark/spark-sql_2.11/srcs/spark-sql_2.11-2.0.0-SNAPSHOT-sources.jar!/org/apache/spark/sql/DataFrame.scala" />
         <option value="$PROJECT_DIR$/src/main/scala/com/aluxian/tweeather/scripts/TwitterHoseEmoTrainer.scala" />
+        <option value="$PROJECT_DIR$/src/main/scala/com/aluxian/tweeather/scripts/TwitterHoseFireTrainer.scala" />
       </list>
     </option>
   </component>
@@ -1040,12 +1039,6 @@
       <option name="number" value="Default" />
       <updated>1447503737037</updated>
     </task>
-    <task id="LOCAL-00100" summary="Stop gracefully by default">
-      <created>1448915436412</created>
-      <option name="number" value="00100" />
-      <option name="project" value="LOCAL" />
-      <updated>1448915436412</updated>
-    </task>
     <task id="LOCAL-00101" summary="Improves script default config vars">
       <created>1448968046271</created>
       <option name="number" value="00101" />
@@ -1334,7 +1327,13 @@
       <option name="project" value="LOCAL" />
       <updated>1451929576073</updated>
     </task>
-    <option name="localTasksCounter" value="149" />
+    <task id="LOCAL-00149" summary="Use the sentiment140 training dataset in emo trainer too">
+      <created>1451930947206</created>
+      <option name="number" value="00149" />
+      <option name="project" value="LOCAL" />
+      <updated>1451930947206</updated>
+    </task>
+    <option name="localTasksCounter" value="150" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -1382,7 +1381,6 @@
     <option name="OFFER_MOVE_TO_ANOTHER_CHANGELIST_ON_PARTIAL_COMMIT" value="false" />
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_CODE_CLEANUP_BEFORE_PROJECT_COMMIT" value="true" />
-    <MESSAGE value="Improves formatting in fire trainer" />
     <MESSAGE value="Improves formatting (fire parser)" />
     <MESSAGE value="Fixes WeatherProvider" />
     <MESSAGE value="Moves twitter stream track limitations to logDebug" />
@@ -1407,7 +1405,8 @@
     <MESSAGE value="Adds pauses to keep spark UI running at the end" />
     <MESSAGE value="Removes redundant import" />
     <MESSAGE value="Use the sentiment140 test dataset in emo trainer" />
-    <option name="LAST_COMMIT_MESSAGE" value="Use the sentiment140 test dataset in emo trainer" />
+    <MESSAGE value="Use the sentiment140 training dataset in emo trainer too" />
+    <option name="LAST_COMMIT_MESSAGE" value="Use the sentiment140 training dataset in emo trainer too" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1612,16 +1611,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/com/aluxian/tweeather/scripts/TwitterHoseFireTrainer.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.7818182">
-          <caret line="43" column="36" selection-start-line="43" selection-start-column="36" selection-end-line="43" selection-end-column="36" />
-          <folding>
-            <element signature="e#39#70#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/scala/com/aluxian/tweeather/scripts/TwitterHoseEmoCounter.scala">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.12727273">
@@ -1718,10 +1707,20 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/scala/com/aluxian/tweeather/scripts/TwitterHoseEmoTrainer.scala">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.7090909">
+        <state vertical-scroll-proportion="0.43636364">
           <caret line="39" column="30" selection-start-line="39" selection-start-column="30" selection-end-line="39" selection-end-column="30" />
           <folding>
             <element signature="e#39#129#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/com/aluxian/tweeather/scripts/TwitterHoseFireTrainer.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.43636364">
+          <caret line="30" column="32" selection-start-line="30" selection-start-column="32" selection-end-line="30" selection-end-column="32" />
+          <folding>
+            <element signature="e#39#70#0" expanded="true" />
           </folding>
         </state>
       </provider>

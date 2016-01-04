@@ -28,7 +28,7 @@ object TwitterHoseFireTrainer extends Script with Logging {
 
     // Configure the perceptron
     val perceptron = new MultilayerPerceptron()
-      .setLayers(Array(3, 5, 1))
+      .setLayers(Array(3, 5, 5, 5, 1))
       .setInputCol("input")
       .setOutputCol("output")
 
