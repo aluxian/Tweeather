@@ -1,5 +1,6 @@
 package com.aluxian.tweeather.transformers
 
+import com.aluxian.tweeather.RichArray
 import org.apache.spark.ml.Transformer
 import org.apache.spark.ml.param._
 import org.apache.spark.ml.util.{BasicParamsReadable, BasicParamsWritable, Identifiable}
@@ -37,7 +38,7 @@ class ColumnDropper(override val uid: String) extends Transformer with BasicPara
 
   override def transform(dataset: DataFrame): DataFrame = {
     transformSchema(dataset.schema, logging = true)
-    dataset.drop($(dropColumns): _*)
+    $(dropColumns).mapCompose(dataset)(col => _.drop(col))
   }
 
   override def copy(extra: ParamMap): ColumnDropper = defaultCopy(extra)
