@@ -1,7 +1,6 @@
 package com.aluxian.tweeather.scripts
 
 import com.aluxian.tweeather.RichSeq
-import com.aluxian.tweeather.scripts.TwitterHoseEmoCounter._
 import com.aluxian.tweeather.transformers._
 import org.apache.spark.Logging
 import org.apache.spark.ml.PipelineModel
@@ -31,7 +30,8 @@ object TwitterHoseFireParser extends Script with Logging {
     data = PipelineModel
       .load("/tw/sentiment/models/emo.model")
       .transform(data)
-      .drop("rawPrediction", "prediction")
+      .drop("rawPrediction")
+      .drop("prediction")
 
     // Get weather
     logInfo("Getting weather data")
