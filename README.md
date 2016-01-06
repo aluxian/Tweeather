@@ -5,6 +5,25 @@ Tweeather is a Machine Learning project that correlates Twitter sentiment to Eur
 I was inspired by a study where user behaviour on Twitter was used to build a predictive model of income: [Studying 
 User Income through Language, Behaviour and Affect in Social Media][1]. I decided it was the perfect opportunity to venture into the world of Big Data and so I learned Spark and Hadoop.
 
+## Table of contents
+
+- [Scripts](#scripts)
+	- [1. *Sentiment140* scripts](#1-sentiment140-scripts)
+		- [Running](#running)
+	- [2. *Emo* scripts](#2-emo-scripts)
+		- [Collection](#collection)
+		- [Parsing](#parsing)
+		- [Training](#training)
+		- [Running](#running)
+	- [3. *Fire* scripts](#3-fire-scripts)
+		- [Collection](#collection)
+		- [Parsing](#parsing)
+		- [Training](#training)
+		- [Running](#running)
+- [Configuration files](#configuration-files)
+- [Tips](#tips)
+- [Suggestions](#suggestions)
+
 ## Scripts
 
 The project has 3 sets of scripts.
@@ -13,7 +32,7 @@ The project has 3 sets of scripts.
 
 These scripts are used to train a Naive Bayes sentiment analyser with the [Sentiment140][2] dataset. Nothing fancy here. The resulting model has an accuracy of 80%.
 
-#### Running it
+#### Running
 
 To run the experiment:
 
@@ -60,7 +79,7 @@ Before training the classifier, the tweets were pre-processed:
 
 The resulting tweets are used to train a Naive Bayes classifier. The model is saved for future usage.
 
-#### Running it
+#### Running
 
 To run the experiment:
 
@@ -98,7 +117,7 @@ After they are collected, tweets are ran through the sentiment analyser to get t
 
 After parsing the tweets, they're used to train a multilayer perceptron. The 3 weather variables are used as the input nodes and the polarity is used as the output node. The model is saved for future usage.
 
-#### Running it
+#### Running
 
 To run the experiment:
 
