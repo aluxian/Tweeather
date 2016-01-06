@@ -183,16 +183,9 @@
     <orderEntry type="library" name="SBT: oro:oro:2.0.8:jar" level="project" />
     <orderEntry type="library" name="SBT: xerces:xercesImpl:2.9.1:jar" level="project" />
     <orderEntry type="library" name="SBT: xmlenc:xmlenc:0.52:jar" level="project" />
-    <orderEntry type="library" name="SBT: com.sun.xml.bind:jaxb-impl:2.2.3-1:jar" level="project" />
-    <orderEntry type="library" name="SBT: javax.activation:activation:1.1:jar" level="project" />
-    <orderEntry type="library" name="SBT: javax.xml.bind:jaxb-api:2.2.2:jar" level="project" />
-    <orderEntry type="library" name="SBT: javax.xml.stream:stax-api:1.0-2:jar" level="project" />
     <orderEntry type="library" name="SBT: net.razorvine:pyrolite:4.9:jar" level="project" />
     <orderEntry type="library" name="SBT: net.sf.py4j:py4j:0.9:jar" level="project" />
     <orderEntry type="library" name="SBT: org.apache.xbean:xbean-asm5-shaded:4.4:jar" level="project" />
-    <orderEntry type="library" name="SBT: org.jpmml:pmml-agent:1.2.7:jar" level="project" />
-    <orderEntry type="library" name="SBT: org.jpmml:pmml-model:1.2.7:jar" level="project" />
-    <orderEntry type="library" name="SBT: org.jpmml:pmml-schema:1.2.7:jar" level="project" />
     <orderEntry type="library" name="SBT: org.roaringbitmap:RoaringBitmap:0.5.11:jar" level="project" />
     <orderEntry type="library" name="SBT: org.tachyonproject:tachyon-client:0.8.2:jar" level="project" />
     <orderEntry type="library" name="SBT: org.tachyonproject:tachyon-underfs-hdfs:0.8.2:jar" level="project" />
@@ -205,16 +198,6 @@
     <orderEntry type="library" name="SBT: com.typesafe.akka:akka-actor_2.11:2.3.11:jar" level="project" />
     <orderEntry type="library" name="SBT: com.typesafe.akka:akka-remote_2.11:2.3.11:jar" level="project" />
     <orderEntry type="library" name="SBT: com.typesafe.akka:akka-slf4j_2.11:2.3.11:jar" level="project" />
-    <orderEntry type="library" name="SBT: org.apache.spark:spark-catalyst_2.11:2.0.0-SNAPSHOT:jar" level="project" />
-    <orderEntry type="library" name="SBT: org.apache.spark:spark-core_2.11:2.0.0-SNAPSHOT:jar" level="project" />
-    <orderEntry type="library" name="SBT: org.apache.spark:spark-graphx_2.11:2.0.0-SNAPSHOT:jar" level="project" />
-    <orderEntry type="library" name="SBT: org.apache.spark:spark-launcher_2.11:2.0.0-SNAPSHOT:jar" level="project" />
-    <orderEntry type="library" name="SBT: org.apache.spark:spark-mllib_2.11:2.0.0-SNAPSHOT:jar" level="project" />
-    <orderEntry type="library" name="SBT: org.apache.spark:spark-network-common_2.11:2.0.0-SNAPSHOT:jar" level="project" />
-    <orderEntry type="library" name="SBT: org.apache.spark:spark-network-shuffle_2.11:2.0.0-SNAPSHOT:jar" level="project" />
-    <orderEntry type="library" name="SBT: org.apache.spark:spark-sql_2.11:2.0.0-SNAPSHOT:jar" level="project" />
-    <orderEntry type="library" name="SBT: org.apache.spark:spark-streaming_2.11:2.0.0-SNAPSHOT:jar" level="project" />
-    <orderEntry type="library" name="SBT: org.apache.spark:spark-unsafe_2.11:2.0.0-SNAPSHOT:jar" level="project" />
     <orderEntry type="library" name="SBT: org.json4s:json4s-ast_2.11:3.2.10:jar" level="project" />
     <orderEntry type="library" name="SBT: org.json4s:json4s-core_2.11:3.2.10:jar" level="project" />
     <orderEntry type="library" name="SBT: org.json4s:json4s-jackson_2.11:3.2.10:jar" level="project" />
@@ -246,5 +229,24 @@
     <orderEntry type="library" name="SBT: com.github.fommil.netlib:netlib-native_system-win-i686:1.1:natives:jar" level="project" />
     <orderEntry type="library" name="SBT: com.github.fommil.netlib:netlib-native_system-win-x86_64:1.1:natives:jar" level="project" />
     <orderEntry type="library" name="SBT: javax.servlet:servlet-api:2.5:jar" level="project" />
+    <orderEntry type="library" name="SBT: com.sun.istack:istack-commons-runtime:2.16:jar" level="project" />
+    <orderEntry type="library" name="SBT: com.sun.xml.bind:jaxb-core:2.2.7:jar" level="project" />
+    <orderEntry type="library" name="SBT: com.sun.xml.bind:jaxb-impl:2.2.7:jar" level="project" />
+    <orderEntry type="library" name="SBT: com.sun.xml.fastinfoset:FastInfoset:1.2.12:jar" level="project" />
+    <orderEntry type="library" name="SBT: javax.xml.bind:jaxb-api:2.2.7:jar" level="project" />
+    <orderEntry type="library" name="SBT: javax.xml.bind:jsr173_api:1.0:jar" level="project" />
+    <orderEntry type="library" name="SBT: org.apache.spark:spark-catalyst_2.11:1.6.0:jar" level="project" />
+    <orderEntry type="library" name="SBT: org.apache.spark:spark-core_2.11:1.6.0:jar" level="project" />
+    <orderEntry type="library" name="SBT: org.apache.spark:spark-graphx_2.11:1.6.0:jar" level="project" />
+    <orderEntry type="library" name="SBT: org.apache.spark:spark-launcher_2.11:1.6.0:jar" level="project" />
+    <orderEntry type="library" name="SBT: org.apache.spark:spark-mllib_2.11:1.6.0:jar" level="project" />
+    <orderEntry type="library" name="SBT: org.apache.spark:spark-network-common_2.11:1.6.0:jar" level="project" />
+    <orderEntry type="library" name="SBT: org.apache.spark:spark-network-shuffle_2.11:1.6.0:jar" level="project" />
+    <orderEntry type="library" name="SBT: org.apache.spark:spark-sql_2.11:1.6.0:jar" level="project" />
+    <orderEntry type="library" name="SBT: org.apache.spark:spark-streaming_2.11:1.6.0:jar" level="project" />
+    <orderEntry type="library" name="SBT: org.apache.spark:spark-unsafe_2.11:1.6.0:jar" level="project" />
+    <orderEntry type="library" name="SBT: org.jpmml:pmml-agent:1.1.15:jar" level="project" />
+    <orderEntry type="library" name="SBT: org.jpmml:pmml-model:1.1.15:jar" level="project" />
+    <orderEntry type="library" name="SBT: org.jpmml:pmml-schema:1.1.15:jar" level="project" />
   </component>
 </module>
