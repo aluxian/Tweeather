@@ -19,7 +19,7 @@ import scala.util.hashing.MurmurHash3
 import scalaj.http.Http
 
 /**
-  * A transformer that retrieves weather from NOAA.
+  * A transformer that retrieves weather forecasts from NOAA.
   */
 class WeatherProvider(override val uid: String) extends Transformer with BasicParamsWritable {
 

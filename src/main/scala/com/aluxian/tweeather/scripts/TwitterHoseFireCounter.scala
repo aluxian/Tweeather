@@ -4,6 +4,9 @@ import org.apache.spark.Logging
 
 import scala.io.StdIn
 
+/**
+  * This script is used to count the number of rows that [[TwitterHoseFireCollector]] has collected.
+  */
 object TwitterHoseFireCounter extends Script with Logging {
 
   override def main(args: Array[String]) {

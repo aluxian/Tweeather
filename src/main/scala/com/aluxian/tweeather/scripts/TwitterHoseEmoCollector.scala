@@ -5,6 +5,11 @@ import org.apache.spark.Logging
 import org.apache.spark.streaming.StreamingContext
 import twitter4j.FilterQuery
 
+/**
+  * This script uses Twitter Streaming API to collect tweets which contain one or more emoji
+  * characters and are written in English. It uses one or more Twitter apps, whose credentials
+  * are stored '''com/aluxian/tweeather/res/twitter.properties'''.
+  */
 object TwitterHoseEmoCollector extends Script with Logging {
 
   override def main(args: Array[String]) {

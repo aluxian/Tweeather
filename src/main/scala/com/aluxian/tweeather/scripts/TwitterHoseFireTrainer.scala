@@ -8,6 +8,13 @@ import org.apache.spark.sql.Row
 
 import scala.io.StdIn
 
+/**
+  * This script trains a multilayer perceptron with the dataset of tweets
+  * collected by [[TwitterHoseFireCollector]] and parsed by [[TwitterHoseFireParser]].
+  * It uses 90% of the dataset for training and 10% for testing.
+  *
+  * After the model is created, it can be tested with [[TwitterHoseFireRepl]].
+  */
 object TwitterHoseFireTrainer extends Script with Logging {
 
   override def main(args: Array[String]) {

@@ -10,6 +10,11 @@ import org.apache.spark.sql.{Row, SaveMode}
 
 import scala.io.StdIn
 
+/**
+  * This script parses the tweets collected by [[TwitterHoseFireCollector]].
+  * For each tweet, it analyses the sentiment and retrives the weather forecast for its location.
+  * The resulting dataset is coalesced to reduce the number of partitions.
+  */
 object TwitterHoseFireParser extends Script with Logging {
 
   val locationBox = TwitterHoseFireCollector.locationBox // Europe
@@ -26,7 +31,6 @@ object TwitterHoseFireParser extends Script with Logging {
     val partitionsNum = Math.max(reducedPartitionsNum, sc.defaultMinPartitions)
 
     var data = rawData
-      .distinct()
       .map(_.split(','))
       .map(parts => (parts(0).toDouble, parts(1).toDouble, parts(2).toLong, parts(3)))
       .coalesce(partitionsNum)

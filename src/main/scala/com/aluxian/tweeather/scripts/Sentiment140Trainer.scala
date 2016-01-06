@@ -16,8 +16,6 @@ import scala.io.StdIn
   *
   * Before running this script, the dataset must be first downloaded with [[Sentiment140Downloader]] and then parsed
   * with [[Sentiment140Parser]]. After the model is created, it can be tested with [[Sentiment140Repl]].
-  *
-  * The resulting model has an accuracy of 80%.
   */
 object Sentiment140Trainer extends Script with Logging {
 

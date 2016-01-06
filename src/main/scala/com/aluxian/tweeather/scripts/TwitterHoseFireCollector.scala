@@ -7,6 +7,11 @@ import org.apache.spark.Logging
 import org.apache.spark.streaming.StreamingContext
 import twitter4j.FilterQuery
 
+/**
+  * This script uses Twitter Streaming API to collect tweets which are localised in Europe
+  * and are written in English. It uses one or more Twitter apps, whose credentials
+  * are stored '''com/aluxian/tweeather/res/twitter.properties'''.
+  */
 object TwitterHoseFireCollector extends Script with Logging {
 
   val locationBox = LocationBox(
