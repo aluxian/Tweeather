@@ -51,6 +51,9 @@ object TwitterHoseFireParser extends Script with Logging {
       new WeatherProvider().setGribUrlColumn("grib_url")
     ).mapCompose(data)(_.transform)
 
+    // Restore number of partitions
+    data = data.repartition(partitionsNum)
+
     // Export data
     logInfo("Exporting data")
     data
