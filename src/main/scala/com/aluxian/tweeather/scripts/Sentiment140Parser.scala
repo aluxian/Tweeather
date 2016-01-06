@@ -4,6 +4,10 @@ import org.apache.spark.Logging
 import org.apache.spark.rdd.RDD
 import org.apache.spark.sql.SaveMode
 
+/**
+  * This script parses the Sentiment140 dataset downloaded by [[Sentiment140Downloader]].
+  * It strips redundant data and only keeps the raw text and labels.
+  */
 object Sentiment140Parser extends Script with Logging {
 
   override def main(args: Array[String]) {

@@ -6,6 +6,12 @@ import java.util.zip.ZipInputStream
 import org.apache.hadoop.fs.Path
 import org.apache.spark.Logging
 
+/**
+  * This script downloads the Sentiment140 Twitter dataset for academics.
+  * The dataset is used by [[Sentiment140Trainer]] and [[TwitterHoseEmoTrainer]].
+  *
+  * @see http://help.sentiment140.com/for-students/
+  */
 object Sentiment140Downloader extends Script with Logging {
 
   val downloadUrl = "http://cs.stanford.edu/people/alecmgo/trainingandtestdata.zip"

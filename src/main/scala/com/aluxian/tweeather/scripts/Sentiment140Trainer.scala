@@ -8,6 +8,15 @@ import org.apache.spark.ml.feature.{HashingTF, StopWordsRemover, Tokenizer}
 import org.apache.spark.mllib.evaluation.BinaryClassificationMetrics
 import org.apache.spark.sql.Row
 
+/**
+  * This script trains a Naive Bayes classifier with the Sentiment140 dataset of tweets.
+  * For training, it uses the dataset of 1.6M tweets. For testing, it uses the manually labelled dataset.
+  *
+  * Before running this script, the dataset must be first downloaded with [[Sentiment140Downloader]] and then parsed
+  * with [[Sentiment140Parser]]. After the model is created, it can be tested with [[Sentiment140Repl]].
+  *
+  * The resulting model has an accuracy of 81%.
+  */
 object Sentiment140Trainer extends Script with Logging {
 
   override def main(args: Array[String]) {
