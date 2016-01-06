@@ -1,7 +1,6 @@
 package com.aluxian.tweeather.scripts
 
 import com.aluxian.tweeather.RichSeq
-import com.aluxian.tweeather.scripts.TwitterHoseEmoParser._
 import com.aluxian.tweeather.transformers._
 import org.apache.spark.Logging
 import org.apache.spark.ml.PipelineModel
@@ -31,6 +30,7 @@ object TwitterHoseFireParser extends Script with Logging {
     val partitionsNum = Math.max(reducedPartitionsNum, sc.defaultMinPartitions)
 
     var data = rawData
+      .distinct()
       .map(_.split(','))
       .map(parts => (parts(0).toDouble, parts(1).toDouble, parts(2).toLong, parts(3)))
       .coalesce(partitionsNum)
