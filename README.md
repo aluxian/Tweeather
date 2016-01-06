@@ -5,25 +5,6 @@ Tweeather is a Machine Learning project that correlates Twitter sentiment to Eur
 I was inspired by a study where user behaviour on Twitter was used to build a predictive model of income: [Studying 
 User Income through Language, Behaviour and Affect in Social Media][1]. I decided it was the perfect opportunity to venture into the world of Big Data and so I learned Spark and Hadoop.
 
-## Table of contents
-
-- [Scripts](#scripts)
-	- [1. *Sentiment140* scripts](#1-sentiment140-scripts)
-		- [Running](#sentiment140-running)
-	- [2. *Emo* scripts](#2-emo-scripts)
-		- [Collection](#emo-collection)
-		- [Parsing](#emo-parsing)
-		- [Training](#emo-training)
-		- [Running](#emo-running)
-	- [3. *Fire* scripts](#3-fire-scripts)
-		- [Collection](#fire-collection)
-		- [Parsing](#fire-parsing)
-		- [Training](#fire-training)
-		- [Running](#fire-running)
-- [Configuration files](#configuration-files)
-- [Tips](#tips)
-- [Suggestions](#suggestions)
-
 ## Scripts
 
 The project has 3 sets of scripts.
@@ -32,7 +13,7 @@ The project has 3 sets of scripts.
 
 These scripts are used to train a Naive Bayes sentiment analyser with the [Sentiment140][2] dataset. Nothing fancy here. The resulting model has an accuracy of 80%.
 
-#### Running [sentiment140-running]
+#### Running
 
 To run the experiment:
 
@@ -54,7 +35,7 @@ $ sbt "run-main com.aluxian.tweeather.scripts.Sentiment140Repl"
 
 These scripts are used to train a Naive Bayes sentiment analyser with tweets collected by myself. For training the classifier, I also used the training dataset of 1.6M tweets provided on the Sentiment140 web page, raising the total size of the training dataset to 10M tweets. The resulting model has an accuracy of 79% (tested on the Sentiment140 manually-labelled dataset).
 
-#### Collection [emo-collection]
+#### Collection
 
 For collecting the tweets, I used [Twitter's Streaming APIs][3] with multiple apps configured. The average throughput was of 325 tweets/sec and I collected over 100M tweets in 4 days. However, after removing all the duplicates, only 8.4M remained.
 
@@ -62,7 +43,7 @@ The stream of tweets I received from the Twitter APIs was filtered by emoji char
 
 This method allowed me to gather a fairly large dataset of labelled tweets, while the accuracy of the model didn't seem to suffer as it is close to the accuracy of most other sentiment analysers.
 
-#### Parsing [emo-parsing]
+#### Parsing
 
 Before training the classifier, the tweets were pre-processed:
 
@@ -75,11 +56,11 @@ Before training the classifier, the tweets were pre-processed:
   - multiple white spaces were replaced with just one
 - stop words like "not", "is", "less", and "or" were removed
 
-#### Training [emo-training]
+#### Training
 
 The resulting tweets are used to train a Naive Bayes classifier. The model is saved for future usage.
 
-#### Running [emo-running]
+#### Running
 
 To run the experiment:
 
@@ -105,19 +86,19 @@ $ sbt "run-main com.aluxian.tweeather.scripts.TwitterHoseEmoRepl"
 
 These scripts are used to train an Artificial Neural Network that predicts the sentiment polarity from 3 weather variables: pressure, temperature and humidity
 
-#### Collection [fire-collection]
+#### Collection
 
 Tweets are collected using Twitter's Streaming APIs, filtered by location (Europe) and language (English).
 
-#### Parsing [fire-parsing]
+#### Parsing
 
 After they are collected, tweets are ran through the sentiment analyser to get their polarity. The parser script uses a [NOAA][4]-provided weather forecast to extract the pressure, temperature and humidity for each tweet's location.
 
-#### Training [fire-training]
+#### Training
 
 After parsing the tweets, they're used to train a multilayer perceptron. The 3 weather variables are used as the input nodes and the polarity is used as the output node. The model is saved for future usage.
 
-#### Running [fire-running]
+#### Running
 
 To run the experiment:
 
