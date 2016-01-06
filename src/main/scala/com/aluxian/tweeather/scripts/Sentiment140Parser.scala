@@ -4,6 +4,8 @@ import org.apache.spark.Logging
 import org.apache.spark.rdd.RDD
 import org.apache.spark.sql.SaveMode
 
+import scala.io.StdIn
+
 /**
   * This script parses the Sentiment140 dataset downloaded by [[Sentiment140Downloader]].
   * It strips redundant data and only keeps the raw text and labels.
@@ -22,6 +24,10 @@ object Sentiment140Parser extends Script with Logging {
 
     logInfo(s"Parsing training dataset")
     parse(trainingData, "/tw/sentiment/140/parsed/training.parquet")
+
+    // Pause to keep the web UI running
+    logInfo("Press enter to continue")
+    StdIn.readLine()
   }
 
   def parse(data: RDD[String], filePath: String) {

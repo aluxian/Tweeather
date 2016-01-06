@@ -6,6 +6,8 @@ import java.util.zip.ZipInputStream
 import org.apache.hadoop.fs.Path
 import org.apache.spark.Logging
 
+import scala.io.StdIn
+
 /**
   * This script downloads the Sentiment140 Twitter dataset for academics.
   * The dataset is used by [[Sentiment140Trainer]] and [[TwitterHoseEmoTrainer]].
@@ -41,6 +43,10 @@ object Sentiment140Downloader extends Script with Logging {
 
     zip.close()
     logInfo("Downloading finished")
+
+    // Pause to keep the web UI running
+    logInfo("Press enter to continue")
+    StdIn.readLine()
   }
 
 }

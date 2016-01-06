@@ -8,6 +8,8 @@ import org.apache.spark.ml.feature.{HashingTF, StopWordsRemover, Tokenizer}
 import org.apache.spark.mllib.evaluation.BinaryClassificationMetrics
 import org.apache.spark.sql.Row
 
+import scala.io.StdIn
+
 /**
   * This script trains a Naive Bayes classifier with the Sentiment140 dataset of tweets.
   * For training, it uses the dataset of 1.6M tweets. For testing, it uses the manually labelled dataset.
@@ -57,6 +59,10 @@ object Sentiment140Trainer extends Script with Logging {
     // Save the model
     logInfo("Saving model")
     model.write.overwrite().save("/tw/sentiment/models/140.model")
+
+    // Pause to keep the web UI running
+    logInfo("Press enter to continue")
+    StdIn.readLine()
   }
 
 }
