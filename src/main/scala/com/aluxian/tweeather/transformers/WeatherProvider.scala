@@ -123,14 +123,20 @@ class WeatherProvider(override val uid: String) extends Transformer with BasicPa
     val gribsDir = $(gribsPath)
     val metricsArray = $(metrics)
 
+    val gribUrlsNum = dataset
+      .select($(gribUrlCol))
+      .distinct()
+      .count()
+      .toInt
+
     val rows = dataset
-      .repartition(col($(gribUrlCol)))
-      .mapPartitions { p =>
-        if (!p.hasNext) {
-          p
+      .repartition(gribUrlsNum, col($(gribUrlCol)))
+      .mapPartitions { partition =>
+        if (!partition.hasNext) {
+          partition
         } else {
-          val bi = p.buffered
-          val row = bi.head
+          val bufferedIter = partition.buffered
+          val row = bufferedIter.head
 
           val latIndex = row.fieldIndex(latCol)
           val lonIndex = row.fieldIndex(lonCol)
@@ -148,7 +154,7 @@ class WeatherProvider(override val uid: String) extends Transformer with BasicPa
                 m -> dt
               }).toMap
 
-              bi.map { row =>
+              bufferedIter.map { row =>
                 val lat = row.getDouble(latIndex)
                 val lon = row.getDouble(lonIndex)
 
