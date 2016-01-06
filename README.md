@@ -5,6 +5,16 @@ Tweeather is a Machine Learning project that correlates Twitter sentiment to Eur
 I was inspired by a study where user behaviour on Twitter was used to build a predictive model of income: [Studying 
 User Income through Language, Behaviour and Affect in Social Media][1]. I decided it was the perfect opportunity to venture into the world of Big Data and so I learned Spark and Hadoop.
 
+## Table of Contents
+
+- [Scripts](#scripts)
+	- [1. *Sentiment140* scripts](#1-sentiment140-scripts)
+	- [2. *Emo* scripts](#2-emo-scripts)
+	- [3. *Fire* scripts](#3-fire-scripts)
+- [Configuration files](#configuration-files)
+- [Tips](#tips)
+- [Suggestions](#suggestions)
+
 ## Scripts
 
 The project has 3 sets of scripts.
