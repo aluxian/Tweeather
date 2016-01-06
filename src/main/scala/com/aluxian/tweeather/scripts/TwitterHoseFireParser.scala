@@ -6,6 +6,7 @@ import org.apache.spark.Logging
 import org.apache.spark.ml.PipelineModel
 import org.apache.spark.mllib.linalg.Vector
 import org.apache.spark.sql.{Row, SaveMode}
+import org.apache.spark.storage.StorageLevel
 
 import scala.io.StdIn
 
@@ -36,13 +37,25 @@ object TwitterHoseFireParser extends Script with Logging {
       .coalesce(partitionsNum)
       .toDF("lat", "lon", "createdAt", "raw_text")
 
+    logInfo("Persist 1")
+    data.persist(StorageLevel.MEMORY_AND_DISK)
+    logInfo("Persist 1 done")
+
     // Analyse sentiment
-    logInfo("Analysing sentiment")
-    data = PipelineModel
-      .load("/tw/sentiment/models/emo.model")
-      .transform(data)
-      .drop("rawPrediction")
-      .drop("prediction")
+//    logInfo("Analysing sentiment")
+//    data = PipelineModel
+//      .load("/tw/sentiment/models/emo.model")
+//      .transform(data)
+//      .drop("rawPrediction")
+//      .drop("prediction")
+//
+//    logInfo("Persist 2")
+//    data.persist(StorageLevel.MEMORY_AND_DISK)
+//    logInfo("Persist 2 done")
+
+    logInfo("saving distinct")
+    data.write.mode(SaveMode.Overwrite).parquet("/tw/fire/parsed/distinct.parquet")
+    return
 
     // Get weather
     logInfo("Getting weather data")
@@ -50,6 +63,10 @@ object TwitterHoseFireParser extends Script with Logging {
       new GribUrlGenerator().setLocationBox(locationBox).setInputCol("createdAt").setOutputCol("grib_url"),
       new WeatherProvider().setGribUrlColumn("grib_url")
     ).mapCompose(data)(_.transform)
+
+    logInfo("Persist 3")
+    data.persist(StorageLevel.MEMORY_AND_DISK)
+    logInfo("Persist 3 done")
 
     // Restore number of partitions
     data = data.repartition(partitionsNum)

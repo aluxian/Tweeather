@@ -12,6 +12,7 @@ import org.apache.spark.ml.util.{BasicParamsReadable, BasicParamsWritable, Ident
 import org.apache.spark.sql.functions._
 import org.apache.spark.sql.types._
 import org.apache.spark.sql.{DataFrame, Row}
+import org.apache.spark.storage.StorageLevel
 import resource._
 import ucar.nc2.dt.grid.GridDataset
 
@@ -123,55 +124,65 @@ class WeatherProvider(override val uid: String) extends Transformer with BasicPa
     val gribsDir = $(gribsPath)
     val metricsArray = $(metrics)
 
+    logInfo("caching")
+
+    dataset.persist(StorageLevel.MEMORY_AND_DISK)
+
+    logInfo(s"Counting")
+
     val gribUrlsNum = dataset
       .select($(gribUrlCol))
       .distinct()
       .count()
       .toInt
 
-    val rows = dataset
-      .repartition(gribUrlsNum, col($(gribUrlCol)))
-      .mapPartitions { partition =>
-        if (!partition.hasNext) {
-          partition
-        } else {
-          val bufferedIter = partition.buffered
-          val row = bufferedIter.head
+    logInfo(s"End, counted $gribUrlsNum")
 
-          val latIndex = row.fieldIndex(latCol)
-          val lonIndex = row.fieldIndex(lonCol)
+    return dataset
 
-          val urlIndex = row.fieldIndex(urlCol)
-          val gribUrl = row.getString(urlIndex)
-
-          managed(WeatherProvider.downloadGrib(gribUrl, gribsDir, metricsArray))
-            .map { data =>
-              val datatypes = metricsArray.map(m => {
-                val dt = data.findGridDatatype(m.gridName)
-                if (dt == null) {
-                  logWarning(s"Null datatype found for $m from $gribUrl")
-                }
-                m -> dt
-              }).toMap
-
-              bufferedIter.map { row =>
-                val lat = row.getDouble(latIndex)
-                val lon = row.getDouble(lonIndex)
-
-                val metricValues = datatypes.map {
-                  case (metric, datatype) =>
-                    val Array(x, y) = datatype.getCoordinateSystem.findXYindexFromLatLon(lat, lon, null)
-                    datatype.readDataSlice(0, 0, y, x).getDouble(0)
-                }.toArray
-
-                Row.merge(row, Row(metricValues: _*))
-              }
-            }
-            .opt.get
-        }
-      }
-
-    dataset.sqlContext.createDataFrame(rows, outputSchema)
+//    val rows = dataset
+//      .repartition(gribUrlsNum, col($(gribUrlCol)))
+//      .mapPartitions { partition =>
+//        if (!partition.hasNext) {
+//          partition
+//        } else {
+//          val bufferedIter = partition.buffered
+//          val row = bufferedIter.head
+//
+//          val latIndex = row.fieldIndex(latCol)
+//          val lonIndex = row.fieldIndex(lonCol)
+//
+//          val urlIndex = row.fieldIndex(urlCol)
+//          val gribUrl = row.getString(urlIndex)
+//
+//          managed(WeatherProvider.downloadGrib(gribUrl, gribsDir, metricsArray))
+//            .map { data =>
+//              val datatypes = metricsArray.map(m => {
+//                val dt = data.findGridDatatype(m.gridName)
+//                if (dt == null) {
+//                  logWarning(s"Null datatype found for $m from $gribUrl")
+//                }
+//                m -> dt
+//              }).toMap
+//
+//              bufferedIter.map { row =>
+//                val lat = row.getDouble(latIndex)
+//                val lon = row.getDouble(lonIndex)
+//
+//                val metricValues = datatypes.map {
+//                  case (metric, datatype) =>
+//                    val Array(x, y) = datatype.getCoordinateSystem.findXYindexFromLatLon(lat, lon, null)
+//                    datatype.readDataSlice(0, 0, y, x).getDouble(0)
+//                }.toArray
+//
+//                Row.merge(row, Row(metricValues: _*))
+//              }
+//            }
+//            .opt.get
+//        }
+//      }
+//
+//    dataset.sqlContext.createDataFrame(rows, outputSchema)
   }
 
   override def copy(extra: ParamMap): WeatherProvider = defaultCopy(extra)
