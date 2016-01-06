@@ -51,6 +51,9 @@ object Sentiment140Trainer extends Script with Logging {
       .select("prediction", "label")
       .map { case Row(prediction: Double, label: Double) => (prediction, label) }
 
+    val matches = predicted.map({ case (prediction, label) => if (prediction == label) 1 else 0 }).sum()
+    logInfo(s"Test dataset accuracy: ${matches / predicted.count()}")
+
     val metrics = new BinaryClassificationMetrics(predicted)
     logInfo(s"Test dataset ROC: ${metrics.areaUnderROC()}")
     logInfo(s"Test dataset PR: ${metrics.areaUnderPR()}")
