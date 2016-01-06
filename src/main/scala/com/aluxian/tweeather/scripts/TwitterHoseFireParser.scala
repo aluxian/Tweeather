@@ -1,6 +1,7 @@
 package com.aluxian.tweeather.scripts
 
 import com.aluxian.tweeather.RichSeq
+import com.aluxian.tweeather.scripts.TwitterHoseEmoParser._
 import com.aluxian.tweeather.transformers._
 import org.apache.spark.Logging
 import org.apache.spark.ml.PipelineModel
@@ -19,10 +20,16 @@ object TwitterHoseFireParser extends Script with Logging {
 
     // Import data
     logInfo("Parsing text files")
-    var data = sc.textFile("/tw/fire/collected/*.text")
+    val rawData = sc.textFile("/tw/fire/collected/*.text")
+
+    val reducedPartitionsNum = Math.ceil(rawData.getNumPartitions / 100d).toInt
+    val partitionsNum = Math.max(reducedPartitionsNum, sc.defaultMinPartitions)
+
+    var data = rawData
       .distinct()
       .map(_.split(','))
       .map(parts => (parts(0).toDouble, parts(1).toDouble, parts(2).toLong, parts(3)))
+      .coalesce(partitionsNum)
       .toDF("lat", "lon", "createdAt", "raw_text")
 
     // Analyse sentiment
