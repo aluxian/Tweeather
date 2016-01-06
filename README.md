@@ -2,7 +2,7 @@
 
 Tweeather is a Machine Learning project that correlates Twitter sentiment to European weather.
 
-I was inspired by a study where user behaviour on Twitter was used to build a predictive model of income: [Studying 
+I was inspired by a study where user behaviour on Twitter was used to build a predictive model of income: [Studying
 User Income through Language, Behaviour and Affect in Social Media][1]. I decided it was the perfect opportunity to venture into the world of Big Data and so I learned Spark and Hadoop.
 
 ## Table of Contents
@@ -92,6 +92,12 @@ $ sbt "run-main com.aluxian.tweeather.scripts.TwitterHoseEmoTrainer"
 $ sbt "run-main com.aluxian.tweeather.scripts.TwitterHoseEmoRepl"
 ```
 
+#### Screenshot
+
+Here's a screenshot of my collector running for almost 4 days.
+
+![Emo Collector](./docs/ss-emo-collector.png)
+
 ### 3. *Fire* scripts
 
 These scripts are used to train an Artificial Neural Network that predicts the sentiment polarity from 3 weather variables: pressure, temperature and humidity
@@ -127,6 +133,12 @@ $ sbt "run-main com.aluxian.tweeather.scripts.TwitterHoseFireTrainer"
 # Test the analyser
 $ sbt "run-main com.aluxian.tweeather.scripts.TwitterHoseFireRepl"
 ```
+
+#### Screenshot
+
+Here's a screenshot of my collector running for almost 9 days.
+
+![Fire Collector](./docs/ss-fire-collector.png)
 
 ## Configuration files
 
