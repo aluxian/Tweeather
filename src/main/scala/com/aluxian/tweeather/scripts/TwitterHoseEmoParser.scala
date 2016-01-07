@@ -15,6 +15,7 @@ object TwitterHoseEmoParser extends Script with Logging {
 
   val positiveEmoticons = TwitterHoseEmoCollector.positiveEmoticons
   val negativeEmoticons = TwitterHoseEmoCollector.negativeEmoticons
+  val partitionsNum = 16
 
   override def main(args: Array[String]) {
     super.main(args)
@@ -23,11 +24,7 @@ object TwitterHoseEmoParser extends Script with Logging {
     // Import data
     logInfo("Parsing text files")
     val data = sc.textFile("/tw/sentiment/emo/collected/*.text")
-
-    val reducedPartitionsNum = Math.ceil(data.getNumPartitions / 100d).toInt
-    val partitionsNum = Math.max(reducedPartitionsNum, sc.defaultMinPartitions)
-
-    data
+      .coalesce(partitionsNum)
       .map(_.stripPrefix("RT").trim)
       .distinct()
       .map(text => {
@@ -36,7 +33,6 @@ object TwitterHoseEmoParser extends Script with Logging {
         if (hasPositive ^ hasNegative) (text, hasPositive.toDouble) else null
       })
       .filter(_ != null)
-      .coalesce(partitionsNum)
 
     logInfo("Saving text files")
     data.toDF("raw_text", "label").write.mode(SaveMode.Overwrite)
