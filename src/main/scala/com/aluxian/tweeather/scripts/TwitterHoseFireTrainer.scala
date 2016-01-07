@@ -6,8 +6,6 @@ import org.apache.spark.ml.evaluation.RegressionEvaluator
 import org.apache.spark.mllib.linalg.{Vector, Vectors}
 import org.apache.spark.sql.Row
 
-import scala.io.StdIn
-
 /**
   * This script trains a multilayer perceptron with the dataset of tweets
   * collected by [[TwitterHoseFireCollector]] and parsed by [[TwitterHoseFireParser]].
@@ -63,9 +61,7 @@ object TwitterHoseFireTrainer extends Script with Logging {
     logInfo("Saving model")
     model.write.overwrite().save("/tw/fire/fire.model")
 
-    // Pause to keep the web UI running
-    logInfo("Press enter to continue")
-    StdIn.readLine()
+    logInfo("Training finished")
   }
 
 }

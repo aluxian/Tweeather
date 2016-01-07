@@ -8,8 +8,6 @@ import org.apache.spark.ml.feature.{HashingTF, StopWordsRemover, Tokenizer}
 import org.apache.spark.mllib.evaluation.BinaryClassificationMetrics
 import org.apache.spark.sql.Row
 
-import scala.io.StdIn
-
 /**
   * This script trains a Naive Bayes classifier with the dataset of tweets
   * collected by [[TwitterHoseEmoCollector]] and parsed by [[TwitterHoseEmoParser]].
@@ -63,9 +61,7 @@ object TwitterHoseEmoTrainer extends Script with Logging {
     logInfo("Saving model")
     model.write.overwrite().save("/tw/sentiment/models/emo.model")
 
-    // Pause to keep the web UI running
-    logInfo("Press enter to continue")
-    StdIn.readLine()
+    logInfo("Training finished")
   }
 
 }

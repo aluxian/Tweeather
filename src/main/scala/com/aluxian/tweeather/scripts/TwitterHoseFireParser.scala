@@ -7,8 +7,6 @@ import org.apache.spark.ml.PipelineModel
 import org.apache.spark.mllib.linalg.Vector
 import org.apache.spark.sql.{Row, SaveMode}
 
-import scala.io.StdIn
-
 /**
   * This script parses the tweets collected by [[TwitterHoseFireCollector]].
   * For each tweet, it analyses the sentiment and retrives the weather forecast for its location.
@@ -64,9 +62,7 @@ object TwitterHoseFireParser extends Script with Logging {
 //      })
       .toDF.write.mode(SaveMode.Overwrite).parquet("/tw/fire/parsed/data.parquet")
 
-    // Pause to keep the web UI running
-    logInfo("Press enter to continue")
-    StdIn.readLine()
+    logInfo("Parsing finished")
   }
 
 }

@@ -4,8 +4,6 @@ import com.aluxian.tweeather.RichBoolean
 import org.apache.spark.Logging
 import org.apache.spark.sql.SaveMode
 
-import scala.io.StdIn
-
 /**
   * This script parses the tweets collected by [[TwitterHoseEmoCollector]].
   * It removes duplicates and tweets which contain both positive and negative emojis.
@@ -37,9 +35,7 @@ object TwitterHoseEmoParser extends Script with Logging {
     data.toDF("raw_text", "label").write.mode(SaveMode.Overwrite)
       .parquet("/tw/sentiment/emo/parsed/data.parquet")
 
-    // Pause to keep the web UI running
-    logInfo("Press enter to continue")
-    StdIn.readLine()
+    logInfo("Parsing finished")
   }
 
 }
