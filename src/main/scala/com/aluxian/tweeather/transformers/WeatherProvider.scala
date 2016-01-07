@@ -3,6 +3,7 @@ package com.aluxian.tweeather.transformers
 import java.io.{File, FileOutputStream}
 import java.nio.file.Files
 
+import com.aluxian.tweeather.RichArray
 import com.aluxian.tweeather.models.Metric
 import com.aluxian.tweeather.utils.MetricArrayParam
 import org.apache.spark.Logging
@@ -114,60 +115,71 @@ class WeatherProvider(override val uid: String) extends Transformer with BasicPa
   }
 
   override def transform(dataset: DataFrame): DataFrame = {
-    val outputSchema = transformSchema(dataset.schema, logging = true)
+    import dataset.sqlContext
+    import dataset.sqlContext.{sparkContext => sc}
 
+    val outputSchema = transformSchema(dataset.schema, logging = true)
+    val emptyDataset = sqlContext.createDataFrame(sc.emptyRDD[Row], dataset.schema)
+
+    // Column names
     val latCol = $(latitudeCol)
     val lonCol = $(longitudeCol)
     val urlCol = $(gribUrlCol)
-
     val gribsDir = $(gribsPath)
     val metricsArray = $(metrics)
 
-    val gribUrlsNum = dataset
-      .select($(gribUrlCol))
+    // Extract all the grib download urls
+    val gribUrls = dataset
+      .select(urlCol)
+      .map(_.getString(0))
       .distinct()
-      .count()
-      .toInt
+      .collect()
 
-    val rows = dataset
-      .repartition(gribUrlsNum, col($(gribUrlCol)))
+    // Group rows with the same url in the same partition
+    val groupDataset = gribUrls.mapCompose(emptyDataset)(url => grouped => {
+      val sameUrlPartition = dataset.filter(col(urlCol) === url).coalesce(1)
+      grouped.unionAll(sameUrlPartition)
+    })
+
+    // Process each partition
+    val rows = groupDataset
       .mapPartitions { partition =>
         if (!partition.hasNext) {
+          // Skip empty partitions
           partition
         } else {
           val bufferedIter = partition.buffered
-          val row = bufferedIter.head
+          val headRow = bufferedIter.head
 
-          val latIndex = row.fieldIndex(latCol)
-          val lonIndex = row.fieldIndex(lonCol)
+          // Extract indexes and the download url
+          val latIndex = headRow.fieldIndex(latCol)
+          val lonIndex = headRow.fieldIndex(lonCol)
+          val urlIndex = headRow.fieldIndex(urlCol)
+          val gribUrl = headRow.getString(urlIndex)
 
-          val urlIndex = row.fieldIndex(urlCol)
-          val gribUrl = row.getString(urlIndex)
-
-          managed(WeatherProvider.downloadGrib(gribUrl, gribsDir, metricsArray))
-            .map { data =>
-              val datatypes = metricsArray.map(m => {
-                val dt = data.findGridDatatype(m.gridName)
-                if (dt == null) {
-                  logWarning(s"Null datatype found for $m from $gribUrl")
-                }
-                m -> dt
-              }).toMap
-
-              bufferedIter.map { row =>
-                val lat = row.getDouble(latIndex)
-                val lon = row.getDouble(lonIndex)
-
-                val metricValues = datatypes.map {
-                  case (metric, datatype) =>
-                    val Array(x, y) = datatype.getCoordinateSystem.findXYindexFromLatLon(lat, lon, null)
-                    datatype.readDataSlice(0, 0, y, x).getDouble(0)
-                }.toArray
-
-                Row.merge(row, Row(metricValues: _*))
-              }
+          // Download and parse the grib file
+          val data = WeatherProvider.downloadGrib(gribUrl, gribsDir, metricsArray)
+          val datatypes = metricsArray.map { metric =>
+            val datatype = data.findGridDatatype(metric.gridName)
+            if (datatype == null) {
+              logWarning(s"Null datatype found for $metric from $gribUrl")
             }
-            .opt.get
+            metric -> datatype
+          }.toMap
+
+          // Process the partition
+          bufferedIter.map { row =>
+            val lat = row.getDouble(latIndex)
+            val lon = row.getDouble(lonIndex)
+
+            val metricValues = datatypes.map {
+              case (metric, datatype) =>
+                val Array(x, y) = datatype.getCoordinateSystem.findXYindexFromLatLon(lat, lon, null)
+                datatype.readDataSlice(0, 0, y, x).getDouble(0)
+            }.toArray
+
+            Row.merge(row, Row(metricValues: _*))
+          }
         }
       }
 
