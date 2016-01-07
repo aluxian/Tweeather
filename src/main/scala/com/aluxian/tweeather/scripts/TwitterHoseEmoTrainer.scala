@@ -41,7 +41,7 @@ object TwitterHoseEmoTrainer extends Script with Logging {
     ))
 
     // Fit the pipeline
-    logInfo(s"Training model on ${trainingData.count()} rows")
+    logInfo(s"Training model on ${trainingData.count()} records")
     val model = pipeline.fit(trainingData)
 
     // Test the model accuracy

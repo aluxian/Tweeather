@@ -1,5 +1,6 @@
 package com.aluxian.tweeather.scripts
 
+import com.aluxian.tweeather.scripts.TwitterHoseEmoTrainer._
 import org.apache.spark.Logging
 import org.apache.spark.ml.ann.MultilayerPerceptron
 import org.apache.spark.ml.evaluation.RegressionEvaluator
@@ -40,7 +41,7 @@ object TwitterHoseFireTrainer extends Script with Logging {
       .setOutputCol("output")
 
     // Train the perceptron
-    logInfo("Training model")
+    logInfo(s"Training model on ${trainingData.count()} records")
     val model = perceptron.fit(trainingData)
 
     // Test the model precision
