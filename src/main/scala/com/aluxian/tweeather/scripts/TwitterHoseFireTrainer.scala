@@ -1,6 +1,5 @@
 package com.aluxian.tweeather.scripts
 
-import com.aluxian.tweeather.scripts.TwitterHoseEmoTrainer._
 import org.apache.spark.Logging
 import org.apache.spark.ml.ann.MultilayerPerceptron
 import org.apache.spark.ml.evaluation.RegressionEvaluator
