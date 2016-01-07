@@ -17,7 +17,6 @@ import scala.io.StdIn
 object TwitterHoseFireParser extends Script with Logging {
 
   val locationBox = TwitterHoseFireCollector.locationBox // Europe
-  val partitionsNum = 16
 
   override def main(args: Array[String]) {
     super.main(args)
@@ -26,7 +25,7 @@ object TwitterHoseFireParser extends Script with Logging {
     // Import data
     logInfo("Parsing text files")
     var data = sc.textFile("/tw/fire/collected/*.text")
-      .coalesce(partitionsNum)
+      .coalesce(sc.defaultParallelism)
       .distinct()
       .map(_.split(','))
       .map(parts => (parts(0).toDouble, parts(1).toDouble, parts(2).toLong, parts(3)))
@@ -47,11 +46,8 @@ object TwitterHoseFireParser extends Script with Logging {
       new WeatherProvider().setGribUrlColumn("grib_url")
     ).mapCompose(data)(_.transform)
 
-    logInfo("saving distinct")
-    data.write.mode(SaveMode.Overwrite).parquet("/tw/fire/parsed/distinct.parquet")
-
     // Restore number of partitions
-    data = data.repartition(partitionsNum)
+    data = data.repartition(sc.defaultParallelism)
 
     // Export data
     logInfo("Exporting data")
