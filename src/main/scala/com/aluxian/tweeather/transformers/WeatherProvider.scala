@@ -136,13 +136,13 @@ class WeatherProvider(override val uid: String) extends Transformer with BasicPa
       .collect()
 
     // Group rows with the same url in the same partition
-    val groupDataset = gribUrls.mapCompose(emptyDataset)(url => grouped => {
-      val sameUrlPartition = dataset.filter(col(urlCol) === url).coalesce(1)
-      grouped.unionAll(sameUrlPartition)
+    val groupedDataset = gribUrls.mapCompose(emptyDataset)(url => groups => {
+      val sameUrlGroup = dataset.filter(col(urlCol) === url).coalesce(1)
+      groups.unionAll(sameUrlGroup)
     })
 
     // Process each partition
-    val rows = groupDataset
+    val rows = groupedDataset
       .mapPartitions { partition =>
         if (!partition.hasNext) {
           // Skip empty partitions
