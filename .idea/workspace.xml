@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="835fc80b-457f-47ce-b26d-7bb3c1b29a60" name="Default" comment="Use sc.defaultParallelism instead of fixed number of partitions">
+    <list default="true" id="835fc80b-457f-47ce-b26d-7bb3c1b29a60" name="Default" comment="Fixes WeatherProvider to correctly process tweets">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/com/aluxian/tweeather/transformers/WeatherProvider.scala" afterPath="$PROJECT_DIR$/src/main/scala/com/aluxian/tweeather/transformers/WeatherProvider.scala" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/com/aluxian/tweeather/scripts/TwitterHoseFireParser.scala" afterPath="$PROJECT_DIR$/src/main/scala/com/aluxian/tweeather/scripts/TwitterHoseFireParser.scala" />
     </list>
     <list id="4b0f262d-68eb-4698-8301-95ceead941ea" name="Rejected commit: Default" comment="Removes default hadoop fs" />
     <ignored path="Tweeather.iws" />
@@ -72,14 +72,12 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="WeatherProvider.scala" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/main/scala/com/aluxian/tweeather/transformers/WeatherProvider.scala">
+      <file leaf-file-name="TwitterHoseFireParser.scala" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/scala/com/aluxian/tweeather/scripts/TwitterHoseFireParser.scala">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.8545455">
-              <caret line="169" column="34" selection-start-line="169" selection-start-column="34" selection-end-line="169" selection-end-column="34" />
-              <folding>
-                <element signature="e#3845#3870#0" expanded="true" />
-              </folding>
+            <state vertical-scroll-proportion="0.58181816">
+              <caret line="50" column="50" selection-start-line="50" selection-start-column="50" selection-end-line="50" selection-end-column="50" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -156,9 +154,9 @@
         <option value="$PROJECT_DIR$/src/main/scala/com/aluxian/tweeather/scripts/TwitterHoseFireTrainer.scala" />
         <option value="$PROJECT_DIR$/src/main/scala/com/aluxian/tweeather/scripts/TwitterHoseEmoParser.scala" />
         <option value="$PROJECT_DIR$/src/main/scala/com/aluxian/tweeather/scripts/Sentiment140Trainer.scala" />
-        <option value="$PROJECT_DIR$/src/main/scala/com/aluxian/tweeather/scripts/TwitterHoseFireParser.scala" />
         <option value="$PROJECT_DIR$/src/main/scala/com/aluxian/tweeather/scripts/TwitterHoseEmoTrainer.scala" />
         <option value="$PROJECT_DIR$/src/main/scala/com/aluxian/tweeather/transformers/WeatherProvider.scala" />
+        <option value="$PROJECT_DIR$/src/main/scala/com/aluxian/tweeather/scripts/TwitterHoseFireParser.scala" />
       </list>
     </option>
   </component>
@@ -1043,12 +1041,6 @@
       <option name="number" value="Default" />
       <updated>1447503737037</updated>
     </task>
-    <task id="LOCAL-00122" summary="Fixes fire trainer script (and the perceptron)">
-      <created>1450546091284</created>
-      <option name="number" value="00122" />
-      <option name="project" value="LOCAL" />
-      <updated>1450546091285</updated>
-    </task>
     <task id="LOCAL-00123" summary="Improves column dropper">
       <created>1450548560013</created>
       <option name="number" value="00123" />
@@ -1337,7 +1329,13 @@
       <option name="project" value="LOCAL" />
       <updated>1452160249334</updated>
     </task>
-    <option name="localTasksCounter" value="171" />
+    <task id="LOCAL-00171" summary="Fixes WeatherProvider to correctly process tweets">
+      <created>1452165528546</created>
+      <option name="number" value="00171" />
+      <option name="project" value="LOCAL" />
+      <updated>1452165528547</updated>
+    </task>
+    <option name="localTasksCounter" value="172" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -1385,7 +1383,6 @@
     <option name="OFFER_MOVE_TO_ANOTHER_CHANGELIST_ON_PARTIAL_COMMIT" value="false" />
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_CODE_CLEANUP_BEFORE_PROJECT_COMMIT" value="true" />
-    <MESSAGE value="Adds pauses to keep spark UI running at the end" />
     <MESSAGE value="Removes redundant import" />
     <MESSAGE value="Use the sentiment140 test dataset in emo trainer" />
     <MESSAGE value="Use the sentiment140 training dataset in emo trainer too" />
@@ -1410,7 +1407,8 @@
     <MESSAGE value="Fixes fire parser" />
     <MESSAGE value="Changes number of partitions to 16 in emo parser" />
     <MESSAGE value="Use sc.defaultParallelism instead of fixed number of partitions" />
-    <option name="LAST_COMMIT_MESSAGE" value="Use sc.defaultParallelism instead of fixed number of partitions" />
+    <MESSAGE value="Fixes WeatherProvider to correctly process tweets" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixes WeatherProvider to correctly process tweets" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1753,14 +1751,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/com/aluxian/tweeather/scripts/TwitterHoseFireParser.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.6181818">
-          <caret line="56" column="12" selection-start-line="56" selection-start-column="12" selection-end-line="56" selection-end-column="12" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://$USER_HOME$/.ivy2/cache/org.apache.spark/spark-core_2.11/srcs/spark-core_2.11-1.6.0-sources.jar!/org/apache/spark/Partition.scala">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.29090908">
@@ -1811,11 +1801,19 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/scala/com/aluxian/tweeather/transformers/WeatherProvider.scala">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.8545455">
-          <caret line="169" column="34" selection-start-line="169" selection-start-column="34" selection-end-line="169" selection-end-column="34" />
+        <state vertical-scroll-proportion="0.4">
+          <caret line="144" column="27" selection-start-line="144" selection-start-column="27" selection-end-line="144" selection-end-column="27" />
           <folding>
             <element signature="e#3845#3870#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/com/aluxian/tweeather/scripts/TwitterHoseFireParser.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.58181816">
+          <caret line="50" column="50" selection-start-line="50" selection-start-column="50" selection-end-line="50" selection-end-column="50" />
+          <folding />
         </state>
       </provider>
     </entry>

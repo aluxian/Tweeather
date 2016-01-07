@@ -47,6 +47,7 @@ object TwitterHoseFireParser extends Script with Logging {
     ).mapCompose(data)(_.transform)
 
     // Restore number of partitions
+    logInfo(s"Restoring number of partitions to ${sc.defaultParallelism}")
     data = data.repartition(sc.defaultParallelism)
 
     // Export data
