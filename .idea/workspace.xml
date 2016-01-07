@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="835fc80b-457f-47ce-b26d-7bb3c1b29a60" name="Default" comment="Adds logInfo in fire parser">
+    <list default="true" id="835fc80b-457f-47ce-b26d-7bb3c1b29a60" name="Default" comment="Refactors names in WeatherProvider">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/com/aluxian/tweeather/transformers/WeatherProvider.scala" afterPath="$PROJECT_DIR$/src/main/scala/com/aluxian/tweeather/transformers/WeatherProvider.scala" />
     </list>
@@ -85,8 +85,8 @@
       <file leaf-file-name="WeatherProvider.scala" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/scala/com/aluxian/tweeather/transformers/WeatherProvider.scala">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.58787876">
-              <caret line="169" column="34" selection-start-line="169" selection-start-column="34" selection-end-line="169" selection-end-column="34" />
+            <state vertical-scroll-proportion="0.73333335">
+              <caret line="184" column="34" selection-start-line="184" selection-start-column="34" selection-end-line="184" selection-end-column="34" />
               <folding>
                 <element signature="e#3845#3870#0" expanded="true" />
               </folding>
@@ -1035,12 +1035,6 @@
       <option name="number" value="Default" />
       <updated>1447503737037</updated>
     </task>
-    <task id="LOCAL-00124" summary="Drop more columns from the sentiment trainers">
-      <created>1450548657184</created>
-      <option name="number" value="00124" />
-      <option name="project" value="LOCAL" />
-      <updated>1450548657184</updated>
-    </task>
     <task id="LOCAL-00125" summary="Improves formatting in fire trainer">
       <created>1450549256385</created>
       <option name="number" value="00125" />
@@ -1329,7 +1323,13 @@
       <option name="project" value="LOCAL" />
       <updated>1452165874623</updated>
     </task>
-    <option name="localTasksCounter" value="173" />
+    <task id="LOCAL-00173" summary="Refactors names in WeatherProvider">
+      <created>1452167548363</created>
+      <option name="number" value="00173" />
+      <option name="project" value="LOCAL" />
+      <updated>1452167548363</updated>
+    </task>
+    <option name="localTasksCounter" value="174" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -1377,7 +1377,6 @@
     <option name="OFFER_MOVE_TO_ANOTHER_CHANGELIST_ON_PARTIAL_COMMIT" value="false" />
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_CODE_CLEANUP_BEFORE_PROJECT_COMMIT" value="true" />
-    <MESSAGE value="Use the sentiment140 test dataset in emo trainer" />
     <MESSAGE value="Use the sentiment140 training dataset in emo trainer too" />
     <MESSAGE value="Changes the number of hidden layers of the perceptron" />
     <MESSAGE value="Don't ignore all retweets" />
@@ -1402,7 +1401,8 @@
     <MESSAGE value="Use sc.defaultParallelism instead of fixed number of partitions" />
     <MESSAGE value="Fixes WeatherProvider to correctly process tweets" />
     <MESSAGE value="Adds logInfo in fire parser" />
-    <option name="LAST_COMMIT_MESSAGE" value="Adds logInfo in fire parser" />
+    <MESSAGE value="Refactors names in WeatherProvider" />
+    <option name="LAST_COMMIT_MESSAGE" value="Refactors names in WeatherProvider" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1806,8 +1806,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/scala/com/aluxian/tweeather/transformers/WeatherProvider.scala">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.58787876">
-          <caret line="169" column="34" selection-start-line="169" selection-start-column="34" selection-end-line="169" selection-end-column="34" />
+        <state vertical-scroll-proportion="0.73333335">
+          <caret line="184" column="34" selection-start-line="184" selection-start-column="34" selection-end-line="184" selection-end-column="34" />
           <folding>
             <element signature="e#3845#3870#0" expanded="true" />
           </folding>

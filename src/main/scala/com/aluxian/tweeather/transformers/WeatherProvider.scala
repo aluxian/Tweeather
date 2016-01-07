@@ -148,8 +148,8 @@ class WeatherProvider(override val uid: String) extends Transformer with BasicPa
           // Skip empty partitions
           partition
         } else {
-          val bufferedIter = partition.buffered
-          val headRow = bufferedIter.head
+          val rows = partition.toList
+          val headRow = rows.head
 
           // Extract indexes and the download url
           val latIndex = headRow.fieldIndex(latCol)
@@ -168,7 +168,7 @@ class WeatherProvider(override val uid: String) extends Transformer with BasicPa
           }.toMap
 
           // Process the partition
-          bufferedIter.map { row =>
+          val processedRows = rows.map { row =>
             val lat = row.getDouble(latIndex)
             val lon = row.getDouble(lonIndex)
 
@@ -180,6 +180,9 @@ class WeatherProvider(override val uid: String) extends Transformer with BasicPa
 
             Row.merge(row, Row(metricValues: _*))
           }
+
+          data.close()
+          processedRows.toIterator
         }
       }
 
