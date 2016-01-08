@@ -77,8 +77,8 @@ class MultilayerPerceptron(override val uid: String)
     * @return Fitted model
     */
   protected def train(dataset: DataFrame): MultilayerPerceptronModel = {
-    val perceptron = FeedForwardTopology.multiLayerPerceptron($(layers), softmax = true)
-    val trainer = new FeedForwardTrainer(perceptron, $(layers).head, $(layers).last)
+    val topology = FeedForwardTopology.multiLayerPerceptron($(layers), softmax = false)
+    val trainer = new FeedForwardTrainer(topology, $(layers).head, $(layers).last)
     trainer.LBFGSOptimizer.setConvergenceTol($(tol)).setNumIterations($(maxIter))
     trainer.setStackSize($(blockSize))
 
@@ -117,7 +117,7 @@ class MultilayerPerceptronModel(override val uid: String, val layers: Array[Int]
   /** @group setParam */
   def setOutputCol(value: String): this.type = set(outputCol, value)
 
-  private val perceptron = FeedForwardTopology.multiLayerPerceptron(layers, softmax = true).getInstance(weights)
+  private val perceptron = FeedForwardTopology.multiLayerPerceptron(layers, softmax = false).getInstance(weights)
 
   override def transformSchema(schema: StructType): StructType = {
     SchemaUtils.checkColumnType(schema, $(inputCol), new VectorUDT)
