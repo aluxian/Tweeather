@@ -1,3 +1,6 @@
+import sbtassembly.AssemblyPlugin.autoImport._
+import sbtsparksubmit.SparkSubmitPlugin.autoImport._
+
 name := "tweeather"
 
 version := "1.0.0"
@@ -26,4 +29,8 @@ resolvers ++= Seq(
   "Unidata Releases" at "http://artifacts.unidata.ucar.edu/content/repositories/unidata-releases/"
 )
 
+// Use assembly to create the uber jar
+sparkSubmitJar := assembly.value.getAbsolutePath
+
+// Import submit tasks
 SparkSubmit.configurations
