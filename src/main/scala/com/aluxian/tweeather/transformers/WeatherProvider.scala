@@ -218,6 +218,8 @@ object WeatherProvider extends BasicParamsReadable[WeatherProvider] with Logging
       } else {
         logError("Couldn't download grib", new Throwable(s"Got response code ${res.code} for $gribUrl"))
       }
+    } else {
+      logInfo(s"Grib ${gribFile.getPath} already downloaded")
     }
 
     // Read and return
