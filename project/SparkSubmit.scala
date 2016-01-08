@@ -4,7 +4,7 @@ import scala.collection.mutable
 
 object SparkSubmit {
 
-  private lazy val sparkMaster = sys.props.getOrElse("TW_SPARK_MASTER", "local[*]")
+  private lazy val sparkMaster = sys.env.getOrElse("TW_SPARK_MASTER", "local[*]")
   private lazy val executorHighMem = "14.4g"
 
   private sealed case class Script(scriptName: String, highMem: Boolean = false) {
