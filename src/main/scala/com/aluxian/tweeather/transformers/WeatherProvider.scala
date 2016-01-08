@@ -141,54 +141,52 @@ class WeatherProvider(override val uid: String) extends Transformer with BasicPa
       groups.unionAll(sameUrlGroup)
     })
 
-    groupedDataset
+    // Process each partition
+    val rows = groupedDataset
+      .mapPartitions { partition =>
+        if (!partition.hasNext) {
+          // Skip empty partitions
+          partition
+        } else {
+          val rows = partition.toList
+          val headRow = rows.head
 
-//    // Process each partition
-//    val rows = groupedDataset
-//      .mapPartitions { partition =>
-//        if (!partition.hasNext) {
-//          // Skip empty partitions
-//          partition
-//        } else {
-//          val rows = partition.toList
-//          val headRow = rows.head
-//
-//          // Extract indexes and the download url
-////          val latIndex = headRow.fieldIndex(latCol)
-////          val lonIndex = headRow.fieldIndex(lonCol)
-////          val urlIndex = headRow.fieldIndex(urlCol)
-////          val gribUrl = headRow.getString(urlIndex)
-//
-////          // Download and parse the grib file
-////          val data = WeatherProvider.downloadGrib(gribUrl, gribsDir, metricsArray)
-////          val datatypes = metricsArray.map { metric =>
-////            val datatype = data.findGridDatatype(metric.gridName)
-////            if (datatype == null) {
-////              logWarning(s"Null datatype found for $metric from $gribUrl")
-////            }
-////            metric -> datatype
-////          }.toMap
-////
-////          // Process the partition
-////          val processedRows = rows.map { row =>
-////            val lat = row.getDouble(latIndex)
-////            val lon = row.getDouble(lonIndex)
-////
-////            val metricValues = datatypes.map {
-////              case (metric, datatype) =>
-////                val Array(x, y) = datatype.getCoordinateSystem.findXYindexFromLatLon(lat, lon, null)
-////                datatype.readDataSlice(0, 0, y, x).getDouble(0)
-////            }.toArray
-////
-////            Row.merge(row, Row(metricValues: _*))
-////          }
-////
-////          data.close()
-//          rows.toIterator
-//        }
-//      }
-//
-//    sqlContext.createDataFrame(rows, outputSchema)
+          // Extract indexes and the download url
+          val latIndex = headRow.fieldIndex(latCol)
+          val lonIndex = headRow.fieldIndex(lonCol)
+          val urlIndex = headRow.fieldIndex(urlCol)
+          val gribUrl = headRow.getString(urlIndex)
+
+          // Download and parse the grib file
+          val data = WeatherProvider.downloadGrib(gribUrl, gribsDir, metricsArray)
+          val datatypes = metricsArray.map { metric =>
+            val datatype = data.findGridDatatype(metric.gridName)
+            if (datatype == null) {
+              logWarning(s"Null datatype found for $metric from $gribUrl")
+            }
+            metric -> datatype
+          }.toMap
+
+          // Process the partition
+          val processedRows = rows.map { row =>
+            val lat = row.getDouble(latIndex)
+            val lon = row.getDouble(lonIndex)
+
+            val metricValues = datatypes.map {
+              case (metric, datatype) =>
+                val Array(x, y) = datatype.getCoordinateSystem.findXYindexFromLatLon(lat, lon, null)
+                datatype.readDataSlice(0, 0, y, x).getDouble(0)
+            }.toArray
+
+            Row.merge(row, Row(metricValues: _*))
+          }
+
+          data.close()
+          processedRows.toIterator
+        }
+      }
+
+    sqlContext.createDataFrame(rows, outputSchema)
   }
 
   override def copy(extra: ParamMap): WeatherProvider = defaultCopy(extra)
