@@ -41,6 +41,7 @@ object Sentiment140Downloader extends Script with Logging {
 
     zip.close()
     logInfo("Downloading finished")
+    sc.stop()
   }
 
 }

@@ -24,6 +24,7 @@ object Sentiment140Parser extends Script with Logging {
     parse(trainingData, "/tw/sentiment/140/parsed/training.parquet")
 
     logInfo("Parsing finished")
+    sc.stop()
   }
 
   def parse(data: RDD[String], filePath: String) {

@@ -16,6 +16,7 @@ object TwitterFireCounter extends Script with Logging {
 
     // Print count
     logInfo(s"Count = ${data.count()}")
+    sc.stop()
   }
 
 }

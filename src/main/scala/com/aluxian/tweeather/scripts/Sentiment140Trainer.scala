@@ -60,6 +60,7 @@ object Sentiment140Trainer extends Script with Logging {
     model.write.overwrite().save("/tw/sentiment/models/140.model")
 
     logInfo("Training finished")
+    sc.stop()
   }
 
 }

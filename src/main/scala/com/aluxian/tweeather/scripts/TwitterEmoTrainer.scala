@@ -62,6 +62,7 @@ object TwitterEmoTrainer extends Script with Logging {
     model.write.overwrite().save("/tw/sentiment/models/emo.model")
 
     logInfo("Training finished")
+    sc.stop()
   }
 
 }

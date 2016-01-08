@@ -62,6 +62,7 @@ object TwitterFireTrainer extends Script with Logging {
     model.write.overwrite().save("/tw/fire/fire.model")
 
     logInfo("Training finished")
+    sc.stop()
   }
 
 }

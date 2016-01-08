@@ -36,6 +36,7 @@ object TwitterEmoParser extends Script with Logging {
       .parquet("/tw/sentiment/emo/parsed/data.parquet")
 
     logInfo("Parsing finished")
+    sc.stop()
   }
 
 }

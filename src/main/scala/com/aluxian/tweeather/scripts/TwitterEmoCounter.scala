@@ -16,6 +16,7 @@ object TwitterEmoCounter extends Script with Logging {
 
     // Print count
     logInfo(s"Count = ${data.count()}")
+    sc.stop()
   }
 
 }

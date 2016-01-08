@@ -63,6 +63,7 @@ object TwitterFireParser extends Script with Logging {
       .toDF.write.mode(SaveMode.Overwrite).parquet("/tw/fire/parsed/data.parquet")
 
     logInfo("Parsing finished")
+    sc.stop()
   }
 
 }
