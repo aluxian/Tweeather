@@ -27,9 +27,7 @@ trait Script {
   protected lazy val scriptName = "Tweeather_" + getClass.getSimpleName.stripSuffix("$")
   protected lazy val sc = new SparkContext(
     new SparkConf()
-      .setIfMissing("spark.app.id", scriptName)
       .setIfMissing("spark.app.name", scriptName)
-      .setIfMissing("spark.master", "local[*]")
       .setIfMissing("spark.streaming.stopGracefullyOnShutdown", "true")
       .setIfMissing("spark.streaming.blockInterval", "30s")
   )
