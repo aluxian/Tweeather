@@ -12,7 +12,7 @@ import twitter4j.FilterQuery
   * and are written in English. It uses one or more Twitter apps, whose credentials
   * are stored '''com/aluxian/tweeather/res/twitter.properties'''.
   */
-object TwitterHoseFireCollector extends Script with Logging {
+object TwitterFireCollector extends Script with Logging {
 
   val locationBox = LocationBox(
     sw = Coordinates(33, -27),

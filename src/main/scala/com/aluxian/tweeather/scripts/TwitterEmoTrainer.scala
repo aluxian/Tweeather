@@ -10,12 +10,12 @@ import org.apache.spark.sql.Row
 
 /**
   * This script trains a Naive Bayes classifier with the dataset of tweets
-  * collected by [[TwitterHoseEmoCollector]] and parsed by [[TwitterHoseEmoParser]].
+  * collected by [[TwitterEmoCollector]] and parsed by [[TwitterEmoParser]].
   *
   * To test the accuracy, it uses the Sentiment140 manually-labelled dataset.
-  * After the model is created, it can be tested with [[TwitterHoseEmoRepl]].
+  * After the model is created, it can be tested with [[TwitterEmoRepl]].
   */
-object TwitterHoseEmoTrainer extends Script with Logging {
+object TwitterEmoTrainer extends Script with Logging {
 
   override def main(args: Array[String]) {
     super.main(args)

@@ -3,9 +3,9 @@ package com.aluxian.tweeather.scripts
 import org.apache.spark.Logging
 
 /**
-  * This script is used to count the number of rows that [[TwitterHoseEmoCollector]] has collected.
+  * This script is used to count the number of rows that [[TwitterEmoCollector]] has collected.
   */
-object TwitterHoseEmoCounter extends Script with Logging {
+object TwitterEmoCounter extends Script with Logging {
 
   override def main(args: Array[String]) {
     super.main(args)

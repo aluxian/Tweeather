@@ -10,7 +10,7 @@ import twitter4j.FilterQuery
   * characters and are written in English. It uses one or more Twitter apps, whose credentials
   * are stored '''com/aluxian/tweeather/res/twitter.properties'''.
   */
-object TwitterHoseEmoCollector extends Script with Logging {
+object TwitterEmoCollector extends Script with Logging {
 
   override def main(args: Array[String]) {
     super.main(args)

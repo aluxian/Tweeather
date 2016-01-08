@@ -8,13 +8,13 @@ import org.apache.spark.mllib.linalg.Vector
 import org.apache.spark.sql.{Row, SaveMode}
 
 /**
-  * This script parses the tweets collected by [[TwitterHoseFireCollector]].
+  * This script parses the tweets collected by [[TwitterFireCollector]].
   * For each tweet, it analyses the sentiment and retrives the weather forecast for its location.
   * The resulting dataset is coalesced to reduce the number of partitions.
   */
-object TwitterHoseFireParser extends Script with Logging {
+object TwitterFireParser extends Script with Logging {
 
-  val locationBox = TwitterHoseFireCollector.locationBox // Europe
+  val locationBox = TwitterFireCollector.locationBox // Europe
 
   override def main(args: Array[String]) {
     super.main(args)

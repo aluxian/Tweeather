@@ -9,9 +9,9 @@ import scala.io.Source
 
 /**
   * This script provides a REPL (read-eval-print-loop) interface for the model created by
-  * [[TwitterHoseFireTrainer]]. The trainer script must be ran first.
+  * [[TwitterFireTrainer]]. The trainer script must be ran first.
   */
-object TwitterHoseFireRepl extends Script with Logging {
+object TwitterFireRepl extends Script with Logging {
 
   override def main(args: Array[String]) {
     super.main(args)

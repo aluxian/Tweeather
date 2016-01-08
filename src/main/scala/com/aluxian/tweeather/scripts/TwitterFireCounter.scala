@@ -3,9 +3,9 @@ package com.aluxian.tweeather.scripts
 import org.apache.spark.Logging
 
 /**
-  * This script is used to count the number of rows that [[TwitterHoseFireCollector]] has collected.
+  * This script is used to count the number of rows that [[TwitterFireCollector]] has collected.
   */
-object TwitterHoseFireCounter extends Script with Logging {
+object TwitterFireCounter extends Script with Logging {
 
   override def main(args: Array[String]) {
     super.main(args)

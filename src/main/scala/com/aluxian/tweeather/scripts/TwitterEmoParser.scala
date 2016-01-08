@@ -5,14 +5,14 @@ import org.apache.spark.Logging
 import org.apache.spark.sql.SaveMode
 
 /**
-  * This script parses the tweets collected by [[TwitterHoseEmoCollector]].
+  * This script parses the tweets collected by [[TwitterEmoCollector]].
   * It removes duplicates and tweets which contain both positive and negative emojis.
   * The resulting dataset is coalesced to reduce the number of partitions.
   */
-object TwitterHoseEmoParser extends Script with Logging {
+object TwitterEmoParser extends Script with Logging {
 
-  val positiveEmoticons = TwitterHoseEmoCollector.positiveEmoticons
-  val negativeEmoticons = TwitterHoseEmoCollector.negativeEmoticons
+  val positiveEmoticons = TwitterEmoCollector.positiveEmoticons
+  val negativeEmoticons = TwitterEmoCollector.negativeEmoticons
 
   override def main(args: Array[String]) {
     super.main(args)

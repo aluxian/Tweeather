@@ -24,3 +24,5 @@ dependencyOverrides ++= Set(
 resolvers ++= Seq(
   "Unidata Releases" at "http://artifacts.unidata.ucar.edu/content/repositories/unidata-releases/"
 )
+
+SparkSubmit.configurations
