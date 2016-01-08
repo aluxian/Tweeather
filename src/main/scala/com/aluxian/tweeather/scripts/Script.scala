@@ -8,16 +8,20 @@ import org.apache.spark.{SparkConf, SparkContext}
 
 /**
   * A base trait that all scripts implement. It configures the logger and the [[SparkContext]].
-  * Custom, Tweeather-specific env vars:
   *
-  * - '''TW_STREAMING_TIMEOUT''' - The period, in seconds, after which streaming should stop.
-  * - '''TW_STREAMING_INTERVAL''' - The duration, in seconds, for each streaming batch.
+  * Custom, Tweeather-specific properties:
+  *
+  * - '''tw.streaming.timeout''' - The period, in seconds, after which streaming should stop.
+  * - '''tw.streaming.interval''' - The duration, in seconds, for each streaming batch.
+  *
+  * By default, Spark is configured to run locally with &lt;the-number-of-cores&gt; workers.
+  * Streaming is configured to always stop gracefully and a block interval of 30 seconds.
   */
 trait Script {
 
-  protected lazy val streamingTimeout = sys.env.get("TW_STREAMING_TIMEOUT") // in seconds
+  protected lazy val streamingTimeout = sys.props.get("tw.streaming.timeout") // in seconds
     .map(_.toLong * 1000).getOrElse(-1L)
-  protected lazy val streamingInterval = sys.env.get("TW_STREAMING_INTERVAL") // in seconds
+  protected lazy val streamingInterval = sys.props.get("tw.streaming.interval") // in seconds
     .map(s => Seconds(s.toLong)).getOrElse(Minutes(5))
 
   protected lazy val scriptName = "Tweeather_" + getClass.getSimpleName.stripSuffix("$")
