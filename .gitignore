@@ -1,5 +1,6 @@
 .idea/
 target/
 logs/
+py/out/
 src/main/resources/com/aluxian/tweeather/res/log4j.properties
 src/main/resources/com/aluxian/tweeather/res/twitter.properties
