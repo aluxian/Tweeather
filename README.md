@@ -9,10 +9,10 @@ User Income through Language, Behaviour and Affect in Social Media][1]. I decide
 
 - [Requirements](#requirements)
 - [Setup](#setup)
-	- [Configuration][#configuration]
-	- [Env vars][#env-vars]
-	- [System properties][#system-properties]
-	- [Submit tasks][#submit-tasks]
+	- [Configuration](#configuration)
+	- [Env vars](#env-vars)
+	- [System properties](#system-properties)
+	- [Submit tasks](#submit-tasks)
 - [Scripts](#scripts)
 	- [1. *Sentiment140* scripts](#1-sentiment140-scripts)
 	- [2. *Emo* scripts](#2-emo-scripts)
