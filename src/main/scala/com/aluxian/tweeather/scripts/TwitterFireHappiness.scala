@@ -1,6 +1,7 @@
 package com.aluxian.tweeather.scripts
 
-import java.util.{Calendar, Date}
+import java.text.SimpleDateFormat
+import java.util.{Calendar, Date, Locale}
 
 import com.aluxian.tweeather.RichDate
 import org.apache.hadoop.fs.{FileUtil, Path}
@@ -47,7 +48,9 @@ object TwitterFireHappiness extends Script with Logging {
     data
       .select("lat", "lon", "timestamp", "probability")
       .map { case Row(lat, lon, timestamp, probability: Vector) =>
+        val dateFormatter = new SimpleDateFormat("yyyyMMdd", Locale.US)
         val date = new Date(timestamp.toString.toLong)
+        val dateStr = dateFormatter.format(date)
         val cycle = date.toCalendar.get(Calendar.HOUR_OF_DAY) match {
           case h if h < 6 => "00"
           case h if h < 12 => "06"
@@ -58,7 +61,7 @@ object TwitterFireHappiness extends Script with Logging {
         Seq(
           lat.toString,
           lon.toString,
-          cycle,
+          dateStr + cycle,
           probability(1)
         ).mkString(",")
       }
