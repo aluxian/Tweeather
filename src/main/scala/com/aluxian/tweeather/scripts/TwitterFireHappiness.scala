@@ -1,7 +1,7 @@
 package com.aluxian.tweeather.scripts
 
 import com.aluxian.tweeather.utils.HdfsUtil
-import org.apache.hadoop.fs.{FileUtil, Path}
+import org.apache.hadoop.fs.Path
 import org.apache.spark.Logging
 import org.apache.spark.ml.PipelineModel
 import org.apache.spark.mllib.linalg.Vector
@@ -55,13 +55,8 @@ object TwitterFireHappiness extends Script with Logging {
 
     // Merge files into a single csv
     logInfo("Merging csv")
-    HdfsUtil.copyMergeWithHeader(hdfs, happinessTextPath, happinessCsvPath, hdfs.getConf,
-      header = "lat,lon,probability\n")
-
-    // Add the header to the csv file
-    logInfo("Adding header to csv")
-    val csvOut = hdfs.open(happinessCsvPath)
-
+    val csvHeader = "lat,lon,probability\n"
+    HdfsUtil.copyMergeWithHeader(hdfs, happinessTextPath, happinessCsvPath, hdfs.getConf, header = csvHeader)
 
     logInfo("Parsing finished")
     sc.stop()
