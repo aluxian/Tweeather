@@ -35,7 +35,7 @@ object TwitterFireRepl extends Script with Logging {
 
       model
         .transform(data)
-        .select("output")
+        .select("predicted")
         .foreach(println)
     }
   }
