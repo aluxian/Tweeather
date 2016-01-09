@@ -226,6 +226,14 @@ Here's an example of some tweets and their predicted polarity:
 
 I uploaded a file with 1000 complete rows on the [releases page][5].
 
+#### Sentiment across Europe
+
+I collected tweets geo-localised in Europe created between 2015-12-26 and 2016-12-04. I ran them through the sentiment analyser, and this is the result:
+
+![](./docs/happiness.gif)
+
+The change in the number of data points seems to depend more on the time of day than on weather conditions. In order to draw a conclusion, a larger dataset of tweets is required (spread across more than just a week).
+
 ### 3. *Fire* scripts
 
 These scripts are used to train an Artificial Neural Network that predicts the sentiment polarity from 3 weather variables: temperature, pressure and humidity.
