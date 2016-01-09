@@ -11,6 +11,8 @@ import org.apache.spark.sql.functions._
 import org.apache.spark.sql.types.StructType
 import org.apache.spark.sql.{DataFrame, Row}
 
+import scala.collection.mutable
+
 /**
   * Each layer has sigmoid activation function, output layer has softmax.
   */
@@ -179,7 +181,7 @@ object MultilayerPerceptronModel extends MLReadable[MultilayerPerceptronModel] {
 
       val dataPath = new Path(path, "data").toString
       val data = sqlContext.read.parquet(dataPath).select("layers", "weights").head()
-      val layers = data.getAs[Array[Int]](0)
+      val layers = data.getAs[mutable.WrappedArray[Int]](0).toArray
       val weights = data.getAs[Vector](1)
       val model = new MultilayerPerceptronModel(metadata.uid, layers, weights)
 
