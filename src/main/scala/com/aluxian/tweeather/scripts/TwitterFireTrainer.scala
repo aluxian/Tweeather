@@ -34,14 +34,16 @@ object TwitterFireTrainer extends Script with Logging {
     // Configure the perceptron
     val perceptron = new MultilayerPerceptron()
       .setLayers(Array(3, 5, 5, 5, 1))
-      .setTol(1e-5)
-      .setMaxIter(1000)
+      .setTol(1e-6)
+      .setMaxIter(10 * 1000)
       .setInputCol("input")
       .setOutputCol("output")
 
     // Train the perceptron
     logInfo(s"Training model on ${trainingData.count()} records")
     val model = perceptron.fit(trainingData)
+
+    println(s"WEIGHTS=${model.weights}")
 
     // Test the model precision
     logInfo("Testing model")
