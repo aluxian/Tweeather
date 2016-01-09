@@ -25,7 +25,7 @@ object HdfsUtil {
 
     try {
       fs.listStatus(srcDir)
-        .sorted
+        .sortWith(_.compareTo(_) < 0)
         .foreach { content =>
           if (content.isFile) {
             val in = fs.open(content.getPath)
