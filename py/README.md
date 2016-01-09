@@ -19,4 +19,3 @@ Some sample files have been included in the `data` folder. Make sure you replace
 
 - `happiness.py`
   - used to plot happiness levels in Europe based on tweets and their predicted sentiment
-  - only tweets written in English were considered, that's why English-speaking regions have the most data points
