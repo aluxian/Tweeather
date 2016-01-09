@@ -34,6 +34,8 @@ object TwitterFireTrainer extends Script with Logging {
     // Configure the perceptron
     val perceptron = new MultilayerPerceptron()
       .setLayers(Array(3, 5, 5, 5, 1))
+      .setTol(1e-5)
+      .setMaxIter(1000)
       .setInputCol("input")
       .setOutputCol("output")
 
