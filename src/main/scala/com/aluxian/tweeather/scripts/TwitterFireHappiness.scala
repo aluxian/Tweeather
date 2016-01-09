@@ -25,8 +25,8 @@ object TwitterFireHappiness extends Script with Logging {
       .coalesce(sc.defaultParallelism)
       .distinct()
       .map(_.split(','))
-      .map(parts => (parts(0).toDouble, parts(1).toDouble, parts(3)))
-      .toDF("lat", "lon", "raw_text")
+      .map(parts => (parts(0), parts(1), parts(2), parts(3)))
+      .toDF("lat", "lon", "date", "raw_text")
 
     // Analyse sentiment
     logInfo("Analysing sentiment")
@@ -42,11 +42,12 @@ object TwitterFireHappiness extends Script with Logging {
     // Export data
     logInfo("Exporting data")
     data
-      .select("lat", "lon", "probability")
-      .map { case Row(lat, lon, probability: Vector) =>
+      .select("lat", "lon", "date", "probability")
+      .map { case Row(lat, lon, date, probability: Vector) =>
         Seq(
           lat.toString,
           lon.toString,
+          date.toString,
           probability(1)
         ).mkString(",")
       }
