@@ -17,6 +17,7 @@ User Income through Language, Behaviour and Affect in Social Media][1]. I decide
 	- [1. *Sentiment140* scripts](#1-sentiment140-scripts)
 	- [2. *Emo* scripts](#2-emo-scripts)
 	- [3. *Fire* scripts](#3-fire-scripts)
+- [Conclusion](#conclusion)
 - [Tips](#tips)
 - [Suggestions](#suggestions)
 
@@ -92,7 +93,7 @@ The project has 3 sets of scripts.
 
 ### 1. *Sentiment140* scripts
 
-These scripts are used to train a naive Bayes sentiment analyser with the [Sentiment140][2] dataset. Nothing fancy here. The resulting model has an accuracy of 80%.
+I used these scripts to train a naive Bayes sentiment analyser with the [Sentiment140][2] dataset. Nothing fancy here. The resulting model has an accuracy of 80%.
 
 #### Running
 
@@ -136,7 +137,7 @@ There are more examples on the [releases page][5].
 
 ### 2. *Emo* scripts
 
-These scripts are used to train a naive Bayes sentiment analyser with tweets collected by myself. For training the classifier, I also used the training dataset of 1.6M tweets provided on the Sentiment140 web page, raising the total size of the training dataset to 10M tweets. The resulting model has an accuracy of 79% (tested on the Sentiment140 manually-labelled dataset).
+I used these scripts to train a naive Bayes sentiment analyser with tweets collected by myself. For training the classifier, I also used the training dataset of 1.6M tweets provided on the Sentiment140 web page, raising the total size of the training dataset to 10M tweets. The resulting model had an accuracy of 79% (tested on the Sentiment140 manually-labelled dataset) and is available on the [releases page][5].
 
 #### Collection
 
@@ -161,7 +162,7 @@ Before training the classifier, the tweets were pre-processed:
 
 #### Training
 
-The resulting tweets are used to train a naive Bayes classifier. The model is saved for future usage.
+The processed tweets were used to train a naive Bayes classifier.
 
 #### Running
 
@@ -232,23 +233,23 @@ I collected tweets geo-localised in Europe created between 2015-12-26 and 2016-1
 
 ![](./docs/happiness.gif)
 
-The change in the number of data points seems to depend more on the time of day than on weather conditions. In order to draw a conclusion, a larger dataset of tweets is required (spread across more than just a week).
+The change in the number of data points seems to depend more on the time of day than on weather conditions. In order to draw a pertinent conclusion about the correlation between weather conditions and sentiment, a larger dataset of tweets is required (spread across more than just a week).
 
 ### 3. *Fire* scripts
 
-These scripts are used to train an Artificial Neural Network that predicts the sentiment polarity from 3 weather variables: temperature, pressure and humidity.
+I used these scripts to train an [artificial neural network][10] that predicted the sentiment polarity given 3 weather variables: temperature, pressure and humidity.
 
 #### Collection
 
-Tweets are collected using Twitter's Streaming API, filtered by location (Europe) and language (English).
+Tweets were collected using Twitter's Streaming API, filtered by location (Europe) and language (English).
 
 #### Parsing
 
-After they are collected, tweets are ran through the sentiment analyser to get their polarity. The parser script uses a [NOAA][4]-provided weather forecast to extract the temperature, pressure and humidity for each tweet's location.
+After they were collected, tweets were ran through the sentiment analyser to get their polarity. The parser script used a [NOAA][4]-provided weather dataset to extract the temperature, pressure and humidity for each tweet's location.
 
 #### Training
 
-After parsing the tweets, they're used to train a [multilayer perceptron][9]. The 3 weather variables are used as the input nodes and the polarity is used as the output node. The model is saved for future usage. My model has an accuracy of XX%.
+After parsing the tweets, I used them to train a [multilayer perceptron][9]. The 3 weather variables were the input nodes and the polarity was the output node.
 
 #### Running
 
@@ -276,6 +277,10 @@ Here's a screenshot of my collector running for almost 9 days.
 
 ![Fire Collector](./docs/ss-fire-collector.png)
 
+## Conclusion
+
+> TODO
+
 ## Tips
 
 Keep these in mind:
@@ -302,3 +307,4 @@ A few suggestions to improve the project:
 [7]: http://www.scala-sbt.org/
 [8]: https://hadoop.apache.org/
 [9]: https://en.wikipedia.org/wiki/Multilayer_perceptron
+[10]: https://www.wikiwand.com/en/Artificial_neural_network
