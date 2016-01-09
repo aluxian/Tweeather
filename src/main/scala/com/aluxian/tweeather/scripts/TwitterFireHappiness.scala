@@ -1,5 +1,7 @@
 package com.aluxian.tweeather.scripts
 
+import com.aluxian.tweeather.utils.HdfsUtil
+import org.apache.hadoop.fs.{FileUtil, Path}
 import org.apache.spark.Logging
 import org.apache.spark.ml.PipelineModel
 import org.apache.spark.mllib.linalg.Vector
@@ -10,6 +12,9 @@ import org.apache.spark.sql.Row
   * a csv file that can be used to plot a happiness graph.
   */
 object TwitterFireHappiness extends Script with Logging {
+
+  val happinessTextPath = new Path("/tw/fire/parsed/happiness.text")
+  val happinessCsvPath = new Path("/tw/fire/parsed/happiness.csv")
 
   override def main(args: Array[String]) {
     super.main(args)
@@ -30,6 +35,11 @@ object TwitterFireHappiness extends Script with Logging {
       .load("/tw/sentiment/models/emo.model")
       .transform(data)
 
+    // Remove existing files
+    logInfo("Removing existing files")
+    hdfs.delete(happinessTextPath, true)
+    hdfs.delete(happinessCsvPath, false)
+
     // Export data
     logInfo("Exporting data")
     data
@@ -41,7 +51,17 @@ object TwitterFireHappiness extends Script with Logging {
           probability(1)
         ).mkString(",")
       }
-      .saveAsTextFile("/tw/fire/parsed/happiness.csv")
+      .saveAsTextFile("/tw/fire/parsed/happiness.text")
+
+    // Merge files into a single csv
+    logInfo("Merging csv")
+    HdfsUtil.copyMergeWithHeader(hdfs, happinessTextPath, happinessCsvPath, hdfs.getConf,
+      header = "lat,lon,probability\n")
+
+    // Add the header to the csv file
+    logInfo("Adding header to csv")
+    val csvOut = hdfs.open(happinessCsvPath)
+
 
     logInfo("Parsing finished")
     sc.stop()
