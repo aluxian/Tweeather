@@ -1,5 +1,8 @@
 package com.aluxian.tweeather.scripts
 
+import java.util.{Calendar, Date}
+
+import com.aluxian.tweeather.RichDate
 import org.apache.hadoop.fs.{FileUtil, Path}
 import org.apache.spark.Logging
 import org.apache.spark.ml.PipelineModel
@@ -26,7 +29,7 @@ object TwitterFireHappiness extends Script with Logging {
       .distinct()
       .map(_.split(','))
       .map(parts => (parts(0), parts(1), parts(2), parts(3)))
-      .toDF("lat", "lon", "date", "raw_text")
+      .toDF("lat", "lon", "timestamp", "raw_text")
 
     // Analyse sentiment
     logInfo("Analysing sentiment")
@@ -42,12 +45,20 @@ object TwitterFireHappiness extends Script with Logging {
     // Export data
     logInfo("Exporting data")
     data
-      .select("lat", "lon", "date", "probability")
-      .map { case Row(lat, lon, date, probability: Vector) =>
+      .select("lat", "lon", "timestamp", "probability")
+      .map { case Row(lat, lon, timestamp, probability: Vector) =>
+        val date = new Date(timestamp.toString.toLong)
+        val cycle = date.toCalendar.get(Calendar.HOUR_OF_DAY) match {
+          case h if h < 6 => "00"
+          case h if h < 12 => "06"
+          case h if h < 18 => "12"
+          case _ => "18"
+        }
+
         Seq(
           lat.toString,
           lon.toString,
-          date.toString,
+          cycle,
           probability(1)
         ).mkString(",")
       }
