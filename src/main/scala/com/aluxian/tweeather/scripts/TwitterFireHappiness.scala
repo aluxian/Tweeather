@@ -6,8 +6,8 @@ import org.apache.spark.mllib.linalg.Vector
 import org.apache.spark.sql.Row
 
 /**
-  * This script parses the tweets collected by [[TwitterFireCollector]] and exports data
-  * that can be used to create a happiness graph.
+  * This script parses the tweets collected by [[TwitterFireCollector]] and exports
+  * a csv file that can be used to plot a happiness graph.
   */
 object TwitterFireHappiness extends Script with Logging {
 
@@ -36,12 +36,12 @@ object TwitterFireHappiness extends Script with Logging {
       .select("lat", "lon", "probability")
       .map { case Row(lat, lon, probability: Vector) =>
         Seq(
-          lat.toString.toDouble,
-          lon.toString.toDouble,
+          lat.toString,
+          lon.toString,
           probability(1)
         ).mkString(",")
       }
-      .saveAsTextFile("/tw/fire/parsed/happiness.txt")
+      .saveAsTextFile("/tw/fire/parsed/happiness.csv")
 
     logInfo("Parsing finished")
     sc.stop()
