@@ -300,9 +300,13 @@ A few suggestions to improve the project:
 
 ## Downloads
 
-I uploaded some files from my project here:
+I uploaded some files from my project on the [releases page][13]:
 
-> TODO
+- [happiness.csv][10] – a csv with `lat`, `lon` and `polarity` describing locations and their sentiment
+- [model-sentiment-140.tar.gz][11] – my Sentiment140 sentiment analyser model
+- [model-emo-140.tar.gz][12] – my emo sentiment analyser model
+- [examples-sentiment-140.txt][14] – prediction examples done with the Sentiment140 analyser
+- [examples-emo-140.txt][15] – prediction examples done with the emo analyser
 
 
 [1]: http://journals.plos.org/plosone/article?id=10.1371/journal.pone.0138717
@@ -314,3 +318,9 @@ I uploaded some files from my project here:
 [7]: http://www.scala-sbt.org/
 [8]: https://hadoop.apache.org/
 [9]: https://en.wikipedia.org/wiki/Multilayer_perceptron
+[10]: https://github.com/Aluxian/Tweeather/releases/download/v1/happiness.csv
+[11]: https://github.com/Aluxian/Tweeather/releases/download/v1/model-sentiment-140.tar.gz
+[12]: https://github.com/Aluxian/Tweeather/releases/download/v1/model-emo-140.tar.gz
+[13]: https://github.com/Aluxian/Tweeather/releases/latest
+[14]: https://github.com/Aluxian/Tweeather/releases/download/v1/examples-sentiment-140.txt
+[15]: https://github.com/Aluxian/Tweeather/releases/download/v1/examples-emo-140.txt
