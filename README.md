@@ -96,6 +96,10 @@ The project has 3 sets of scripts.
 
 I used these scripts to train a naive Bayes sentiment analyser with the [Sentiment140][2] dataset. Nothing fancy here. The resulting model has an accuracy of 80%.
 
+#### Processing
+
+The same processing steps were taken as for the [*Emo* scripts](#2-emo-scripts).
+
 #### Running
 
 To run the experiment:
@@ -148,7 +152,7 @@ The stream of tweets I received from the Twitter API was filtered by emoji chara
 
 This method allowed me to gather a fairly large dataset of labelled tweets, while the accuracy of the model didn't seem to suffer.
 
-#### Parsing
+#### Processing
 
 Before training the analyser, the tweets were pre-processed:
 
@@ -240,13 +244,13 @@ I used these scripts to train an [artificial neural network][5] that predicted t
 
 Tweets were collected using Twitter's Streaming API, filtered by location (Europe) and language (English).
 
-#### Parsing
+#### Processing
 
 After they were collected, tweets were ran through the sentiment analyser to get their polarity. The parser script used a [NOAA][4]-provided weather dataset to extract the temperature, pressure and humidity for each tweet's location.
 
 #### Training
 
-After parsing the tweets, I used them to train a [multilayer perceptron][9]. The 3 weather variables were the input nodes and the polarity was the output node. 90% of the dataset was used for training and the remaining 10% for testing.
+After processing the tweets, I used them to train a [multilayer perceptron][9]. The 3 weather variables were the input nodes and the polarity was the output node. 90% of the dataset was used for training and the remaining 10% for testing.
 
 #### Running
 
