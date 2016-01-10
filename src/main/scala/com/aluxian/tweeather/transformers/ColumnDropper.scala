@@ -18,27 +18,27 @@ class ColumnDropper(override val uid: String) extends Transformer with BasicPara
     * Param for the column names to be removed.
     * @group param
     */
-  final val dropColumns: StringArrayParam =
-    new StringArrayParam(this, "dropColumns", "columns to be dropped")
+  final val columns: StringArrayParam =
+    new StringArrayParam(this, "columns", "columns to be dropped")
 
   /** @group setParam */
-  def setDropColumns(columns: String*): this.type = set(dropColumns, columns.toArray)
+  def setColumns(value: String*): this.type = set(columns, value.toArray)
 
   /** @group setParam */
-  def setDropColumns(columns: Array[String]): this.type = set(dropColumns, columns)
+  def setColumns(value: Array[String]): this.type = set(columns, value)
 
   /** @group getParam */
-  def getDropColumns: Array[String] = $(dropColumns)
+  def getColumns: Array[String] = $(columns)
 
-  setDefault(dropColumns -> Array())
+  setDefault(columns -> Array())
 
   override def transformSchema(schema: StructType): StructType = {
-    StructType(schema.fields.diff($(dropColumns)))
+    StructType(schema.fields.diff($(columns)))
   }
 
   override def transform(dataset: DataFrame): DataFrame = {
     transformSchema(dataset.schema, logging = true)
-    $(dropColumns).mapCompose(dataset)(col => _.drop(col))
+    $(columns).mapCompose(dataset)(col => _.drop(col))
   }
 
   override def copy(extra: ParamMap): ColumnDropper = defaultCopy(extra)
