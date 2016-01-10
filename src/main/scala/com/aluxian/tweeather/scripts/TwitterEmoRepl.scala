@@ -25,9 +25,9 @@ object TwitterEmoRepl extends Script with Logging {
         .parallelize(Seq(input), 1)
         .toDF("raw_text")
 
-      model.transform(data)
-        .select("probability", "prediction")
-        .foreach(println)
+      model
+        .transform(data)
+        .show(truncate = false)
     }
   }
 
