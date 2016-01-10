@@ -1,5 +1,7 @@
 package com.aluxian.tweeather.scripts
 
+import java.io.File
+
 import org.apache.hadoop.fs.FileSystem
 import org.apache.log4j.PropertyConfigurator
 import org.apache.spark.sql.SQLContext
@@ -28,6 +30,7 @@ trait Script {
   protected lazy val sc = new SparkContext(
     new SparkConf()
       .setIfMissing("spark.app.name", scriptName)
+      .setIfMissing("spark.eventLog.dir", "/tw/logs")
       .setIfMissing("spark.eventLog.enabled", "true")
       .setIfMissing("spark.streaming.stopGracefullyOnShutdown", "true")
       .setIfMissing("spark.streaming.blockInterval", "30s")
@@ -42,6 +45,9 @@ trait Script {
       case Some(url) => PropertyConfigurator.configure(url)
       case None => System.err.println("Unable to load log4j.properties")
     }
+
+    // Ensure the event log directory exists
+    new File("/tw/logs").mkdirs()
   }
 
 }
