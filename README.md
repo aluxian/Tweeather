@@ -190,7 +190,7 @@ $ sbt submit-TwitterHoseEmoRepl
 
 Here's a screenshot of my collector running for almost 4 days.
 
-![Emo Collector](./docs/ss-emo-collector.png)
+![Emo Collector](https://raw.githubusercontent.com/Aluxian/Tweeather/master/docs/ss-emo-collector.png)
 
 #### Example
 
@@ -231,7 +231,7 @@ I uploaded a file with 1000 complete rows on the [releases page][5].
 
 I collected tweets geo-localised in Europe created between 2015-12-26 and 2016-12-04. I ran them through the sentiment analyser, and this is the result:
 
-![](./docs/happiness.gif)
+![Happiness Levels in Europe](https://raw.githubusercontent.com/Aluxian/Tweeather/master/docs/happiness.gif)
 
 The change in the number of data points seems to depend more on the time of day than on weather conditions. In order to draw a pertinent conclusion about the correlation between weather conditions and sentiment, a larger dataset of tweets is required (spread across more than just a week).
 
@@ -275,7 +275,7 @@ $ sbt submit-TwitterHoseFireRepl
 
 Here's a screenshot of my collector running for almost 9 days.
 
-![Fire Collector](./docs/ss-fire-collector.png)
+![Fire Collector](https://raw.githubusercontent.com/Aluxian/Tweeather/master/docs/ss-fire-collector.png)
 
 ## Conclusion
 
