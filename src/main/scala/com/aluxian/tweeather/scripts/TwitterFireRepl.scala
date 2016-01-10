@@ -19,7 +19,7 @@ object TwitterFireRepl extends Script with Logging {
 
     println("Loading fire model...")
     sc // dummy call to init the context
-    val model = PipelineModel.load("/tw/fire/fire.model")
+    val model = PipelineModel.load("/tw/fire/models/fire.model")
     println("Done. Write the input as <temperature>,<pressure>,<humidity> and press <enter>")
 
     for (input <- Source.stdin.getLines) {
