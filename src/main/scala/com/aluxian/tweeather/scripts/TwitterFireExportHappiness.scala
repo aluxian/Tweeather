@@ -12,9 +12,9 @@ import org.apache.spark.sql.Row
 
 /**
   * This script parses the tweets collected by [[TwitterFireCollector]] and exports
-  * a csv file that can be used to plot a happiness graph.
+  * a csv file with the tweets and their location, timestamp, and polarity.
   */
-object TwitterFireHappiness extends Script with Logging {
+object TwitterFireExportHappiness extends Script with Logging {
 
   val happinessTextPath = new Path("/tw/fire/parsed/happiness.text")
   val happinessCsvPath = new Path("/tw/fire/parsed/happiness.csv")

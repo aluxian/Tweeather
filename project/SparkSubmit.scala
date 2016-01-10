@@ -23,21 +23,21 @@ object SparkSubmit {
   }
 
   private lazy val configs = Seq(
-    Script("ClusterTest"),
     Script("Sentiment140Downloader"),
     Script("Sentiment140Parser"),
     Script("Sentiment140Trainer"),
     Script("Sentiment140Repl"),
-    Script("TwitterEmoCollector"),
+    Script("TwitterEmoCollector", highMem = true),
     Script("TwitterEmoCounter", highMem = true),
     Script("TwitterEmoParser", highMem = true),
     Script("TwitterEmoTrainer", highMem = true),
     Script("TwitterEmoRepl"),
     Script("TwitterFireCollector", highMem = true),
     Script("TwitterFireCounter", highMem = true),
-    Script("TwitterFireHappiness", highMem = true),
+    Script("TwitterFireExportHappiness", highMem = true),
+    Script("TwitterFireExportWeather", highMem = true),
     Script("TwitterFireParser", highMem = true),
-    Script("TwitterFireTrainer"),
+    Script("TwitterFireTrainer", highMem = true),
     Script("TwitterFireRepl")
   )
 
