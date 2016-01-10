@@ -1,6 +1,7 @@
 package com.aluxian.tweeather.scripts
 
 import org.apache.spark.Logging
+import org.apache.spark.ml.Pipeline
 import org.apache.spark.ml.ann.MultilayerPerceptron
 import org.apache.spark.ml.evaluation.RegressionEvaluator
 import org.apache.spark.mllib.linalg.{Vector, Vectors}
@@ -31,24 +32,20 @@ object TwitterFireTrainer extends Script with Logging {
       .toDF("input", "output")
       .randomSplit(Array(0.9, 0.1))
 
-    // Configure the perceptron
-    val perceptron = new MultilayerPerceptron()
-      .setLayers(Array(3, 5, 5, 5, 1))
-      .setTol(1e-6)
-      .setMaxIter(10 * 1000)
-      .setInputCol("input")
-      .setOutputCol("output")
+    // Configure the pipeline
+    val pipeline = new Pipeline().setStages(Array(
+      new MultilayerPerceptron().setLayers(Array(3, 10, 10, 1)).setTol(1e-6).setMaxIter(10 * 1000)
+    ))
 
     // Train the perceptron
     logInfo(s"Training model on ${trainingData.count()} records")
-    val model = perceptron.fit(trainingData)
+    val model = pipeline.fit(trainingData)
 
-    // Test the model precision
+    // Test the model accuracy
     logInfo("Testing model")
     val predicted = model
-      .setOutputCol("predicted")
       .transform(testData)
-      .select("output", "predicted")
+      .select("output", "prediction")
       .map {
         case Row(output: Vector, predicted: Vector) =>
           (output.toArray.head, predicted.toArray.head)
@@ -61,7 +58,7 @@ object TwitterFireTrainer extends Script with Logging {
 
     // Save the model
     logInfo("Saving model")
-    model.write.overwrite().save("/tw/fire/fire.model")
+    model.write.overwrite().save("/tw/fire/models/fire.model")
 
     logInfo("Training finished")
     sc.stop()

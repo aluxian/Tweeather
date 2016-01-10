@@ -1,7 +1,7 @@
 package com.aluxian.tweeather.scripts
 
 import org.apache.spark.Logging
-import org.apache.spark.ml.ann.MultilayerPerceptronModel
+import org.apache.spark.ml.PipelineModel
 import org.apache.spark.mllib.linalg.Vectors
 import org.apache.spark.sql.functions._
 
@@ -19,7 +19,7 @@ object TwitterFireRepl extends Script with Logging {
 
     println("Loading fire model...")
     sc // dummy call to init the context
-    val model = MultilayerPerceptronModel.load("/tw/fire/fire.model")
+    val model = PipelineModel.load("/tw/fire/fire.model")
     println("Done. Write the input as <temperature>,<pressure>,<humidity> and press <enter>")
 
     for (input <- Source.stdin.getLines) {

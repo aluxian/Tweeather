@@ -2,9 +2,9 @@ package org.apache.spark.ml.ann
 
 import org.apache.hadoop.fs.Path
 import org.apache.spark.ml._
-import org.apache.spark.ml.classification.MultilayerPerceptronParams
+import org.apache.spark.ml.classification.{MultilayerPerceptronParams => MultilayerPerceptronClassifierParams}
 import org.apache.spark.ml.param.ParamMap
-import org.apache.spark.ml.param.shared.{HasInputCol, HasOutputCol}
+import org.apache.spark.ml.param.shared._
 import org.apache.spark.ml.util._
 import org.apache.spark.mllib.linalg._
 import org.apache.spark.sql.functions._
@@ -13,11 +13,14 @@ import org.apache.spark.sql.{DataFrame, Row}
 
 import scala.collection.mutable
 
+/** Params for Multilayer Perceptron. */
+trait MultilayerPerceptronParams extends MultilayerPerceptronClassifierParams with HasInputCol with HasOutputCol {}
+
 /**
-  * Each layer has sigmoid activation function, output layer has softmax.
+  * Each layer has sigmoid activation function.
   */
 class MultilayerPerceptron(override val uid: String)
-  extends Estimator[MultilayerPerceptronModel] with HasInputCol with HasOutputCol with MultilayerPerceptronParams {
+  extends Estimator[MultilayerPerceptronModel] with MultilayerPerceptronParams {
 
   def this() = this(Identifiable.randomUID("multilayerPerceptron"))
 
@@ -32,6 +35,12 @@ class MultilayerPerceptron(override val uid: String)
     * @group setParam
     */
   def setOutputCol(value: String): this.type = set(outputCol, value)
+
+  /**
+    * Set the name of the column which holds the predicted output layer Vector.
+    * @group setParam
+    */
+  def setPredictionCol(value: String): this.type = set(predictionCol, value)
 
   /**
     * Set the sizes of the ANN layers.
@@ -60,11 +69,10 @@ class MultilayerPerceptron(override val uid: String)
     */
   def setTol(value: Double): this.type = set(tol, value)
 
-  /**
-    * Set the seed for weights initialization.
-    * @group setParam
-    */
-  def setSeed(value: Long): this.type = set(seed, value)
+  setDefault(
+    inputCol -> "input",
+    outputCol -> "output"
+  )
 
   override def transformSchema(schema: StructType): StructType = {
     SchemaUtils.checkColumnType(schema, $(inputCol), new VectorUDT)
@@ -103,46 +111,40 @@ class MultilayerPerceptron(override val uid: String)
 
 /**
   * Model based on the Multilayer Perceptron.
-  * Each layer has the sigmoid activation function, output layer has softmax.
+  * Each layer has the sigmoid activation function.
   *
   * @param uid uid
-  * @param layers array of layer sizes including input and output layers
+  * @param layersArray array of layer sizes including input and output layers
   * @param weights vector of initial weights for the model that consists of the weights of layers
   * @return prediction model
   */
-class MultilayerPerceptronModel(override val uid: String, val layers: Array[Int], val weights: Vector)
-  extends Model[MultilayerPerceptronModel] with HasInputCol with HasOutputCol with MLWritable {
+class MultilayerPerceptronModel(override val uid: String, val layersArray: Array[Int], val weights: Vector)
+  extends Model[MultilayerPerceptronModel] with MultilayerPerceptronParams with MLWritable {
 
-  /** @group setParam */
-  def setInputCol(value: String): this.type = set(inputCol, value)
-
-  /** @group setParam */
-  def setOutputCol(value: String): this.type = set(outputCol, value)
-
-  private val perceptron = FeedForwardTopology.multiLayerPerceptron(layers, softmax = false).getInstance(weights)
+  private val perceptron = FeedForwardTopology.multiLayerPerceptron(layersArray, softmax = false).getInstance(weights)
 
   override def transformSchema(schema: StructType): StructType = {
     SchemaUtils.checkColumnType(schema, $(inputCol), new VectorUDT)
-    SchemaUtils.appendColumn(schema, $(outputCol), new VectorUDT)
+    SchemaUtils.appendColumn(schema, $(predictionCol), new VectorUDT)
   }
 
   /**
     * Transforms the dataset by reading from [[inputCol]], running the perceptron prediction and storing
-    * the predictions as a new column [[outputCol]].
+    * the predictions as a new column [[predictionCol]].
     *
     * @param dataset input dataset
-    * @return transformed dataset with [[outputCol]] of type [[Double]]
+    * @return transformed dataset with [[predictionCol]] of type [[Double]]
     */
   override def transform(dataset: DataFrame): DataFrame = {
     transformSchema(dataset.schema, logging = true)
-    val predictUDF = udf { (features: Vector) =>
-      perceptron.predict(features)
+    val predictUDF = udf { (input: Vector) =>
+      perceptron.predict(input)
     }
-    dataset.withColumn($(outputCol), predictUDF(col($(inputCol))))
+    dataset.withColumn($(predictionCol), predictUDF(col($(inputCol))))
   }
 
   override def copy(extra: ParamMap): MultilayerPerceptronModel = {
-    copyValues(new MultilayerPerceptronModel(uid, layers, weights), extra)
+    copyValues(new MultilayerPerceptronModel(uid, layersArray, weights), extra)
   }
 
   override def write: MLWriter = new MultilayerPerceptronModel.ModelWriter(this)
@@ -164,7 +166,7 @@ object MultilayerPerceptronModel extends MLReadable[MultilayerPerceptronModel] {
       // Save metadata and Params
       DefaultParamsWriter.saveMetadata(instance, path, sc)
       // Save model data: layers, weights
-      val data = Data(instance.layers, instance.weights)
+      val data = Data(instance.layersArray, instance.weights)
       val dataPath = new Path(path, "data").toString
       sqlContext.createDataFrame(Seq(data)).repartition(1).write.parquet(dataPath)
     }
