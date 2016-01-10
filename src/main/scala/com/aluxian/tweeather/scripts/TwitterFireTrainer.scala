@@ -43,8 +43,6 @@ object TwitterFireTrainer extends Script with Logging {
     logInfo(s"Training model on ${trainingData.count()} records")
     val model = perceptron.fit(trainingData)
 
-    println(s"WEIGHTS=${model.weights}")
-
     // Test the model precision
     logInfo("Testing model")
     val predicted = model
