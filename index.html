@@ -63,6 +63,7 @@ User Income through Language, Behaviour and Affect in Social Media</a>. I decide
 <li><a href="#conclusion">Conclusion</a></li>
 <li><a href="#tips">Tips</a></li>
 <li><a href="#suggestions">Suggestions</a></li>
+<li><a href="#downloads">Downloads</a></li>
 </ul>
 
 <h2>
@@ -202,6 +203,11 @@ $ cp src/main/resources/com/aluxian/tweeather/res/twitter-template.properties \
 <p>I used these scripts to train a naive Bayes sentiment analyser with the <a href="http://help.sentiment140.com/for-students/">Sentiment140</a> dataset. Nothing fancy here. The resulting model has an accuracy of 80%.</p>
 
 <h4>
+<a id="processing" class="anchor" href="#processing" aria-hidden="true"><span class="octicon octicon-link"></span></a>Processing</h4>
+
+<p>The same processing steps were taken as for the <a href="#2-emo-scripts"><em>Emo</em> scripts</a>.</p>
+
+<h4>
 <a id="running" class="anchor" href="#running" aria-hidden="true"><span class="octicon octicon-link"></span></a>Running</h4>
 
 <p>To run the experiment:</p>
@@ -239,12 +245,12 @@ $ sbt submit-Sentiment140Repl
 |1.0   |0.5581821154365963|@asherroth World Cup 2010 Access?? Damn, that's a good look!                                                                             |
 </code></pre>
 
-<p>There are more examples on the <a href="https://github.com/Aluxian/Tweeather/releases">releases page</a>.</p>
+<p>You can download a file with more examples from the <a href="#downloads">downloads section</a>.</p>
 
 <h3>
 <a id="2-emo-scripts" class="anchor" href="#2-emo-scripts" aria-hidden="true"><span class="octicon octicon-link"></span></a>2. <em>Emo</em> scripts</h3>
 
-<p>I used these scripts to train a naive Bayes sentiment analyser with tweets collected by myself. For training the classifier, I also used the training dataset of 1.6M tweets provided on the Sentiment140 web page, raising the total size of the training dataset to 10M tweets. The resulting model had an accuracy of 79% (tested on the Sentiment140 manually-labelled dataset) and is available on the <a href="https://github.com/Aluxian/Tweeather/releases">releases page</a>.</p>
+<p>I used these scripts to train a naive Bayes sentiment analyser with tweets collected by myself. The resulting model had an accuracy of 75% and is available for download in the <a href="#downloads">downloads section</a>.</p>
 
 <h4>
 <a id="collection" class="anchor" href="#collection" aria-hidden="true"><span class="octicon octicon-link"></span></a>Collection</h4>
@@ -256,9 +262,9 @@ $ sbt submit-Sentiment140Repl
 <p>This method allowed me to gather a fairly large dataset of labelled tweets, while the accuracy of the model didn't seem to suffer.</p>
 
 <h4>
-<a id="parsing" class="anchor" href="#parsing" aria-hidden="true"><span class="octicon octicon-link"></span></a>Parsing</h4>
+<a id="processing-1" class="anchor" href="#processing-1" aria-hidden="true"><span class="octicon octicon-link"></span></a>Processing</h4>
 
-<p>Before training the classifier, the tweets were pre-processed:</p>
+<p>Before training the analyser, the tweets were pre-processed:</p>
 
 <ul>
 <li>the feature space was reduced
@@ -285,7 +291,7 @@ $ sbt submit-Sentiment140Repl
 <h4>
 <a id="training" class="anchor" href="#training" aria-hidden="true"><span class="octicon octicon-link"></span></a>Training</h4>
 
-<p>The processed tweets were used to train a naive Bayes classifier.</p>
+<p>I used 90% of the tweets for training and the remaining 10% for testing.</p>
 
 <h4>
 <a id="running-1" class="anchor" href="#running-1" aria-hidden="true"><span class="octicon octicon-link"></span></a>Running</h4>
@@ -297,10 +303,6 @@ $ sbt submit-TwitterHoseEmoCollector
 
 # Parse the collected tweets
 $ sbt submit-TwitterHoseEmoParser
-
-# Download the Sentiment140 dataset if you haven't already
-$ sbt submit-Sentiment140Downloader
-$ sbt submit-Sentiment140Parser
 
 # Train the sentiment analyser
 $ sbt submit-TwitterHoseEmoTrainer
@@ -349,7 +351,7 @@ $ sbt submit-TwitterHoseEmoRepl
 |33.8733655|35.8495145|0.1955959507977803|ok im gonna go back to sleep now                                                                                                                                                                                                                      |
 </code></pre>
 
-<p>I uploaded a file with 1000 complete rows on the <a href="https://github.com/Aluxian/Tweeather/releases">releases page</a>.</p>
+<p>You can download the file with 1000 complete rows from the <a href="#downloads">downloads section</a>.</p>
 
 <h4>
 <a id="sentiment-across-europe" class="anchor" href="#sentiment-across-europe" aria-hidden="true"><span class="octicon octicon-link"></span></a>Sentiment across Europe</h4>
@@ -371,14 +373,14 @@ $ sbt submit-TwitterHoseEmoRepl
 <p>Tweets were collected using Twitter's Streaming API, filtered by location (Europe) and language (English).</p>
 
 <h4>
-<a id="parsing-1" class="anchor" href="#parsing-1" aria-hidden="true"><span class="octicon octicon-link"></span></a>Parsing</h4>
+<a id="processing-2" class="anchor" href="#processing-2" aria-hidden="true"><span class="octicon octicon-link"></span></a>Processing</h4>
 
 <p>After they were collected, tweets were ran through the sentiment analyser to get their polarity. The parser script used a <a href="http://www.noaa.gov/">NOAA</a>-provided weather dataset to extract the temperature, pressure and humidity for each tweet's location.</p>
 
 <h4>
 <a id="training-1" class="anchor" href="#training-1" aria-hidden="true"><span class="octicon octicon-link"></span></a>Training</h4>
 
-<p>After parsing the tweets, I used them to train a <a href="https://en.wikipedia.org/wiki/Multilayer_perceptron">multilayer perceptron</a>. The 3 weather variables were the input nodes and the polarity was the output node.</p>
+<p>After processing the tweets, I used them to train a <a href="https://en.wikipedia.org/wiki/Multilayer_perceptron">multilayer perceptron</a>. The 3 weather variables were the input nodes and the polarity was the output node. 90% of the dataset was used for training and the remaining 10% for testing.</p>
 
 <h4>
 <a id="running-2" class="anchor" href="#running-2" aria-hidden="true"><span class="octicon octicon-link"></span></a>Running</h4>
@@ -423,7 +425,7 @@ $ sbt submit-TwitterHoseFireRepl
 <li>use a powerful machine (otherwise, a cluster might be required)</li>
 <li>use the Spark UI to watch your script's progress on <a href="http://localhost:4040">http://localhost:4040</a>
 </li>
-<li>you can download my trained models from the <a href="https://github.com/Aluxian/Tweeather/releases">releases page</a>; just place them where the trainers would save them (see the scripts' source code) and you're good to go</li>
+<li>you can download my trained models from the <a href="#downloads">downloads section</a>; just place them where the trainers would save them (see the scripts' source code) and you're good to go</li>
 </ul>
 
 <h2>
@@ -435,6 +437,24 @@ $ sbt submit-TwitterHoseFireRepl
 <li>The sentiment analyser doesn't recognise negated words. Sentences like "i am not happy" are incorrectly classified as positive. Use a POS-tagger to merge words with their negations before using them for training (e.g. that sentence would become "i am not_happy")</li>
 <li>Use fuzzy matching with an English dictionary to correct spelling mistakes and further reduce the feature space</li>
 <li><em>Other suggestions are welcome!</em></li>
+</ul>
+
+<h2>
+<a id="downloads" class="anchor" href="#downloads" aria-hidden="true"><span class="octicon octicon-link"></span></a>Downloads</h2>
+
+<p>I uploaded some files from my project on the <a href="https://github.com/Aluxian/Tweeather/releases/latest">releases page</a>:</p>
+
+<ul>
+<li>
+<a href="https://github.com/Aluxian/Tweeather/releases/download/v1/happiness.csv">happiness.csv</a> – a csv with <code>lat</code>, <code>lon</code> and <code>polarity</code> describing locations and their sentiment</li>
+<li>
+<a href="https://github.com/Aluxian/Tweeather/releases/download/v1/model-sentiment-140.tar.gz">model-sentiment-140.tar.gz</a> – my Sentiment140 sentiment analyser model</li>
+<li>
+<a href="https://github.com/Aluxian/Tweeather/releases/download/v1/model-emo-140.tar.gz">model-emo-140.tar.gz</a> – my emo sentiment analyser model</li>
+<li>
+<a href="https://github.com/Aluxian/Tweeather/releases/download/v1/examples-sentiment-140.txt">examples-sentiment-140.txt</a> – prediction examples done with the Sentiment140 analyser</li>
+<li>
+<a href="https://github.com/Aluxian/Tweeather/releases/download/v1/examples-emo-140.txt">examples-emo-140.txt</a> – prediction examples done with the emo analyser</li>
 </ul>
         </section>
 
