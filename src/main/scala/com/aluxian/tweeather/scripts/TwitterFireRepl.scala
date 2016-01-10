@@ -30,8 +30,8 @@ object TwitterFireRepl extends Script with Logging {
 
       val data = sc
         .parallelize(Seq(input), 1)
-        .toDF("raw_input")
-        .withColumn("input", t(col("raw_input")))
+        .toDF("kb_input")
+        .withColumn("raw_input", t(col("kb_input")))
 
       model
         .transform(data)
