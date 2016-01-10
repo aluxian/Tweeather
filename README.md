@@ -20,6 +20,7 @@ User Income through Language, Behaviour and Affect in Social Media][1]. I decide
 - [Conclusion](#conclusion)
 - [Tips](#tips)
 - [Suggestions](#suggestions)
+- [Downloads](#downloads)
 
 ## Requirements
 
@@ -133,11 +134,11 @@ Here's an example of prediction done on the Sentiment140 test dataset:
 |1.0   |0.5581821154365963|@asherroth World Cup 2010 Access?? Damn, that's a good look!                                                                             |
 ```
 
-There are more examples on the [releases page][5].
+You can download a file with more examples from the [downloads section](#downloads).
 
 ### 2. *Emo* scripts
 
-I used these scripts to train a naive Bayes sentiment analyser with tweets collected by myself. For training the classifier, I also used the training dataset of 1.6M tweets provided on the Sentiment140 web page, raising the total size of the training dataset to 10M tweets. The resulting model had an accuracy of 79% (tested on the Sentiment140 manually-labelled dataset) and is available on the [releases page][5].
+I used these scripts to train a naive Bayes sentiment analyser with tweets collected by myself. For training the classifier, I also used the training dataset of 1.6M tweets provided on the Sentiment140 web page, raising the total size of the training dataset to 10M tweets. The resulting model had an accuracy of 79% (tested on the Sentiment140 manually-labelled dataset) and is available for download in the [downloads section](#downloads).
 
 #### Collection
 
@@ -225,7 +226,7 @@ Here's an example of some tweets and their predicted polarity:
 |33.8733655|35.8495145|0.1955959507977803|ok im gonna go back to sleep now																																																						|
 ```
 
-I uploaded a file with 1000 complete rows on the [releases page][5].
+You can download the file with 1000 complete rows from the [downloads section](#downloads).
 
 #### Sentiment across Europe
 
@@ -237,7 +238,7 @@ The change in the number of data points seems to depend more on the time of day 
 
 ### 3. *Fire* scripts
 
-I used these scripts to train an [artificial neural network][10] that predicted the sentiment polarity given 3 weather variables: temperature, pressure and humidity.
+I used these scripts to train an [artificial neural network][5] that predicted the sentiment polarity given 3 weather variables: temperature, pressure and humidity.
 
 #### Collection
 
@@ -287,7 +288,7 @@ Keep these in mind:
 
 - use a powerful machine (otherwise, a cluster might be required)
 - use the Spark UI to watch your script's progress on [http://localhost:4040](http://localhost:4040)
-- you can download my trained models from the [releases page][5]; just place them where the trainers would save them (see the scripts' source code) and you're good to go
+- you can download my trained models from the [downloads section](#downloads); just place them where the trainers would save them (see the scripts' source code) and you're good to go
 
 ## Suggestions
 
@@ -297,14 +298,19 @@ A few suggestions to improve the project:
 - Use fuzzy matching with an English dictionary to correct spelling mistakes and further reduce the feature space
 - *Other suggestions are welcome!*
 
+## Downloads
+
+I uploaded some files from my project here:
+
+> TODO
+
 
 [1]: http://journals.plos.org/plosone/article?id=10.1371/journal.pone.0138717
 [2]: http://help.sentiment140.com/for-students/
 [3]: https://dev.twitter.com/streaming/overview
 [4]: http://www.noaa.gov/
-[5]: https://github.com/Aluxian/Tweeather/releases
+[5]: https://www.wikiwand.com/en/Artificial_neural_network
 [6]: http://spark.apache.org/
 [7]: http://www.scala-sbt.org/
 [8]: https://hadoop.apache.org/
 [9]: https://en.wikipedia.org/wiki/Multilayer_perceptron
-[10]: https://www.wikiwand.com/en/Artificial_neural_network
