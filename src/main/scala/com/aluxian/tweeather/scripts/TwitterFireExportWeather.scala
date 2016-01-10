@@ -26,7 +26,7 @@ object TwitterFireExportWeather extends Script with Logging {
       .coalesce(sc.defaultParallelism)
       .distinct()
       .map(_.split(','))
-      .map(parts => (parts(0), parts(1), parts(2).toLong))
+      .map(parts => (parts(0).toDouble, parts(1).toDouble, parts(2).toLong))
       .toDF("lat", "lon", "createdAt")
 
     // Get weather
