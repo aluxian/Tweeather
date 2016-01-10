@@ -4,7 +4,7 @@ import org.apache.spark.Logging
 import org.apache.spark.ml.Pipeline
 import org.apache.spark.ml.ann.MultilayerPerceptron
 import org.apache.spark.ml.evaluation.RegressionEvaluator
-import org.apache.spark.ml.feature.Normalizer
+import org.apache.spark.ml.feature.MinMaxScaler
 import org.apache.spark.mllib.linalg.{Vector, Vectors}
 import org.apache.spark.sql.Row
 
@@ -35,7 +35,7 @@ object TwitterFireTrainer extends Script with Logging {
 
     // Configure the pipeline
     val pipeline = new Pipeline().setStages(Array(
-      new Normalizer().setInputCol("raw_input").setOutputCol("input").setP(2.0),
+      new MinMaxScaler().setInputCol("raw_input").setOutputCol("input"),
       new MultilayerPerceptron().setLayers(Array(3, 10, 10, 1)).setTol(1e-6).setMaxIter(10 * 1000)
     ))
 
