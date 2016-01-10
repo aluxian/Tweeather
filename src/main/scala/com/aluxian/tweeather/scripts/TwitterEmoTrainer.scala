@@ -4,7 +4,7 @@ import com.aluxian.tweeather.transformers.{ColumnDropper, FeatureReducer, String
 import org.apache.spark.Logging
 import org.apache.spark.ml.Pipeline
 import org.apache.spark.ml.classification.NaiveBayes
-import org.apache.spark.ml.feature.{HashingTF, IDF, StopWordsRemover, Tokenizer}
+import org.apache.spark.ml.feature.{HashingTF, StopWordsRemover, Tokenizer}
 import org.apache.spark.mllib.evaluation.BinaryClassificationMetrics
 import org.apache.spark.sql.Row
 
@@ -31,11 +31,11 @@ object TwitterEmoTrainer extends Script with Logging {
       new StringSanitizer().setInputCol("reduced_text").setOutputCol("text"),
       new Tokenizer().setInputCol("text").setOutputCol("raw_words"),
       new StopWordsRemover().setInputCol("raw_words").setOutputCol("words"),
-      new HashingTF().setInputCol("words").setOutputCol("raw_features"),
-      new IDF().setInputCol("raw_features").setOutputCol("features"),
+      new HashingTF().setInputCol("words").setOutputCol("features"),
+      // new IDF().setInputCol("raw_features").setOutputCol("features"),
       new NaiveBayes().setSmoothing(0.5).setFeaturesCol("features"),
       new ColumnDropper().setColumns("raw_text", "reduced_text", "text",
-        "raw_words", "words", "raw_features", "features")
+        "raw_words", "words", "features")
     ))
 
     // Fit the pipeline
