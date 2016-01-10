@@ -142,7 +142,7 @@ You can download a file with more examples from the [downloads section](#downloa
 
 ### 2. *Emo* scripts
 
-I used these scripts to train a naive Bayes sentiment analyser with tweets collected by myself. The resulting model had an accuracy of XX% (TODO) and is available for download in the [downloads section](#downloads).
+I used these scripts to train a naive Bayes sentiment analyser with tweets collected by myself. The resulting model had an accuracy of 75% and is available for download in the [downloads section](#downloads).
 
 #### Collection
 
