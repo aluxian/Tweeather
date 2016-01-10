@@ -36,7 +36,7 @@ object TwitterFireTrainer extends Script with Logging {
     // Configure the pipeline
     val pipeline = new Pipeline().setStages(Array(
       new MinMaxScaler().setInputCol("raw_input").setOutputCol("input"),
-      new MultilayerPerceptron().setLayers(Array(3, 10, 10, 1)).setTol(0.01).setMaxIter(100)
+      new MultilayerPerceptron().setLayers(Array(3, 10, 10, 10, 1)).setTol(0.01).setMaxIter(1000)
     ))
 
     // Train the perceptron
