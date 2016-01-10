@@ -163,7 +163,7 @@ Before training the analyser, the tweets were pre-processed:
 
 #### Training
 
-90% of the tweets were used for training. The remaining 10% was used for testing.
+I used 90% of the tweets for training and the remaining 10% for testing.
 
 #### Running
 
