@@ -138,7 +138,7 @@ You can download a file with more examples from the [downloads section](#downloa
 
 ### 2. *Emo* scripts
 
-I used these scripts to train a naive Bayes sentiment analyser with tweets collected by myself. For training the classifier, I also used the training dataset of 1.6M tweets provided on the Sentiment140 web page, raising the total size of the training dataset to 10M tweets. The resulting model had an accuracy of 79% (tested on the Sentiment140 manually-labelled dataset) and is available for download in the [downloads section](#downloads).
+I used these scripts to train a naive Bayes sentiment analyser with tweets collected by myself. The resulting model had an accuracy of XX% (TODO) and is available for download in the [downloads section](#downloads).
 
 #### Collection
 
@@ -150,7 +150,7 @@ This method allowed me to gather a fairly large dataset of labelled tweets, whil
 
 #### Parsing
 
-Before training the classifier, the tweets were pre-processed:
+Before training the analyser, the tweets were pre-processed:
 
 - the feature space was reduced
   - urls were replaced with `URL`
@@ -163,7 +163,7 @@ Before training the classifier, the tweets were pre-processed:
 
 #### Training
 
-The processed tweets were used to train a naive Bayes classifier.
+90% of the tweets were used for training. The remaining 10% were used for testing.
 
 #### Running
 
@@ -175,10 +175,6 @@ $ sbt submit-TwitterHoseEmoCollector
 
 # Parse the collected tweets
 $ sbt submit-TwitterHoseEmoParser
-
-# Download the Sentiment140 dataset if you haven't already
-$ sbt submit-Sentiment140Downloader
-$ sbt submit-Sentiment140Parser
 
 # Train the sentiment analyser
 $ sbt submit-TwitterHoseEmoTrainer
@@ -250,7 +246,7 @@ After they were collected, tweets were ran through the sentiment analyser to get
 
 #### Training
 
-After parsing the tweets, I used them to train a [multilayer perceptron][9]. The 3 weather variables were the input nodes and the polarity was the output node.
+After parsing the tweets, I used them to train a [multilayer perceptron][9]. The 3 weather variables were the input nodes and the polarity was the output node. 90% of the dataset was used for training and the remaining 10% for testing.
 
 #### Running
 

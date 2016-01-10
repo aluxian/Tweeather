@@ -22,10 +22,8 @@ object TwitterEmoTrainer extends Script with Logging {
 
     // Prepare data sets
     logInfo("Getting datasets")
-    val testData = sqlc.read.parquet("/tw/sentiment/140/parsed/test.parquet")
-    val emoTrainingData = sqlc.read.parquet("/tw/sentiment/emo/parsed/data.parquet")
-    val s140TrainingData = sqlc.read.parquet("/tw/sentiment/140/parsed/training.parquet")
-    val trainingData = emoTrainingData.unionAll(s140TrainingData)
+    val Array(trainingData, testData) = sqlc.read.parquet("/tw/sentiment/emo/parsed/data.parquet")
+      .randomSplit(Array(0.9, 0.1))
 
     // Configure the pipeline
     val pipeline = new Pipeline().setStages(Array(
