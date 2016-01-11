@@ -302,7 +302,8 @@ A few suggestions to improve the project:
 
 I uploaded some files from my project on the [releases page][13]:
 
-- [happiness.csv][10] – a csv with `lat`, `lon` and `polarity` describing locations and their sentiment
+- [happiness.csv][10] – a csv with `lat`, `lon` and `polarity` extracted from tweets
+- [weather.csv][16] – a csv with `lat`, `lon`, `created_at`, `temperature (K)`, `pressure (Pa)` and `humidity (%)` extracted from tweets and their locations' forecast
 - [model-sentiment-140.tar.gz][11] – my Sentiment140 sentiment analyser model
 - [model-emo-140.tar.gz][12] – my emo sentiment analyser model
 - [examples-sentiment-140.txt][14] – prediction examples done with the Sentiment140 analyser
@@ -324,3 +325,4 @@ I uploaded some files from my project on the [releases page][13]:
 [13]: https://github.com/Aluxian/Tweeather/releases/latest
 [14]: https://github.com/Aluxian/Tweeather/releases/download/v1/examples-sentiment-140.txt
 [15]: https://github.com/Aluxian/Tweeather/releases/download/v1/examples-emo-140.txt
+[16]: https://github.com/Aluxian/Tweeather/releases/download/v1/weather.csv
