@@ -246,7 +246,7 @@ Tweets were collected using Twitter's Streaming API, filtered by location (Europ
 
 #### Processing
 
-After they were collected, tweets were ran through the sentiment analyser to get their polarity. The parser script used a [NOAA][4]-provided weather dataset to extract the temperature, pressure and humidity for each tweet's location.
+After they were collected, tweets were ran through the sentiment analyser to get their polarity. The parser script used a [NOAA][4]-provided [weather dataset][17] to extract the temperature, pressure and humidity for each tweet's location.
 
 #### Training
 
@@ -326,3 +326,4 @@ I uploaded some files from my project on the [releases page][13]:
 [14]: https://github.com/Aluxian/Tweeather/releases/download/v1/examples-sentiment-140.txt
 [15]: https://github.com/Aluxian/Tweeather/releases/download/v1/examples-emo-140.txt
 [16]: https://github.com/Aluxian/Tweeather/releases/download/v1/weather.csv
+[17]: https://www.ncdc.noaa.gov/data-access/model-data/model-datasets/global-forcast-system-gfs
