@@ -29,7 +29,7 @@
       <div class="inner clearfix">
         <section id="main-content">
           <h1>
-<a id="tweeather" class="anchor" href="#tweeather" aria-hidden="true"><span class="octicon octicon-link"></span></a>Tweeather</h1>
+<a id="tweeather" class="anchor" href="#tweeather" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Tweeather</h1>
 
 <p>Tweeather is a Machine Learning project that correlates Twitter sentiment to European weather.</p>
 
@@ -37,7 +37,7 @@
 User Income through Language, Behaviour and Affect in Social Media</a>. I decided it was the perfect opportunity to venture into the world of Big Data and so I learned Spark and Hadoop.</p>
 
 <h2>
-<a id="table-of-contents" class="anchor" href="#table-of-contents" aria-hidden="true"><span class="octicon octicon-link"></span></a>Table of Contents</h2>
+<a id="table-of-contents" class="anchor" href="#table-of-contents" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Table of Contents</h2>
 
 <ul>
 <li><a href="#requirements">Requirements</a></li>
@@ -67,7 +67,7 @@ User Income through Language, Behaviour and Affect in Social Media</a>. I decide
 </ul>
 
 <h2>
-<a id="requirements" class="anchor" href="#requirements" aria-hidden="true"><span class="octicon octicon-link"></span></a>Requirements</h2>
+<a id="requirements" class="anchor" href="#requirements" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Requirements</h2>
 
 <p>You need these tools to be able to run the project:</p>
 
@@ -111,10 +111,10 @@ User Income through Language, Behaviour and Affect in Social Media</a>. I decide
 </ul>
 
 <h2>
-<a id="setup" class="anchor" href="#setup" aria-hidden="true"><span class="octicon octicon-link"></span></a>Setup</h2>
+<a id="setup" class="anchor" href="#setup" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Setup</h2>
 
 <h3>
-<a id="configuration" class="anchor" href="#configuration" aria-hidden="true"><span class="octicon octicon-link"></span></a>Configuration</h3>
+<a id="configuration" class="anchor" href="#configuration" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Configuration</h3>
 
 <p>The project has 2 configuration files:</p>
 
@@ -144,7 +144,7 @@ $ cp src/main/resources/com/aluxian/tweeather/res/twitter-template.properties \
 </code></pre>
 
 <h3>
-<a id="env-vars" class="anchor" href="#env-vars" aria-hidden="true"><span class="octicon octicon-link"></span></a>Env vars</h3>
+<a id="env-vars" class="anchor" href="#env-vars" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Env vars</h3>
 
 <p>Make sure you set these up before running a script:</p>
 
@@ -162,7 +162,7 @@ $ cp src/main/resources/com/aluxian/tweeather/res/twitter-template.properties \
 </ul>
 
 <h3>
-<a id="system-properties" class="anchor" href="#system-properties" aria-hidden="true"><span class="octicon octicon-link"></span></a>System properties</h3>
+<a id="system-properties" class="anchor" href="#system-properties" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>System properties</h3>
 
 <p>Tweeather supports the following custom system properties:</p>
 
@@ -188,27 +188,27 @@ $ cp src/main/resources/com/aluxian/tweeather/res/twitter-template.properties \
 </ul>
 
 <h3>
-<a id="submit-tasks" class="anchor" href="#submit-tasks" aria-hidden="true"><span class="octicon octicon-link"></span></a>Submit tasks</h3>
+<a id="submit-tasks" class="anchor" href="#submit-tasks" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Submit tasks</h3>
 
 <p>If your Spark cluster doesn't have at least 14GB of RAM, edit <code>executorHighMem</code> in <code>project/SparkSubmit.scala</code>.</p>
 
 <h2>
-<a id="scripts" class="anchor" href="#scripts" aria-hidden="true"><span class="octicon octicon-link"></span></a>Scripts</h2>
+<a id="scripts" class="anchor" href="#scripts" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Scripts</h2>
 
 <p>The project has 3 sets of scripts.</p>
 
 <h3>
-<a id="1-sentiment140-scripts" class="anchor" href="#1-sentiment140-scripts" aria-hidden="true"><span class="octicon octicon-link"></span></a>1. <em>Sentiment140</em> scripts</h3>
+<a id="1-sentiment140-scripts" class="anchor" href="#1-sentiment140-scripts" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>1. <em>Sentiment140</em> scripts</h3>
 
 <p>I used these scripts to train a naive Bayes sentiment analyser with the <a href="http://help.sentiment140.com/for-students/">Sentiment140</a> dataset. Nothing fancy here. The resulting model has an accuracy of 80%.</p>
 
 <h4>
-<a id="processing" class="anchor" href="#processing" aria-hidden="true"><span class="octicon octicon-link"></span></a>Processing</h4>
+<a id="processing" class="anchor" href="#processing" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Processing</h4>
 
 <p>The same processing steps were taken as for the <a href="#2-emo-scripts"><em>Emo</em> scripts</a>.</p>
 
 <h4>
-<a id="running" class="anchor" href="#running" aria-hidden="true"><span class="octicon octicon-link"></span></a>Running</h4>
+<a id="running" class="anchor" href="#running" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Running</h4>
 
 <p>To run the experiment:</p>
 
@@ -226,7 +226,7 @@ $ sbt submit-Sentiment140Repl
 </code></pre>
 
 <h3>
-<a id="example" class="anchor" href="#example" aria-hidden="true"><span class="octicon octicon-link"></span></a>Example</h3>
+<a id="example" class="anchor" href="#example" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Example</h3>
 
 <p>Here's an example of prediction done on the Sentiment140 test dataset:</p>
 
@@ -248,12 +248,12 @@ $ sbt submit-Sentiment140Repl
 <p>You can download a file with more examples from the <a href="#downloads">downloads section</a>.</p>
 
 <h3>
-<a id="2-emo-scripts" class="anchor" href="#2-emo-scripts" aria-hidden="true"><span class="octicon octicon-link"></span></a>2. <em>Emo</em> scripts</h3>
+<a id="2-emo-scripts" class="anchor" href="#2-emo-scripts" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>2. <em>Emo</em> scripts</h3>
 
 <p>I used these scripts to train a naive Bayes sentiment analyser with tweets collected by myself. The resulting model had an accuracy of 75% and is available for download in the <a href="#downloads">downloads section</a>.</p>
 
 <h4>
-<a id="collection" class="anchor" href="#collection" aria-hidden="true"><span class="octicon octicon-link"></span></a>Collection</h4>
+<a id="collection" class="anchor" href="#collection" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Collection</h4>
 
 <p>For collecting the tweets, I used <a href="https://dev.twitter.com/streaming/overview">Twitter's Streaming API</a> with multiple apps configured. The average throughput was of 325 tweets/sec and I collected over 100M tweets in 4 days. However, after removing all the duplicates, only 8.4M remained.</p>
 
@@ -262,7 +262,7 @@ $ sbt submit-Sentiment140Repl
 <p>This method allowed me to gather a fairly large dataset of labelled tweets, while the accuracy of the model didn't seem to suffer.</p>
 
 <h4>
-<a id="processing-1" class="anchor" href="#processing-1" aria-hidden="true"><span class="octicon octicon-link"></span></a>Processing</h4>
+<a id="processing-1" class="anchor" href="#processing-1" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Processing</h4>
 
 <p>Before training the analyser, the tweets were pre-processed:</p>
 
@@ -289,12 +289,12 @@ $ sbt submit-Sentiment140Repl
 </ul>
 
 <h4>
-<a id="training" class="anchor" href="#training" aria-hidden="true"><span class="octicon octicon-link"></span></a>Training</h4>
+<a id="training" class="anchor" href="#training" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Training</h4>
 
 <p>I used 90% of the tweets for training and the remaining 10% for testing.</p>
 
 <h4>
-<a id="running-1" class="anchor" href="#running-1" aria-hidden="true"><span class="octicon octicon-link"></span></a>Running</h4>
+<a id="running-1" class="anchor" href="#running-1" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Running</h4>
 
 <p>To run the experiment:</p>
 
@@ -312,14 +312,14 @@ $ sbt submit-TwitterHoseEmoRepl
 </code></pre>
 
 <h4>
-<a id="screenshot" class="anchor" href="#screenshot" aria-hidden="true"><span class="octicon octicon-link"></span></a>Screenshot</h4>
+<a id="screenshot" class="anchor" href="#screenshot" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Screenshot</h4>
 
 <p>Here's a screenshot of my collector running for almost 4 days.</p>
 
 <p><img src="https://raw.githubusercontent.com/Aluxian/Tweeather/master/docs/ss-emo-collector.png" alt="Emo Collector"></p>
 
 <h4>
-<a id="example-1" class="anchor" href="#example-1" aria-hidden="true"><span class="octicon octicon-link"></span></a>Example</h4>
+<a id="example-1" class="anchor" href="#example-1" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Example</h4>
 
 <p>Here's an example of some tweets and their predicted polarity:</p>
 
@@ -354,7 +354,7 @@ $ sbt submit-TwitterHoseEmoRepl
 <p>You can download the file with 1000 complete rows from the <a href="#downloads">downloads section</a>.</p>
 
 <h4>
-<a id="sentiment-across-europe" class="anchor" href="#sentiment-across-europe" aria-hidden="true"><span class="octicon octicon-link"></span></a>Sentiment across Europe</h4>
+<a id="sentiment-across-europe" class="anchor" href="#sentiment-across-europe" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Sentiment across Europe</h4>
 
 <p>I collected tweets geo-localised in Europe created between 2015-12-26 and 2016-12-04. I ran them through the sentiment analyser, and this is the result:</p>
 
@@ -363,27 +363,27 @@ $ sbt submit-TwitterHoseEmoRepl
 <p>The change in the number of data points seems to depend more on the time of day than on weather conditions. In order to draw a pertinent conclusion about the correlation between weather conditions and sentiment, a larger dataset of tweets is required (spread across more than just a week).</p>
 
 <h3>
-<a id="3-fire-scripts" class="anchor" href="#3-fire-scripts" aria-hidden="true"><span class="octicon octicon-link"></span></a>3. <em>Fire</em> scripts</h3>
+<a id="3-fire-scripts" class="anchor" href="#3-fire-scripts" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>3. <em>Fire</em> scripts</h3>
 
 <p>I used these scripts to train an <a href="https://www.wikiwand.com/en/Artificial_neural_network">artificial neural network</a> that predicted the sentiment polarity given 3 weather variables: temperature, pressure and humidity.</p>
 
 <h4>
-<a id="collection-1" class="anchor" href="#collection-1" aria-hidden="true"><span class="octicon octicon-link"></span></a>Collection</h4>
+<a id="collection-1" class="anchor" href="#collection-1" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Collection</h4>
 
 <p>Tweets were collected using Twitter's Streaming API, filtered by location (Europe) and language (English).</p>
 
 <h4>
-<a id="processing-2" class="anchor" href="#processing-2" aria-hidden="true"><span class="octicon octicon-link"></span></a>Processing</h4>
+<a id="processing-2" class="anchor" href="#processing-2" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Processing</h4>
 
 <p>After they were collected, tweets were ran through the sentiment analyser to get their polarity. The parser script used a <a href="http://www.noaa.gov/">NOAA</a>-provided weather dataset to extract the temperature, pressure and humidity for each tweet's location.</p>
 
 <h4>
-<a id="training-1" class="anchor" href="#training-1" aria-hidden="true"><span class="octicon octicon-link"></span></a>Training</h4>
+<a id="training-1" class="anchor" href="#training-1" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Training</h4>
 
 <p>After processing the tweets, I used them to train a <a href="https://en.wikipedia.org/wiki/Multilayer_perceptron">multilayer perceptron</a>. The 3 weather variables were the input nodes and the polarity was the output node. 90% of the dataset was used for training and the remaining 10% for testing.</p>
 
 <h4>
-<a id="running-2" class="anchor" href="#running-2" aria-hidden="true"><span class="octicon octicon-link"></span></a>Running</h4>
+<a id="running-2" class="anchor" href="#running-2" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Running</h4>
 
 <p>To run the experiment:</p>
 
@@ -403,21 +403,21 @@ $ sbt submit-TwitterHoseFireRepl
 </code></pre>
 
 <h4>
-<a id="screenshot-1" class="anchor" href="#screenshot-1" aria-hidden="true"><span class="octicon octicon-link"></span></a>Screenshot</h4>
+<a id="screenshot-1" class="anchor" href="#screenshot-1" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Screenshot</h4>
 
 <p>Here's a screenshot of my collector running for almost 9 days.</p>
 
 <p><img src="https://raw.githubusercontent.com/Aluxian/Tweeather/master/docs/ss-fire-collector.png" alt="Fire Collector"></p>
 
 <h2>
-<a id="conclusion" class="anchor" href="#conclusion" aria-hidden="true"><span class="octicon octicon-link"></span></a>Conclusion</h2>
+<a id="conclusion" class="anchor" href="#conclusion" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Conclusion</h2>
 
 <blockquote>
 <p>TODO</p>
 </blockquote>
 
 <h2>
-<a id="tips" class="anchor" href="#tips" aria-hidden="true"><span class="octicon octicon-link"></span></a>Tips</h2>
+<a id="tips" class="anchor" href="#tips" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Tips</h2>
 
 <p>Keep these in mind:</p>
 
@@ -429,7 +429,7 @@ $ sbt submit-TwitterHoseFireRepl
 </ul>
 
 <h2>
-<a id="suggestions" class="anchor" href="#suggestions" aria-hidden="true"><span class="octicon octicon-link"></span></a>Suggestions</h2>
+<a id="suggestions" class="anchor" href="#suggestions" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Suggestions</h2>
 
 <p>A few suggestions to improve the project:</p>
 
@@ -440,7 +440,7 @@ $ sbt submit-TwitterHoseFireRepl
 </ul>
 
 <h2>
-<a id="downloads" class="anchor" href="#downloads" aria-hidden="true"><span class="octicon octicon-link"></span></a>Downloads</h2>
+<a id="downloads" class="anchor" href="#downloads" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Downloads</h2>
 
 <p>I uploaded some files from my project on the <a href="https://github.com/Aluxian/Tweeather/releases/latest">releases page</a>:</p>
 
